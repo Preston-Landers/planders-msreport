@@ -51,8 +51,14 @@
 \usepackage{xunicode}
 \usepackage{fixltx2e} % fix a problem with fnsymbol w/ fontspec, such as footnotes in vita
 
+% NOTE: technically the report formatting requirements say only
+% a single font must be used. But I've seen many examples of 
+% UT master's reports that use a monospace/teletype face for 
+% technical terms. I believe that's considered a 'math font' so it's ok...
+
 %\setmonofont[Scale=0.95]{Inconsolata}
 \setmonofont{Inconsolata}
+
 \setmainfont[Ligatures=TeX]{Adobe Text Pro}
 %\setmainfont[Ligatures=TeX]{Minion Pro}
 
@@ -71,7 +77,7 @@
 
 \author{Preston Brent Landers}  	% Required
 
-\address{planders@utexas.edu}  % Required
+\address{\texttt{planders@utexas.edu}}  % Required
 
 % Required
 \title{Selmy: an adaptive API for cloud database services}
@@ -163,8 +169,8 @@
 % (remove the % in front of) the following two command lines (the ones
 % that have the \ as their second character).
 %
-\degree{MASTER OF SCIENCE}
-\degreeabbr{M.A.}
+\degree{Master of Science in Engineering}
+\degreeabbr{M.S.E.}
 
 % Uncomment the line below that corresponds to the type of master's
 % document you are writing.
@@ -300,7 +306,7 @@
 %
 \begin{dedication}
 \index{Dedication@\emph{Dedication}}%
-Dedicated to my wife Andrea.
+Dedicated to my wife Andrea and to my parents.
 \end{dedication}
 
 
