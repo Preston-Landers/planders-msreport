@@ -51,6 +51,8 @@
 \usepackage{xunicode}
 \usepackage{fixltx2e} % fix a problem with fnsymbol w/ fontspec, such as footnotes in vita
 
+\usepackage[htt]{hyphenat}
+
 % NOTE: technically the report formatting requirements say only
 % a single font must be used. But I've seen many examples of 
 % UT master's reports that use a monospace/teletype face for 
@@ -80,7 +82,7 @@
 \address{\texttt{planders@utexas.edu}}  % Required
 
 % Required
-\title{Speakur: a case study of Web Component \\ encapsulation and synchronization}
+\title{Speakur: a case study of Web Component \\ architecture for composable applications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOTICE: The total number of supervisors and other members %%%%%%%%%%
@@ -129,7 +131,7 @@
 %	[Charles Townes]
 %	{Arthur Schawlow}
 \committeemembers
-	{Your Name Here}
+	{Christine Julien}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -246,6 +248,9 @@
 %\numberwithin{equation}{section}
 
 
+%%% Preston custom macros
+\newcommand{\codename}[1]{\texttt{#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	Macros.							     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -325,18 +330,18 @@ fail me to tell of the multitudes of individuals \ldots
 \utabstract
 \index{Abstract}%
 \indent
-This paper presents Speakur, a real-time commenting system for the mobile web, as a case study of W3C Web Component encapsulation and synchronization.
-Speakur illustrates how new HTML5 standards such as Web Components can help apply widely used software engineering principles such as encapsulation and composition to the realm of web authoring.
-Any web author can easily insert Speakur as a component on page (a custom HTML tag) to provide a realtime comments forum for that page/article without needing to run their own server component. 
-It uses W3C Web Components (WC) standard to achieve encapsulation and separation from the containing page.
-Web Components are an upcoming HTML5 standard for writing custom HTML tags using techniques like templates and Shadow DOM. 
 
-The report will discuss this new technology of HTML5 Web Components, 
-provide a case study of how to structure a real-world application using it along with embedding it in a larger system (possibly including native mobile apps), 
-and analyze and explain how to do efficient real-time component synchronization between web clients.
-The major research question is whether W3C Web Components provide a viable path towards the principles of encapsulation and easy code reuse which have been largely absent from web authoring so far. 
-In other words, is this the future of the web? 
-A subsidiary question is the most efficient way to achieve state synchronization between a large number of clients in the context of Web Components.
+This report is a case study of applying encapsulation, composition and distributed synchronization techniques to web application architecture through the use of Web Components, a proposed extension to the W3C HTML5 document standard. 
+The author presents Speakur, a real-time social discussion plugin for the mobile and desktop web, as an example of how HTML5 Web Component technologies can enable web designers and programmers to realize engineering principles such as modularity, encapsulation and separation of concerns when composing pages out of many disparate elements sourced from a diverse set of authors.
+
+Web authors can add a Speakur discussion to their page by inserting a simple HTML element at the desired spot to give the page a real-time discussion or feedback system.
+Speakur uses Google's Polymer framework's implementation of the draft Web Components (WC) standard to achieve encapsulation of its internal implementation details from the containing page, which only interact through a well defined interface (API).
+
+Web Components are a draft HTML5 standard for writing custom HTML tags that take advantage of new browser technologies like Shadow DOM, CSS Flexbox and data-bound templates.
+This report will review these new Web Component techniques and provide a case study of structuring a real-world WC applet that is embedded in a larger page or app.
+The major research question is whether W3C Web Components provide a viable path towards the encapsulation and composition principles which have been largely absent thus far from web authoring. 
+In other words, \textit{are components really the future of the web}? 
+Subsidiary questions include the maturity and suitability of current Web Components technologies for widespread deployment and how to efficiently synchronize state across distributed components.
 
 
 \tableofcontents   % Table of Contents will be automatically
@@ -433,7 +438,7 @@ A subsidiary question is the most efficient way to achieve state synchronization
 Preston Brent Landers
 was born in Texas and attended high school on the Nevada side of Lake Tahoe. 
 He received his Bachelor of Arts in English from the University of Texas at Austin.
-He works as a software engineer for Journyx, Inc.\footnote[1]{\url{http://www.journyx.com}}
+He works as a web and mobile software engineer for Journyx, Inc.\footnote[1]{\url{http://www.journyx.com}}
 in Austin, Texas and began graduate studies in Software Engineering at 
 the University of Texas at Austin in August 2012. 
 
