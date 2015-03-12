@@ -249,7 +249,7 @@
 
 
 %%% Preston custom macros
-\newcommand{\codename}[1]{\texttt{#1}}
+\newcommand{\tcode}[1]{\texttt{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	Macros.							     %
@@ -337,11 +337,11 @@ The author presents Speakur, a real-time social discussion plugin for the mobile
 Web authors can add a Speakur discussion to their page by inserting a simple HTML element at the desired spot to give the page a real-time discussion or feedback system.
 Speakur uses Google's Polymer framework's implementation of the draft Web Components (WC) standard to achieve encapsulation of its internal implementation details from the containing page, which only interact through a well defined interface (API).
 
-Web Components are a draft HTML5 standard for writing custom HTML tags that take advantage of new browser technologies like Shadow DOM, CSS Flexbox and data-bound templates.
-This report will review these new Web Component techniques and provide a case study of structuring a real-world WC applet that is embedded in a larger page or app.
-The major research question is whether W3C Web Components provide a viable path towards the encapsulation and composition principles which have been largely absent thus far from web authoring. 
+Web Components are a proposed HTML5 standard for writing custom HTML tags that take advantage of new browser technologies like Shadow DOM, CSS Flexbox and data-bound templates.
+This report will review these new Web Component technologies and provide a case study of structuring a real-world WC applet that is embedded in a larger page or app.
+The major research question is whether W3C Web Components provide a viable path towards the encapsulation and composition principles that have largely eluded web engineers thus far. 
 In other words, \textit{are components really the future of the web}? 
-Subsidiary questions include the maturity and suitability of current Web Components technologies for widespread deployment and how to efficiently synchronize state across distributed components.
+Subsidiary questions include assessing the maturity and suitability of current Web Components technologies for widespread deployment and how to efficiently synchronize component state across a distributed network.
 
 
 \tableofcontents   % Table of Contents will be automatically
@@ -394,6 +394,7 @@ Subsidiary questions include the maturity and suitability of current Web Compone
 
 \include{chapter-appendix3}
 
+\printindex{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Generate the bibliography.					     %
@@ -424,7 +425,7 @@ Subsidiary questions include the maturity and suitability of current Web Compone
 %	to generate the index (if used) MUST be moved to before      %
 %	the bibliography section.				     %
 %								     %
-\printindex%    % Include the index here. Comment out this line      %
+% \printindex%    % Include the index here. Comment out this line      %
 %		% with a percent sign if you do not want an index.   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
