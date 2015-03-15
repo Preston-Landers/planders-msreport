@@ -16,20 +16,20 @@
 
 This report presents a case study of applying W3C Web Components 
 \index{Web Components}
-to achieve encapsulation and separation of concerns within the context of collaborative web authoring. 
+to achieve encapsulation and modularity within the context of collaborative web authoring. 
 The author has created Speakur, a real-time discussion social plugin for the web, 
 as an experiment to determine the maturity and viability of using Web Components to create modern, highly composable web applications.
 
-Like most web applications, Speakur is based primarily on HTML and Java\-script. 
-HTML is a declarative markup language used to create documents --- web pages --- which are viewed by users with a program called the browser. 
-The Hypertext Markup Language (HTML) 
+Like most web applications, Speakur is written in HTML markup and Java\-script code. 
+HTML is a declarative markup language used to create documents --- web pages --- which are viewed with the help of a program called the browser. 
+The Hyper\-text Markup Language (HTML) 
 \index{HTML}
 standard has proven wildly successful since its introduction in 1993 by British computer scientist 
 Tim Berners-Lee, 
 \index{Tim Berners-Lee}
 with billions and billions of pages served, 
 and millions of public and private web sites forming a major part of our information landscape. [CITE?]
-More than any other invention other than perhaps email, the World Wide Web has shaped how we see and use the global network.
+More than any other invention, other than perhaps email, the World Wide Web (WWW) has shaped how we see and use the global network.
 
 % 
 \begin{figure}[htb]
@@ -41,7 +41,7 @@ More than any other invention other than perhaps email, the World Wide Web has s
 \end{figure}
 \index{commands!environments!figure}%
 
-Those designing and programming applications for the Web platform have long dreamed of the ability to mix and match independent, reusable chunks of functionality --- components --- in their documents without inter-coupling and mutual interference. 
+Those designing and programming applications for the Web as a computing platform have long dreamed of the ability to mix and match independent, reusable chunks of functionality --- components --- in their documents without mutual coupling and interference. 
 The original and current Document Object Model (DOM)
 \index{DOM}
 browser abstraction provided by HTML does not allow for significant decoupling; 
@@ -54,20 +54,23 @@ usually in a limited and inelegant way.
 At the time of HTML's introduction the concept of quickly and easily composing a static web page, 
 much less a full-fledged dynamic application, 
 out of Lego-like reusable building blocks seemed like a distant dream at best. 
-The introduction of the Javascript
-\index{Javascript}
-\footnote[1]{Javascript, also rendered as JavaScript or JS, 
+The introduction of the Javascript\footnote{Javascript, also rendered as JavaScript or JS, 
 has no significant relation to Sun's (now Oracle's) popular Java programming language;
-the name is an unfortunate coincidence at best.}
+the name is an unfortunate coincidence at best. 
+\index{Javascript}
+To complicate the naming situation even further, Javascript is officially standardized under the name ECMAScript (ES).}
 (JS) programming language to web browsers in 1995 allowed for a completely new dimension of dynamic behavior that was not possible before.
-Eventually web apps like Gmail and Google Docs rivaled traditional desktop applications in functionality and usability while being instantly accessible from nearly anywhere.
+Eventually web apps powered by Javascript like Gmail and Google Docs rivaled traditional desktop applications in functionality and usability while being instantly accessible from nearly anywhere.
 Still, web apps had to be stitched together `by hand' in ways that carefully ensured that the different parts didn't step on each other's toes, else disaster frequently ensued. 
 Each component or area of the system could not help but be coupled to the others at some level as a result of the programming model imposed by the DOM and HTML.
 
-Over the years the dynamic behaviors afforded by Javascript grew in importance along with, and perhaps helping drive the growth of, the web. 
-A great many frameworks and libraries sprang up around the HTML/JS ecosystem to help manage this complexity and to provide scaffolding and structure for client side web apps.
+Over the years the dynamic behaviors afforded by Javascript grew in importance along with the web, and helped contribute to its success. 
+The flexible, loosely typed nature of Javascript aided the prototyping process and initial development,
+but the difficulties of maintaining a semblance of coherence in a large sprawling application soon became apparent.
+Over time a bewildering array of frameworks and libraries sprang up around the HTML/JS ecosystem to help manage this complexity and to provide scaffolding and structure for client side web apps.
 For many years individual JS frameworks seemed to come and go as ephemerally as teenage pop idols. 
 The industry kept searching for the Next Big Thing that would make writing high quality web apps less of bug-ridden, messy chore. 
+
 In recent years Google's Angular [CITE] 
 \index{Angular}
 has emerged as a dominant client framework, 
@@ -78,20 +81,24 @@ JS library with its Virtual DOM is an up-and-comer focused on high performance t
 
 Yet despite the recent successes of web frameworks like Angular and React in capturing developer attention and the emergence of the updated HTML5 standard in 2011, 
 there still did not exist a clear picture of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering.
-That is, until engineers from Google 
+That is, until engineers from Google\footnote{
+As of March 2015, Google's Chrome browser is the most popular desktop browser. [CITE]}
 \index{Google}
-and Mozilla \index{Mozilla} \footnote{The Mozilla Foundation is the sponsor of the popular Firefox web browser. It grew out Netscape whose Navigator browser first helped bring the web to a mass audience.}
-and other organizations got together to draft a new standard called Web Components that will extend and enhance HTML5 in interesting ways that could have unforeseen consequences.
+and Mozilla\footnote{
+The Mozilla Foundation is the sponsor of the popular Firefox web browser. It grew out of Netscape, whose Navigator browser helped bring the web to a mass audience.}
+\index{Mozilla} 
+and other organizations got together [\textbf{WHEN?}] to draft a new standard called \textbf{Web Components} that will extend and enhance HTML5 in ways that could have a significant long-term impact.
 
 \section{Web Components Overview}
-Fundamentally, the Web Component standard consists of 4 core DOM technologies that, 
-if accepted by the World Wide Web (W3C) 
+Fundamentally, the Web Components standard consists of four new core DOM technologies --- extensions to the current HTML5 standard.
+If these standards are accepted by major browser vendors and the World Wide Web Consortium (W3C)
 \index{W3C}
-Consortium and web browser vendors, 
-will eventually become native features provided by browsers and available to all web pages without any additional JS frameworks. The core Web Component technologies are:
+which maintains HTML, 
+they will eventually become native browser features and available directly to any web page without needing to use any additional JS frameworks or libraries. 
+The core Web Component technologies are:
 \begin{itemize}
 \item
-\textbf{Custom Elements}: extending HTML with new elements---custom HTML tags
+\textbf{Custom Elements}: extending HTML with author-created tags
 \item
 \textbf{Shadow DOM}: encapsulation for the internals of custom elements
 \item
@@ -100,8 +107,8 @@ will eventually become native features provided by browsers and available to all
 \textbf{Imports}: packaging for HTML components
 \end{itemize}
 
-This paper will explore related web standards initiatives that are frequently associated with Web Components 
-but not formally grouped under them such as mutation observers,
+This report also explores several related web standards initiatives that are frequently associated with Web Components 
+but are not formally grouped under them, including mutation observers,
 \index{mutation observers}
 model driven views, 
 \index{model driven views}
@@ -110,12 +117,13 @@ and the CSS Flexible Boxes
 and CSS Grid
 \index{CSS Grid}
 systems. 
-Because these technologies are not yet formally accepted as a W3C standard and not yet widely implemented in commonly used mobile and desktop browsers, 
+Because these technologies are not yet formally accepted as W3C standards and are not yet widely implemented in typical mobile and desktop browsers, 
 Speakur has been implemented using Google's experimental Polymer framework [CITE].
 Polymer provides a Javascript `polyfill'
 \index{polyfill}
-library to implement many of the new Web Component features in currently available browsers. 
+library to implement many of the new Web Component features in browsers which would otherwise not support them. 
 Eventually this platform polyfill should become unnecessary, in theory, as WC becomes widely adopted in browsers.
+Some browsers like Google Chrome already have at least some native Web Component support and on these browsers the polyfill is effectively a `no-op'.
 
 The potential componentization of the web is one of the most exciting developments in web engineering in years and follows the overall growth in software-as-a-service (SaaS) 
 \index{SaaS}
@@ -128,38 +136,38 @@ The move towards a component-based Web will enable interesting new composite ser
 What previously required a highly integrated, high-overhead development model or lots of tedious glue code can become as simple as importing a custom element and dropping it onto a page.
 
 
-\section{Structure of This Paper}
-\index{Structure of This Paper@\emph{Structure of This Paper}}%
+\section{Structure of This Report}
+\index{Structure of This Report@\emph{Structure of This Report}}%
 
-The goal of this paper is to demonstrate the application of software engineering design patterns embodied in the  W3C proposed Web Components standard such as encapsulation, composition, and
-automatic synchronization of application state. 
-This paper attempts to explain many of the goals and principles of the Web Components initiative and show how a number of different technologies taken together help raise the overall level of abstraction for web authors and developers.
+The goal of this report is to demonstrate the application of software engineering design patterns embodied in the  W3C proposed Web Components standard such as encapsulation, modular composition, and automatic synchronization of application state. 
+This report discusses many of the goals and principles of the Web Components initiative and how a number of different technologies taken together help raise the overall level of abstraction for content authors, web engineers, and application developers --- which I will refer to collectively as (web) authors for short.
 
-The Background section of this report provides an introduction to some of the architectural problems inherent in modern web authoring and how Web Components (WC) addresses them. 
+The Background section provides an introduction to some of the architectural problems inherent in modern web authoring and how Web Components (WC) address them. 
 It also provides some background on software engineering design patterns that are embodied in Web Components such as encapsulation, composition, and inheritance, as well as technologies such as WebSockets and NoSQL databases.
 It describes some of the motivations behind the development of Speakur and some of the specific software engineering questions it addresses, such as the ability to provide a hassle-free way to host an embedded discussion forum inside an arbitrary web resource in a way that is fully encapsulated.
 
 The Approach section details the specific structures and techniques used when constructing a Web Component, and describes the technology and software architecture choices that went into Speakur. 
-It describes how Speakur uses Web Components to implement encapsulated functionality that is protected 
+It describes how Speakur uses Web Components to implement encapsulated modules whose internals are protected from unintentional outside influence.
 
-The Implementation section describes the application of Web Component principles to the specific task of providing a flexible and suitably generic discussion forum / commenting system. 
-It describes the overall architecture, code flow, and synchronization process. 
+The Implementation section describes the application of Web Component principles to the specific task of providing a flexible and suitably generic discussion forum / commenting plugin for both desktop and mobile browsers. 
+It describes the overall architecture, code flow, and synchronization process.
 An important topic in this section is security: how can we implement a largely client-based system while maintaining some kind of data integrity?
 
 This is followed by an Analysis section which discusses some of the outcomes as compared to the original goals and also looks at the impact of the selection of Web Components, Polymer, Firebase and some of the other architectural choices. 
 A few quantitative results are included, I hope \textbf{(TODO)}.
 
-Finally, the Conclusion section is just all kinds of awesome and wraps up the paper \textbf{(TODO)}. 
+Finally, the Conclusion section is just all kinds of awesome and wraps up the report \textbf{(TODO)}. 
 
 \section{Source Code and Demonstration Resources}
 \index{Source Code and Demonstration Resources@\emph{Source Code and Demonstration Resources}}%
 
-The source code for Speakur consists of HTML and Javascript code located in two git version control repositories. The first repository is for the actual
+The source code for Speakur consists of HTML and Javascript files located in a Git version control repository. 
+These files constitute an ``HTML Import'' package that provides a
 \tcode{<speakur-discussion>}
 % \texttt{$\textless$speakur-discussion\textgreater} 
-HTML element that is available for use by web authors, and the second contains additional demonstrations, a standalone application and a management console.
+custom HTML element for the use of web authors in their own pages.
 
-The source code and public documentation to help web authors use Speakur in their own sites can be found on GitHub:
+The Speakur source code and component documentation can be found here on GitHub.com:
 
 \tcode{\url{https://github.com/Preston-Landers/speakur-discussion}}
 
