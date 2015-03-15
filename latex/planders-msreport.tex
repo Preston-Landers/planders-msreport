@@ -47,8 +47,9 @@
 % pdfkeywords={HTTP} {REST} {RESTful} {database} {cloud} {API},
 % }
 
+%\usepackage{xunicode}
+%\usepackage[T1]{fontenc}
 \usepackage{fontspec}
-\usepackage{xunicode}
 \usepackage{fixltx2e} % fix a problem with fnsymbol w/ fontspec, such as footnotes in vita
 
 \usepackage[htt]{hyphenat}
@@ -59,10 +60,20 @@
 % technical terms. I believe that's considered a 'math font' so it's ok...
 
 %\setmonofont[Scale=0.95]{Inconsolata}
-\setmonofont{Inconsolata}
+%\setmonofont{Inconsolata}
+%\usepackage{luximono}
+%\usepackage[tt={oldstyle=true,variable=true}]{cfr-lm}
+%\renewcommand{\ttdefault}{clmjv}
+
+% My version of Inconsolata may not support bold/italic?
+\setmonofont[SmallCapsFont={Latin Modern Mono Caps}]{Latin Modern Mono Light}
 
 \setmainfont[Ligatures=TeX]{Adobe Text Pro}
 %\setmainfont[Ligatures=TeX]{Minion Pro}
+
+%\usepackage{libertine}%% Only as example for the romans/sans fonts
+%\usepackage{beraserif}
+%\usepackage[scaled=0.9]{beramono}
 
 %\pretolerance=10000
 

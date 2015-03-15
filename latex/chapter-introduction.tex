@@ -33,11 +33,10 @@ More than any other invention, other than perhaps email, the World Wide Web (WWW
 
 % 
 \begin{figure}[htb]
-\begin{center}
-\ \includegraphics[width=6in]{images/screenshot_20150312_1630_v2.png}
+\centering
+ \includegraphics[width=6in]{images/screenshot_20150312_1630_v2.png}
 \caption{A Speakur thread inside a demonstration page.}
-\label{f:ex}
-\end{center}
+\label{f:demo1}
 \end{figure}
 \index{commands!environments!figure}%
 
@@ -54,11 +53,13 @@ usually in a limited and inelegant way.
 At the time of HTML's introduction the concept of quickly and easily composing a static web page, 
 much less a full-fledged dynamic application, 
 out of Lego-like reusable building blocks seemed like a distant dream at best. 
-The introduction of the Javascript\footnote{Javascript, also rendered as JavaScript or JS, 
+The introduction of the 
+Javascript\footnote{Javascript, also rendered as JavaScript or JS, 
 has no significant relation to Sun's (now Oracle's) popular Java programming language;
-the name is an unfortunate coincidence at best. 
-\index{Javascript}
+the name is an unfortunate coincidence at best.
+
 To complicate the naming situation even further, Javascript is officially standardized under the name ECMAScript (ES).}
+\index{Javascript}
 (JS) programming language to web browsers in 1995 allowed for a completely new dimension of dynamic behavior that was not possible before.
 Eventually web apps powered by Javascript like Gmail and Google Docs rivaled traditional desktop applications in functionality and usability while being instantly accessible from nearly anywhere.
 Still, web apps had to be stitched together `by hand' in ways that carefully ensured that the different parts didn't step on each other's toes, else disaster frequently ensued. 
@@ -71,7 +72,7 @@ Over time a bewildering array of frameworks and libraries sprang up around the H
 For many years individual JS frameworks seemed to come and go as ephemerally as teenage pop idols. 
 The industry kept searching for the Next Big Thing that would make writing high quality web apps less of bug-ridden, messy chore. 
 
-In recent years Google's Angular [CITE] 
+In recent years (roughly 2011 to 2014) Google's Angular [CITE] 
 \index{Angular}
 has emerged as a dominant client framework, 
 due in part to its high perceived quality [CITE] and the fact that it represents an common point for a fragmented industry to rally around.
@@ -79,7 +80,7 @@ Facebook's React
 \index{React}
 JS library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger.
 
-Yet despite the recent successes of web frameworks like Angular and React in capturing developer attention and the emergence of the updated HTML5 standard in 2011, 
+Yet despite the emergence of the updated HTML5 standard in 2011 and the recent successes of web frameworks like Angular and React in capturing developer attention, 
 there still did not exist a clear picture of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering.
 That is, until engineers from Google\footnote{
 As of March 2015, Google's Chrome browser is the most popular desktop browser. [CITE]}
@@ -163,9 +164,11 @@ Finally, the Conclusion section is just all kinds of awesome and wraps up the re
 
 The source code for Speakur consists of HTML and Javascript files located in a Git version control repository. 
 These files constitute an ``HTML Import'' package that provides a
-\tcode{<speakur-discussion>}
-% \texttt{$\textless$speakur-discussion\textgreater} 
+\textbf{\tcode{<speakur-discussion>}}
 custom HTML element for the use of web authors in their own pages.
+
+% XXX TODO: bold around \tcode has no effect?
+% http://tex.stackexchange.com/questions/215482/how-do-i-get-texttt-with-bold-face-in-latex
 
 The Speakur source code and component documentation can be found here on GitHub.com:
 
