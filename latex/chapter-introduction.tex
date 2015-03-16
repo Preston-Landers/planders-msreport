@@ -47,8 +47,7 @@ browser abstraction provided by HTML does not allow for significant decoupling;
 everything lives together on one big page. Hacks like the 
 \tcode{<iframe>} 
 \index{iframe}
-tag have allowed one to work around some of these restrictions, 
-usually in a limited and inelegant way.
+tag let you work around some of these restrictions, usually in a limited and inelegant way.
 
 At the time of HTML's introduction the concept of quickly and easily composing a static web page, 
 much less a full-fledged dynamic application, 
@@ -81,14 +80,15 @@ Facebook's React
 JS library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger.
 
 Yet despite the emergence of the updated HTML5 standard in 2011 and the recent successes of web frameworks like Angular and React in capturing developer attention, 
-there still did not exist a clear picture of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering.
+a clear picture still did not exist of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering.
 That is, until engineers from Google\footnote{
 As of March 2015, Google's Chrome browser is the most popular desktop browser. [CITE]}
 \index{Google}
 and Mozilla\footnote{
 The Mozilla Foundation is the sponsor of the popular Firefox web browser. It grew out of Netscape, whose Navigator browser helped bring the web to a mass audience.}
 \index{Mozilla} 
-and other organizations got together [\textbf{WHEN?}] to draft a new standard called \textbf{Web Components} that will extend and enhance HTML5 in ways that could have a significant long-term impact.
+and other organizations got together [\textbf{WHEN?}] to draft a new standard called \textbf{Web Components} that will extend and enhance HTML5 in ways that could have a significant long-term impact. 
+For example, as of the time of this writing, a rewrite of Angular called Angular 2.0 is slated to include Web Components as a core architectural element [CITE].
 
 \section{Web Components Overview}
 Fundamentally, the Web Components standard consists of four new core DOM technologies --- extensions to the current HTML5 standard.
@@ -118,7 +118,7 @@ and the CSS Flexible Boxes
 and CSS Grid
 \index{CSS Grid}
 systems. 
-Because these technologies are not yet formally accepted as W3C standards and are not yet widely implemented in typical mobile and desktop browsers, 
+In part because these technologies are not yet formally accepted as W3C standards and are not yet widely implemented in typical mobile and desktop browsers, 
 Speakur has been implemented using Google's experimental Polymer framework [CITE].
 Polymer provides a Javascript `polyfill'
 \index{polyfill}
