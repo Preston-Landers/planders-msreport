@@ -57,14 +57,14 @@ That model was that one used internally by browsers to implement the newer HTML5
 The \tcode{<video>} element presents a simple interface (API) to HTML authors that hides the complexities of playing high definition video.
 Internally, however, browsers implement \tcode{<video>} with a `shadow' or hidden document inside the object that contains the internal state. 
 For example, an author can write:
-\begin{lstlisting}[language=html]
+\begin{lstlisting}[language=HTML5]
 	<video loop src=...> </video>
 \end{lstlisting}
 to cause the video to loop repeatedly.
 
 This shadow Document Object Model (DOM) inside the \tcode{<video>} tag creates the user interface (UI) needed to control video playback such as volume controls, the timeline bar, and pause and play buttons.
 These inner playback controls are themselves built out of HTML, CSS and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
-Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the \tcode{<div>} for the Play button highlighted.
+Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
 
 % 
 \begin{figure}[htb]
@@ -101,19 +101,19 @@ The primary restriction to avoid a name collision with future built-in HTML elem
 
 To create a new Custom Element, first you register the element:
 
-\begin{lstlisting}[language=Javascript]
+\begin{lstlisting}[language=JavaScript]
  var MyElement = document.registerElement('my-element');
 \end{lstlisting}
 
 Then you place your new element on the page either declaratively in HTML:
 
-\begin{lstlisting}[language=html]
+\begin{lstlisting}[language=HTML5]
  <my-element> hello, world! </my-element>
 \end{lstlisting}
 
 or imperatively with Javascript:
 
-\begin{lstlisting}[language=Javascript]
+\begin{lstlisting}[language=JavaScript]
  var MyElement = document.registerElement('my-element');
  // instantiate a new instance of the element
  var thisOne = new MyElement();      
@@ -144,23 +144,47 @@ Together the shadow DOM and light DOM form the \textit{logical DOM} of a custom 
 It is also possible for elements to have multiple shadow DOM sub-trees. 
 This is used particularly for emulating object-oriented inheritance.
 
-In languages like C\# and Java, encapsulation often implies guarantees made by the language about the accessibility of object fields.
+In languages like C\# and Java, encapsulation and private fields implies guarantees made by the language about the accessibility of those fields.
 But in the case of Web Components, Shadow DOM is not completely and utterly isolated from the containing page.
 It is possible to ``reach inside'' and break encapsulation to at least some degree, 
 but the point is that this must be an intentional act by the developer and not an unexpected side-effect.
 
 \subsection{HTML Imports}
-One significant problem faced by web developers is that prior to Web Components, HTML lacked a mechanism to bring in a snippet of HTML or Javascript from an external location and insert it into the current document, similar to an \tcode{\#include} directive in the C language. 
+One significant problem faced by web developers is the lack of any built-in module packaging methods in HTML.
+Prior to Web Components there was no way to bring in a snippet of HTML or Javascript from an external location and insert it exactly one time into the current document, similar to an \tcode{\#include} directive in the C language or the packaging and import systems commonly used in scripting languages like Python and Ruby. 
 Javascript could always be loaded with a \tcode{<script>} tag, but this did not ensure that resources were loaded exactly once, a process known as \textit{de-duping}.
-If a component was used in two different spots on the page, it might need to use the same external Javascript resource but that file would be requested from the server twice, degrading application performance.
+A component that uses a certain JS resource might be used in two different spots on the page but that file would be requested from the server twice, degrading application performance.
 
 In order to fix these problems the HTML Imports standard allows for bringing in snippets of HTML, CSS or Javascript into the current document in a way that ensures automatic de-duping of repeated requests.
 The one major caveat there is that de-duping only happens if the resources are named in exactly the same fashion in both cases.
-More on that problem later (TODO: section).
+Dealing with HTLM Imports in a consistent fashion will be discussed in the Implementation section.
 
 \subsection{Templates}
-Inert pieces of DOM that can be instantiated
-Data-bound templates
+The final major piece of the Web Components puzzle are native HTML5 Templates. 
+Unlike the rest of Web Components, the \tcode{<template>} tag have already become a part of the HTML5 specification.
+\textit{\textbf{Template}} is a frequently overloaded word with different meanings in different programming environments.
+While HTML5 templates have some similarities to the concept of templates popularized by frameworks like Angular and Django, there are some important differences.
+
+HTML5 templates are inert hunks of HTML that can be instantiated into the DOM by Javascript.
+Their basic function is to give a template for custom element internals.
+
+Binding data into templates with special ``curly'' operators like in the following example (a data bound template) is \textbf{not} a part of the standard HTML5 template spec:
+
+\begin{lstlisting}[language=HTML5]
+	<template> 
+		The temperature is {{ temp }} in {{ city }} right now.
+	</template>
+\end{lstlisting}
+
+Instead this functionality is handled by a Javascript framework such as React or Polymer.
+Data-bound templates are discussed in more detail in the following chapter.
+
+The primary benefit of HTML Templates from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
+Templates are primarily used to declare the internal structure (shadow DOM) of custom elements. 
+Therefore the resources needed to use the custom element aren't downloaded until they are actually needed.
+
+% http://www.w3.org/TR/html5/scripting-1.html#the-template-element
+
 
 \subsection{Related technologies}
 
