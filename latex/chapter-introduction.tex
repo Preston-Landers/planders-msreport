@@ -14,13 +14,14 @@
 %purpose. Yadda, yadda, yadda, \ldots
 %\end{quote}
 
-This report presents a case study of applying W3C Web Components 
+This report is a case study of using W3C Web Components, 
 \index{Web Components}
-to achieve encapsulation and modularity within the context of collaborative web authoring. 
-The author has created Speakur, a real-time discussion social plugin for the web, 
-as an experiment to determine the maturity and viability of using Web Components to create modern, highly composable web applications.
+a proposed HTML5 extension,
+to implement techniques of encapsulation, abstraction, modularity in web application engineering.
+The author designed Speakur, a real-time discussion social plugin for the web, 
+as an experiment to determine the viability and maturity of using Web Components to create modern, highly composable web applications.
 
-Like most web applications, Speakur is written in HTML markup and Java\-script code. 
+Like most web applications Speakur is written in a combination of HTML markup and the Java\-script programming language. 
 HTML is a declarative markup language used to create documents --- web pages --- which are viewed with the help of a program called the browser. 
 The Hyper\-text Markup Language (HTML) 
 \index{HTML}
@@ -69,6 +70,8 @@ The flexible, loosely typed nature of Javascript aided the prototyping process a
 but the difficulties of maintaining a semblance of coherence in a large sprawling application soon became apparent.
 Over time a bewildering array of frameworks and libraries sprang up around the HTML/JS ecosystem to help manage this complexity and to provide scaffolding and structure for client side web apps.
 For many years individual JS frameworks seemed to come and go as ephemerally as teenage pop idols. 
+Interoperability between these completing frameworks was virtually non-existent. 
+Components from one framework typically couldn't be easily combined with those from an another.
 The industry kept searching for the Next Big Thing that would make writing high quality web apps less of bug-ridden, messy chore. 
 
 In recent years (roughly 2011 to 2014) Google's Angular [CITE] 
@@ -167,6 +170,18 @@ The source code for Speakur consists of HTML and Javascript files located in a G
 These files constitute an ``HTML Import'' package that provides a
 \textbf{\tcode{<speakur-discussion>}}
 custom HTML element for the use of web authors in their own pages.
+An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in briefly in Listing~\ref{example1} below.
+
+\begin{lstlisting}[language=HTML5,numbers=none,caption=
+{Example of the Speakur custom HTML element},label=example1,captionpos=below]
+ <!-- place this on your page
+      where you want a discussion -->
+ <speakur-discussion
+   href="http://example.com/news/web-components-in-action"
+   allowAnonymous="false">
+ </speakur-discussion>
+\end{lstlisting}
+
 
 % XXX TODO: bold around \tcode has no effect?
 % http://tex.stackexchange.com/questions/215482/how-do-i-get-texttt-with-bold-face-in-latex
@@ -178,3 +193,4 @@ The Speakur source code and component documentation can be found on the social c
 Demonstrations of several web pages which show off embedded Speakur discussions are available at the following location:
 
 \tcode{\url{https://preston-landers.github.io/speakur-discussion/components/speakur-discussion/demo.html}}
+

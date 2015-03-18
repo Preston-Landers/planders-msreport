@@ -50,6 +50,8 @@ Using Bootstrap's navigation bar could be as simple as replacing the code in fig
 \end{figure}
 \index{commands!environments!figure}%
 
+TODO: replace that with a regular listing?
+
 \subsection{Encapsulation and composition}
 
 The Web Components working group, consisting of software engineers from several major browser vendors, looked at this situation and found that, in practice, browsers already had a suitable model for encapsulating components that hide complexity behind well-defined interfaces.
@@ -179,7 +181,7 @@ TODO: HTML imports:
 
 \subsection{Templates}
 The last major piece of the Web Component puzzle is the native HTML5 \tcode{<template>} tag. 
-Unlike the rest of Web Components, \tcode{<template>} has already become a standard part of the HTML5 specification, although one that is not yet widely used.
+Unlike the rest of Web Components, \tcode{<template>} has already become a standard part of the HTML5 specification, although one that is not yet widely used outside of WC.
 \textit{Template} is a frequently overloaded word with different meanings in different programming environments.
 While HTML5 templates have some similarities to the concept of templates popularized by frameworks like Angular and Django, there are some important differences.
 
@@ -192,9 +194,9 @@ Their basic function is to give a template for custom element representation.
 
 However, templates are most useful in combination with `live' data, not static, unchanging text.
 Binding data into templates with special operators\footnote{
-Sometimes called `mustaches' or curly braces. }
+Sometimes called mustaches, handlebars or curly braces. }
 is \textbf{not} a part of the standard HTML5 template spec.
-The following example of a data bound template is something that does not work with plain Web Components alone:
+The following example of a data bound template is something that does \textit{not} work with plain Web Components alone:
 
 \begin{lstlisting}[language=HTML5,numbers=none]
 	<template> 
@@ -202,7 +204,7 @@ The following example of a data bound template is something that does not work w
 	</template>
 \end{lstlisting}
 
-This functionality is handled by a Javascript framework such as React or Polymer.
+Instead this functionality can be handled by a Javascript framework such as React or Polymer.
 Data-bound templates are discussed in more detail in the following chapter.
 
 The primary benefit of HTML Templates from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
@@ -305,4 +307,4 @@ leaving only Polymer and the less-comprehensive X-Tags project [CITE] and a few 
 
 \end{itemize}
 
-In the following section we will discuss some of the high level architectural considerations in designing such a component.
+In the next chapter we will discuss some of the high level architectural concerns that should be addressed when designing such a component.
