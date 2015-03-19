@@ -31,14 +31,19 @@
 \usepackage{verbatim}      	% Allows quoting source with commands.
 \usepackage{makeidx}       	% Package to make an index.
 \usepackage{graphicx}
+
+\usepackage{url}		% Allows good typesetting of web URLs.
+
+\usepackage[backend=biber,url=false,citestyle=numeric,firstinits=true]{biblatex}
 \usepackage{citesort}         	% 
+
+\addbibresource{diss.bib}
 
 
 % Prestons code listing definitions
 \input{codelistings}
 
 
-\usepackage{url}		% Allows good typesetting of web URLs.
 %\usepackage{hyperref}  % adds PDF bookmarks and such
 %\hypersetup{
 % colorlinks=true,
@@ -432,8 +437,10 @@ Subsidiary topics include assessing the maturity and suitability of current Web 
                 % the bibliography, even if they are not 	     %
                 % explicitly cited in the text. 		     %
 		%						     %
-\bibliographystyle{plain}  % Here the bibliography 		     %
-\bibliography{diss}        % is inserted.			     %
+
+\printbibliography
+%\bibliographystyle{plain}  % Here the bibliography 		     %
+%\bibliography{diss}        % is inserted.			     %
 \index{Bibliography@\emph{Bibliography}}%			     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

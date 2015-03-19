@@ -4,7 +4,7 @@
 
 When the Web was first created by Tim Berners-Lee in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
 The idea of composing a complex web application out of simple components like snapping together Lego blocks seemed like a distant dream at best.
-Until recently, web authors were limited to using the predefined HTML elements or `tags' that were listed in the W3C standard and understood by browser programs, such as \tcode{<title>} and \tcode{<video>}. 
+Until recently, web authors were limited to using the predefined HTML layout elements or `tags' that were listed in the W3C standard and understood by browser programs, such as \tcode{<title>} and \tcode{<video>}. 
 Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic and Netscape Navigator.
 
 As of early 2015, modern web apps are typically written with a Javascript framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications, large or small, from a number of sub-components.
@@ -17,9 +17,24 @@ These issues make it difficult to create and share generic, reusable \textit{web
 among different users who may not use the same frameworks or follow the same set of assumptions and conventions.
 
 \section{Current challenges in web authoring}
-To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter Bootstrap library [CITE].
+In object oriented programming, encapsulation is typically defined as a 
+``language mechanism for restricting access to some of the object's components''
+~\cite[p. 522]{mitchell2003}.
+The point of encapsulation is providing an \textit{abstraction} that consumers of the functionality can rely on without knowing internals. 
+The goals of encapsulation and abstraction include:
+\begin{quote}
+Identifying the interface of a data structure \dots 
+providing \textit{information hiding} by separating implementation decisions from parts of the program that use the data structure \dots 
+and allowing the data structure to be used in many different ways by many different components.
+\cite[p. 243]{mitchell2003}
+\end{quote}
+
+Although techniques of abstraction and encapsulation have been widespread in object oriented programming for decades,
+the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules~\cite{ihrig2012}.
+
+To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter Bootstrap library~\cite{bootstrapcontributors2015}.
 Twitter Bootstrap is a collection of Cascading Style Sheet (CSS) rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
-Bootstrap provides pre-styled User Interface (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or applications.
+Bootstrap provides pre-styled User Interface (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
 Because Bootstrap must work within the confines of the DOM and the HTML5 standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
 For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML and then customize it to your needs as shown in figure~\ref{f:twbs1}.
 
@@ -39,18 +54,30 @@ Even then, conflicts are inevitable when the entire page is treated as a single 
 
 What if instead one could create and share a reusable chunk of functionality --- a web component -- that hid all of these tedious structural details and encapsulated its private, internal state? 
 What if web authors could create their \textit{own} HTML elements?  
-Using Bootstrap's navigation bar could be as simple as replacing the code in figure~\ref{f:twbs1} with a custom element like the one in figure~\ref{f:twbs2}.
+Using Bootstrap's navigation bar could be as simple as replacing the code in figure~\ref{f:twbs1} with a custom element like the one in 
+% figure~\ref{f:twbs2}.
+%listing~\ref{l:twbs2}.
+the following example:
 
 % 
-\begin{figure}[htb]
-\centering
- \includegraphics[width=3.5in]{images/bootstrap_navbar_wc.png}
-\caption{Hypothetical Bootstrap nav bar custom element.}
-\label{f:twbs2}
-\end{figure}
-\index{commands!environments!figure}%
+%\begin{figure}[htb]
+%\centering
+% \includegraphics[width=3.5in]{images/bootstrap_navbar_wc.png}
+%\caption{Hypothetical Bootstrap nav bar custom element.}
+%\label{f:twbs2}
+%\end{figure}
+%\index{commands!environments!figure}%
 
-TODO: replace that with a regular listing?
+% TODO: replace that with a regular listing?
+
+\begin{lstlisting}[language=HTML5,numbers=none,caption=
+{Hypothetical Bootstrap nav bar custom element.},label=l:twbs2,captionpos=below]
+ <twbs-navbar>
+   <a href="#">Home</a>
+   <a href="#">About</a>
+   <a href="#">Sign In</a>
+ </twbs-navbar>
+\end{lstlisting}
 
 \subsection{Encapsulation and composition}
 
@@ -263,8 +290,9 @@ CSS Grid layout intended for overall page layout...
 
 
 \section{Literature Review}
-\subsection{Popular Javascript frameworks}
-\subsection{Google Polymer framework}
+\subsection{Javascript frameworks}
+\subsection{Polymer framework}
+A team within Google has developed the Polymer~\cite{polymercontributors2015} framework based on Web Components architecture.
 
 \section{Speakur}
 My desire to learn more about modern web development led me to investigate web frameworks like Angular and Meteor.
@@ -303,7 +331,7 @@ when someone replies to a post it should become instantly available to anyone vi
 
 
 This instantly ruled out the vast majority of frameworks, 
-leaving only Polymer and the less-comprehensive X-Tags project [CITE] and a few other smaller contenders.
+leaving only Polymer and the less-comprehensive X-Tags project~\cite{x-tagscontributors2015} and a few other smaller contenders.
 
 \end{itemize}
 

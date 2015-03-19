@@ -11,6 +11,8 @@
 *.acr
 *.alg
 *.bbl
+*.bcf
+*.run.xml
 *.blg
 *.dvi
 *.glg
