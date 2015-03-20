@@ -2,15 +2,16 @@
 \index{Background%
 @\emph{Background}}%
 
-When the Web was first created by Tim Berners-Lee in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
+When the Web was first created by Tim Berners-Lee\index{Berners-Lee, Tim} in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
 The idea of composing a complex web application out of basic components like snapping together Lego blocks seemed like a distant dream at best.
 Until recently, web authors were limited to using the predefined HTML layout elements or `tags' that were listed in the W3C standard and understood by browser programs, such as \tcode{<title>} and \tcode{<video>}. 
-Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic and Netscape Navigator.
+Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic\index{Mosaic}
+and Netscape Navigator \index{Netscape Navigator}.
 
 As of early 2015, modern web apps are typically written with a Javascript framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications, large or small, from a number of sub-components.
-Angular, Meteor, and Backbone are three such frameworks~\cite{dickey2014}.
-The difference between a `framework' and a library is somewhat arbitrary, but typically frameworks are more comprehensive than narrowly focused utility libraries.
-Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model (DOM). 
+Angular\index{Angular}, Meteor\index{Meteor}, and Backbone\index{Backbone} are three such frameworks~\cite{dickey2014}.
+The difference between a `framework'\index{Framework} and a library is somewhat arbitrary, but typically frameworks are more comprehensive than narrowly focused utility libraries.
+Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model (DOM)\index{DOM}. 
 In this model, the entire web page or app belongs to a single `document', constituent parts are not encapsulated or isolated from each other, and authors are limited to working with the predefined HTML tags.
 These issues make it difficult to create and share generic, reusable \textit{web components} 
 --- in the abstract sense --- 
@@ -36,18 +37,18 @@ Bootstrap provides pre-styled User Interface (UI) widgets such as menus, buttons
 Because Bootstrap must work within the confines of the DOM and the HTML5 standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
 For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
 
-% 
 \begin{figure}[htb]
 \centering
  \includegraphics[width=6in]{images/bootstrap_navbar_html.png}
-\caption{A partial example of Twitter Bootstrap navigation bar HTML.}
+\caption{Partial example of Twitter Bootstrap navigation bar HTML.}
 \label{f:twbs1}
 \end{figure}
 \index{commands!environments!figure}%
 
+
 This forces Bootstrap's users to tightly couple the layout of their page with the internal structure required by Bootstrap's navigation bar widget. 
-This coupling militates against Bootstrap significantly refactoring the internal structure of the navigation widget because that would require a large community of developers to update their applications accordingly.
-In addition, because CSS rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure minimal interference with other components and unintended effects~\cite{walton2014}. 
+This coupling hinders a significant refactoring of the navigation widget's internal structure because that would require the large community of developers to update their applications accordingly.
+In addition, because CSS rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure no unintended side-effects~\cite{walton2014}. 
 Even then, conflicts are inevitable when the entire page is treated as a single sandbox and you combine components from many different vendors. 
 
 What if instead one could create and share a reusable chunk of functionality --- a web component -- that hid all of these tedious structural details and encapsulated its private, internal state? 
@@ -72,11 +73,11 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in figur
  </twbs-navbar>
 \end{lstlisting}
 
-\subsection{Encapsulation and composition}
+\subsection{Abstraction, encapsulation and composition}
 
 The Web Components working group, consisting of software engineers from several major browser vendors, 
 looked at this situation and found that, in practice, browsers already had a suitable model for encapsulating components that hide complexity behind well-defined interfaces.
-That model was that one used internally by browsers to implement the newer HTML5 tags like the \textbf{\tcode{<video>}} element. 
+That model was that one used internally by browsers to implement the newer HTML5 tags like the \textbf{\tcode{<video>}} element.\index{<video>} 
 The \tcode{<video>} element presents a simple interface (API) to HTML authors that hides the complexities of playing high definition video.
 Internally, however, browsers implement \tcode{<video>} with a `shadow' or hidden document inside the object that contains the internal state~\cite{kitamura2014}. 
 For example, an author can write:
@@ -98,10 +99,14 @@ Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (inter
 \end{figure}
 \index{commands!environments!figure}%
 
-This example illustrates two design principles that are widely followed in other areas of software engineering~\cite{fowler2012}:
+At the bottom of Figure~\ref{f:html5video} a small \tcode{\#player-api} tag is visible in the DOM path.
+This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
+
+This example illustrates three component design principles that are widely followed in other areas of software engineering~\cite{fowler2012}:
 \begin{itemize}
-\item Use \textbf{encapsulation} and well defined interfaces, as the \tcode{<video>} element does, to protect private state, hide implementation complexity, and leave implementors free to refactor internals.
-\item Prefer \textbf{composition} or \textit{has-a} relationships over inheritance or \textit{is-a} relationships when building modules. 
+\item Create layers of \textbf{abstraction} to represent `public' details that are relevant to the surrounding code or environment.
+\item Use \textbf{encapsulation} and well defined interfaces to protect private state, hide implementation complexity, and leave implementors free to refactor internals.
+\item Prefer \textbf{composition} or \textit{has-a} relationships over inheritance or \textit{is-a} relationships when building modules to reduce coupling and simplify interface refactoring.
 \end{itemize}
 
 Composition helps reduce coupling or structural between modules by forcing them to interact using only public interfaces.
@@ -114,20 +119,20 @@ The question remains, which specific browser internals must be exposed and stand
 \section{Web Components}
 
 The Web Component initiative consists of two main technologies and two supporting features. 
-Custom HTML Elements and Shadow DOM are the two key players while HTML Imports and Templates support these features. 
-One of the central goals of the Web Components initiatives is to maintain interoperability across different browsers and frameworks, 
+Custom HTML Elements\index{Custom Elements} and Shadow DOM\index{Shadow DOM} are the two key players while HTML Imports and Templates support these features. 
+One of the central goals of the Web Components\index{Web Components} initiatives is to maintain interoperability across different browsers and frameworks, 
 so that modules which adhere to the Web Components standard can provide a consistent experience no matter what framework the developer chooses or which browser the user selects.
 For example, an important benefit of Custom Elements is that they \textit{are} standard HTML elements; they live in the DOM and can be accessed by the usual DOM methods and the majority of standard HTML/JS development tools~\cite{penades2015}.
 They also behave somewhat like objects in traditional object oriented programming (OOP) in that 
 they have \textit{methods} and hidden internal \textit{state} (data).
 
 \subsection{Custom HTML elements}
-Never before have web authors been able to define their own custom HTML elements that were not found in the official list.
+Never before have web authors been able to define their own custom HTML elements\index{Custom Elements} that were not found in the official list.
 Actually, many authors and web frameworks have been doing exactly that for years, primarily for internal purposes where the custom elements are pre\-processed and compiled down to standard HTML.
 The custom elements would not get sent to the end user's browser because it would not know what to do with them.
-In addition, the DOM has long supported creating custom-named elements, but it was not possible to do much interesting with them because they were treated like an ordinary 
-\tcode{<span>} element~\cite{w3ccontributors2015-b}.
-However, the possibility now exists to create custom elements in a standard way that will work consistently across browsers with the W3C Custom Element 
+In addition, the DOM\index{DOM} has long supported creating custom-named elements, but it was not possible to do much interesting with them because they were treated like an ordinary 
+\tcode{<span>}\index{<span>} element~\cite{w3ccontributors2015-b}.
+However, the possibility now exists to create custom elements in a standard way that will work consistently across browsers with the W3C Custom Element\index{Custom Elements}
 specification~\cite{w3ccontributors2015-b}. 
 
 The primary restriction is that all custom elements must have a \texttt{-} character (dash) in their name, such as \tcode{<my-element>}. 
@@ -158,11 +163,11 @@ With a quick example like this the result does not look all that different from 
 To do something more interesting with your custom element you will need to the other features of Web Components: Shadow DOM, templates and imports.
 
 \subsection{Shadow DOM}
-Shadow DOM encapsulates the internal structure of an element~\cite{w3ccontributors2015}. 
-As we have seen, browsers already use Shadow DOM to encapsulate the private state of standard elements like \tcode{<video>} but now this capability is extended to custom-defined elements.
+Shadow DOM\index{Shadow DOM} encapsulates the internal structure of an element~\cite{w3ccontributors2015}. 
+As we have seen, browsers already use Shadow DOM to encapsulate the private state of standard elements like \tcode{<video>}\index{<video>} but now this capability is extended to custom-defined elements.
 
 You can think of shadow DOM like an HTML fragment inside an element that describes its external appearance without exposing these structural details\footnote{
-HTML5 Shadow~DOM should not be confused with the React framework's \textbf{Virtual}~DOM, which is conceptually closer to HTML5 Templates in nature than Shadow DOM.}. 
+HTML5 Shadow~DOM\index{Shadow DOM} should not be confused with the React\index{React} framework's \textbf{Virtual}~DOM, which is conceptually closer to HTML5 Templates in nature than Shadow DOM.}. 
 Typically a custom element definition has a template (more on these in a moment) which produces the shadow DOM necessary to render the element.
 The actual contents of the shadow DOM are just ordinary elements.
 Any element (whether custom or not) can have zero, one, or more shadow DOM trees attached.
@@ -175,7 +180,7 @@ a \textbf{\tcode{<twbs-navbar>}} element consumes a set of three
 \textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like the example in figure~\ref{f:twbs1}, 
 projecting the set of links into the nav menu structure with appropriate wrappers.
 
-The \tcode{<content>} tag is used inside a custom element's template to indicate the spot where the consumed (wrapped) content should be \textit{projected}. 
+The \tcode{<content>}\index{<content>} tag is used inside a custom element's template to indicate the spot where the consumed (wrapped) content should be \textit{projected}. 
 This wrapped content is known as 
 \textit{light DOM}\index{Light DOM}, 
 because it's given by the user and projected through into the shadow.
@@ -183,24 +188,26 @@ Together the shadow DOM and light DOM form the \textit{logical DOM}\index{Logica
 It is also possible for elements to have multiple shadow DOM sub-trees. 
 This is used particularly for emulating object-oriented-like inheritance relationships between custom elements.
 
-In languages like C\#\index{C\#} and Java\index{Java}, the encapsulation of classes and the protection of private object fields are a relatively strong guarantee by the language.
-But in the case of Web Components, shadow DOM is not completely and utterly isolated from the containing page.
+In languages like C\#\index{C\#} and Java\index{Java}, the encapsulation\index{encapsulation} of classes and the protection of private object fields are a relatively strong guarantee by the language.
+Javascript variables can be protected by \textit{closures}\index{closure}
+but shadow DOM and CSS\index{CSS} are not completely and utterly isolated from the containing page.
 It is possible to ``reach inside'' and break encapsulation to at least some degree, 
 but the point is that this must be an intentional act by the developer and not an unexpected side-effect~\cite{bidelman2014}.
 
 \subsection{HTML Imports}
 One significant problem faced by web developers is the lack of any built-in packaging system for modules in HTML.
 Prior to Web Components there was no way to import a snippet of HTML or Javascript from an external location and insert it exactly one time into the current document, 
-similar to an \tcode{\#include} directive in the C language or the packaging and import systems popular in scripting languages like Python, Go and Ruby. 
-Javascript could always be loaded with a \tcode{<script>} tag like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}.
+similar to an \tcode{\#include} directive in the C language or the packaging and import systems popular in scripting languages\index{scripting languages}
+like Python\index{Python}, Go\index{Go} and Ruby\index{Ruby}. 
+Javascript could always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
 A component that uses a certain JS resource might be found in two different spots on the page but that resource would be requested from the server twice, degrading application performance.
 
-In order to fix these problems the HTML Imports standard allows for bringing in snippets of HTML, CSS or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
+In order to fix these problems the HTML Imports\index{HTML Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The one major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
 Dealing with HTML Imports in a consistent fashion will be discussed in the Implementation section.
 
 \subsection{Templates}
-The last major piece of the Web Component puzzle is the native HTML5 \tcode{<template>} tag. 
+The last major piece of the Web Component puzzle is the native HTML5 \tcode{<template>}\index{<template>} tag. 
 Unlike the rest of Web Components, \tcode{<template>} has already become a standard part of the HTML5 specification, 
 although one that is perhaps not widely used yet outside of WC~\cite{w3ccontributors2015-c}.
 \textit{Template} is a frequently overloaded word with different meanings in different programming environments.
@@ -210,9 +217,9 @@ HTML5 templates are inert hunks of HTML embedded in the page that can be instant
 Their basic function is to give a template for custom element representation.
 
 However, templates are most useful in combination with `live' data, not static, unchanging text.
-Binding data into templates with special operators,\footnote{
-Sometimes called mustaches, handlebars or curly braces. }
-also known as a Model-Driven View,
+Binding data into templates with special operators\footnote{
+Sometimes called mustaches, handlebars or curly braces. },
+also known as a Model-Driven View\index{Model-Driven View},
 is \textbf{not} a part of the standard HTML5 template spec.
 The following example of a data bound template is something that does \textit{not} work with plain Web Components alone:
 
@@ -222,40 +229,44 @@ The following example of a data bound template is something that does \textit{no
 	</template>
 \end{lstlisting}
 
-Google engineers have advanced a proposal for standardizing Model-Driven Views but it is not yet part of the standard \tcode{<template>} element~\cite{googledevelopers2014}.
+Google\index{Google} engineers have advanced a proposal for standardizing 
+Model-Driven Views\index{Model-Driven View}
+but it is not yet part of the standard \tcode{<template>} element~\cite{googledevelopers2014}.
 Instead this functionality can be handled by a Javascript framework such as React or Polymer.
 Data-bound templates are discussed in more detail in the following chapter.
 
 The primary benefit of HTML Templates from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
-Templates are often used to declare the internal structure (shadow DOM) of custom elements. 
+Templates are often used to declare the internal structure (shadow DOM\index{Shadow DOM}) of custom elements. 
 Therefore the resources needed to use the custom element aren't downloaded until they are actually needed, which is necessary when composing a large application out of numerous distinct elements.
 
 
 \section{Related W3C initiatives}
-There are a number of related W3C initiatives for web standards. 
+There are a number of related W3C\index{W3C} initiatives for web standards. 
 Sometimes these are loosely grouped under the label Web Components,
 and they do support componentization in web application design, 
-but they are a separate part of the HTML5 standard.
-These include mutation observers, DOM selectors, and so-called ``responsive'' attributes designed to adjust the layout automatically according to screen size.
+but they are a separate part of the HTML5\index{HTML5} standard.
+These include mutation observers\index{mutation observers}, 
+DOM selectors\index{Selectors}, 
+and so-called ``responsive'' attributes designed to adjust the layout automatically according to screen size.
 All of these techniques have been used extensively in Speakur.
 
 \subsection{Mutation Observers}
 For example, \textit{mutation observers}\index{Mutation Observers}
-allow a component to register a `callback' function to observe and react to any changes in the state of an area of interest in the DOM, 
+allow a component to register a `callback'\index{callback} function to observe and react to any changes in the state of an area of interest in the DOM\index{DOM}, 
 whether that change was generated by a user action or another 
 component~\cite{w3ccontributors2014}.
 This helps decouple components by allowing them to react asynchronously to changes in each other's public state without directly interconnecting the components.
 The observers ``deliver mutations in batches asynchronously at the end of a micro-task rather than immediately after they occur''~\cite{addyosmani2014}.
-This helps performance and user experience (UX) by ensuring that the callback is only called ``as-needed'' rather than once for each small change.
+This aids performance and user experience (UX)\index{UX} by ensuring that the callback\index{callback} is only called ``as-needed'' rather than once for each small change.
 
 \subsection{Selectors}
-Another standardization initiative is in the area of DOM / CSS \textit{selectors}\index{Selectors},
+Another standardization initiative is in the area of DOM\index{DOM} / CSS\index{CSS} \textit{selectors}\index{Selectors},
 as popularized by the extremely widespread jQuery\index{jQuery} library,
-written by John Resig\index{John Resig} 
+written by John Resig\index{Resig, John} 
 and used in half of all major websites as of 2012~\cite{matthiasgelbmann2012}.
-The Selector API was officially standardized in 2013 and browser support is good in current versions~\cite{w3ccontributors2013}.
+The Selector\index{Selectors} API was officially standardized in 2013 and browser support is good in current versions~\cite{w3ccontributors2013}.
 
-Selectors allow you to quickly find DOM elements based on a `selector' --- a rule-based description string -- to perform further operations on their state such as reading or modifying, or observing future changes, attaching animations, and so on. 
+The JS selector API allow you to quickly find DOM elements based on a rule-based description string (the selector) to perform further operations on their state such as reading or modifying, or observing future changes, attaching animations, and so on. 
 The following example shows how to populate a JS variable with the element that has the \tcode{id} attribute equal to \tcode{some-id}:
 
 \begin{lstlisting}[language=JavaScript,numbers=none]
@@ -298,20 +309,23 @@ CSS Grid layout intended for overall page layout...
 
 \section{Polymer Framework}
 
-A team within Google has developed the Polymer~\cite{polymercontributors2015} framework based on Web Components architecture.
+A team within Google\index{Google} has developed the 
+Polymer\index{Polymer} framework based on Web Components\index{Web Components} 
+architecture~\cite{polymercontributors2015}.
 
 \section{Speakur}
-My desire to learn more about modern web development led me to investigate web frameworks like Angular and Meteor.
+My desire to learn more about modern web development led me to investigate web frameworks like Angular\index{Angular} and Meteor\index{Meteor}.
 I spent a few weeks building elementary demos with these two frameworks in particular.
 Although they are expressive and powerful, and are used every day to power high-traffic applications, 
 I was unhappy with the non-standard and idiosyncratic nature of these frameworks. 
 They relied on `proprietary' (even if open source) extensions that were not native to HTML and not easily transportable across different frameworks and architectures.
-This dissatisfaction led me to learn about the Web Components initiative.
+This dissatisfaction led me to learn about the Web Components\index{Web Components} initiative.
 
 \subsection{Origin}
-Learning about Web Components quickly led me to the Polymer project.
-I wanted a component that demonstrated common use cases for Web Components and also showed off some of the design possibilities provided by Polymer and Material Design~\cite{imura2015}.
-I was also intrigued by the possibilities of a server-free design afforded by Firebase.
+Learning about Web Components quickly led me to the Polymer\index{Polymer} project.
+I wanted a component that demonstrated common use cases for Web Components and also showed off some of the design possibilities provided by Polymer and 
+Material Design~\cite{imura2015}\index{Material Design}.
+I was also intrigued by the possibilities of a server-free design afforded by Firebase\index{Firebase}.
 Some kind of `live' social plugin seemed like a natural fit for the capabilities of Polymer and Firebase, so this led to a discussion plugin for blogs and other articles.
 My hope was that it would required little or nothing in the way of dedicated server resources in order to actually use it. 
 
@@ -324,20 +338,23 @@ I wanted my discussion component to have some of the following attributes:
 
 \item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web developer tools like \url{https://jsbin.com}.
 
-\item Support Markdown formatted comments including syntax highlighting for code snippets.
+\item Support Markdown\index{Markdown} formatted comments including syntax highlighting for code snippets.
 
-\item Support internationalization (i18n) and localization (l10n) features for a global audience.
+\item Support 
+internationalization\index{internationalization}
+(i18n) and 
+localization\index{localization} (l10n) features for a global audience.
 
-\item Support distributed event notification similar to the publish-subscribe (pubsub) design pattern. 
+\item Support distributed event notification similar to the 
+publish-subscribe\index{publish-subscribe} (pubsub) design pattern. 
 
 In essence, `live' data updates:
 when someone replies to a post it should become instantly available to anyone viewing the thread.
 
-\item If any framework was used at all, it should be based on Web Components. 
-
+\item If any framework was used at all, it should be based on Web Components\index{Web Components}. 
 
 This instantly ruled out the vast majority of frameworks, 
-leaving only Polymer and the less-comprehensive X-Tags project~\cite{x-tagscontributors2015} and a few other smaller contenders.
+leaving only Polymer\index{Polymer} and the less-comprehensive X-Tags\index{X-Tags} project~\cite{x-tagscontributors2015} and a few other less ambitious contenders.
 
 \end{itemize}
 
