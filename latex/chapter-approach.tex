@@ -40,15 +40,15 @@ in 15 languages as shown in Figure~\ref{f:lang}.
 \begin{figure}[htb]
 \centering
  \includegraphics[width=5.5in]{images/screenshot_20150320_1923_lang.png}
-\caption{Speakur language\index{internationalization} updates instantly upon selection.}
+\caption{Speakur's interface language\index{internationalization} updates instantly upon selection.}
 \label{f:lang}
 \end{figure}
 
 
-From a technical perspective, some of Speaker's more interesting features include the use of Polymer's data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
-to allow components to instantly reflect dependent changes in far-flung areas of the application,
-plus Firebase's\index{Firebase} event publishing or pubsub\index{publish-subscribe} architecture to allow all web clients to instantly and transparently reflect data changes in any other client.
-One example of the power of data-bound templates is that all the strings in the application update instantly when the user changes his or her locale in the preferences dialog as in Figure~\ref{f:lang}.
+From a technical perspective, one of Speaker's more interesting features is the use of Polymer's data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
+to allow components to automatically reflect changes in far-flung areas of the application.
+Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
+Another example of the power of data-bound templates is that all of the user-visible text in the application updates immediately as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
 
 \section{Architecture Overview}
 It has been said that ``any problem in computer science can be solved with another layer of indirection\index{indirection}'' (usually attributed to Wheeler).
@@ -80,8 +80,20 @@ It is recommended to create your own Firebase\index{Firebase} instance for data 
 The author's demonstration database will be used by default.
 
 
-Security\index{security} for web clients engaging in data manipulation (i.e, posting, editing or deleting comments) is handled entirely through Firebase\index{Firebase} authentication\index{authentication} and data security\index{security} rules.
-The simplicity of this arrangement means that it is extremely easy to fit Speakur into most any web application architectures.
+Security\index{security} for web clients engaging in data manipulation (i.e, posting, editing or deleting comments) is handled entirely through Firebase\index{Firebase} authentication\index{authentication} and data security\index{security} rules described below.
+The simplicity of this arrangement means that it is extremely easy to fit Speakur into almost any web application architecture.
+
+\section{Responsive Design}
+Because Speakur\index{Speakur} is not a standalone application but rather a plug-in designed to be embedded into other web pages or apps, 
+the full document is not under its control.
+This can affect the mobile\index{mobile} user experience\index{user experience (UX)},
+but within these limits, Speakur strives to present a responsive\index{responsive} interface to different screen sizes.
+
+The primary way it does this is...
+
+\section{Polymer and Web Components}
+As described in the Background chapter, Web Components\index{Web Components} are a W3C\index{W3C} initiative to expose certain native browser features in a public, standardized way. 
+Polymer\index{Polymer} is a Google\index{Google} web framework built from the ground up around Web Components.
 
 In general, Speakur tries to adhere to the core principles laid out by the 
 Web Components\index{Web Components} developers 
@@ -102,26 +114,53 @@ It's worth reproducing those here in full:
 \end{itemize}
 \end{quote}
 
-\section{Responsive Design}
-Because Speakur\index{Speakur} is not a standalone application but rather a plug-in designed to be embedded into other web pages or apps, 
-the full document is not under its control.
-This can affect the mobile\index{mobile} user experience\index{user experience (UX)},
-but within these limits, Speakur strives to present a responsive\index{responsive} interface to different screen sizes.
-
-The primary way it does this is...
-
-\section{Polymer and Web Components}
-As described in the Background chapter, Web Components\index{Web Components} are a W3C\index{W3C} initiative to expose certain native browser features in a public, standardized way. 
-Polymer\index{Polymer} is a Google\index{Google} web framework built from the ground up around Web Components.
+Explain how I follow those guidelines... [TODO]
 
 \section{Data store and synchronization}
-\subsection{NoSQL and Firebase}
+As mentioned, all persistent data is stored in a cloud database called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
+Anyone who wants to use Speakur\index{Speakur} can register for a free account on \tcode{firebase.com} and create a database instance to hold Speakur data.
+No other server component is required.
+Firebase is a NoSQL\index{NoSQL}-style key-value data store of the kind that has been popularized
+with the growth of 
+Node.js\index{Node.js}, a server-side Javascript\index{Javascript} environment,
+and the MongoDB\index{MongoDB} NoSQL database~\cite{dickey2014}.
 
-'Serverless'
+Firebase\index{Firebase} provides Web~Socket\index{Web Socket}-based event notification and synchronization 
+as well as a JSON-based\index{JSON} security rule description format for securing\index{security} and validating user actions.
+
+\subsection{NoSQL and Firebase}
+Firebase\index{Firebase} can be used `standalone' as the sole provider of data services to an application, as Speakur does, or else it can be used as an auxiliary to other services or REST\index{REST} APIs\index{API}.
+
+Firebase itself provides a REST API for data access.
+The term REST or RESTful is abused quite a bit in the industry [CITE]
+but in Roy Fielding's original 2000 Ph.D. thesis, 
+REST refers primarily to transferring \textit{representations} of application state.
+Specifically...
+
+More about FB...
+
 
 \subsection{Web Sockets}
+Web Socket\index{Web Sockets} are a TCP/IP protocol that can be used alongside HTTP for persistent data connections between web clients and servers.
+The primary purpose is to avoid the overhead of initiating a new HTTP connection to check on the status of something on the server, also known as polling\index{polling}.
+Firebase\index{Firebase} uses Web Sockets rather than traditional high-overhead HTTP requests to move data back and forth to the client.
+This always-on connection allows for sending nearly instant event notifications to all currently active clients with minimal overhead.
+In practice, this allows the application to update its distributed state in real-time.
+
+[CITE] for websockets?
 
 \subsection{Security}
+Firebase implements the two major categories of user access control: authentication and 
+authorization~\footnote{
+Authentication (sometimes abbreviated \textit{authn}) answers the question ``are you who you say you are?'' 
+while authorization (\textit{authz}) asks ``what are you allowed to see and do?''}.
+
+[CITE: Stallings]
+
+\subsubsection{Authentication}
+
+\subsubsection{Authorization}
+
 
 \section{Data Flow and Event Handling}
 

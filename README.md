@@ -13,3 +13,10 @@ May 2015
 ## Current version (PDF)
 
 https://bitbucket.org/planders/planders-msreport/src/master/latex/planders-msreport.pdf?at=master
+
+## Committe Members
+
+Supervisor: Adnan Aziz
+
+Reader: Christine Julien
+
