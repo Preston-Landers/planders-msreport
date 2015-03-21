@@ -1,7 +1,15 @@
 ## Preston Landers MS Report LaTeX
 
-This is the Masters Report for Preston Landers
+This is the Masters Report for Preston Landers.
 
-Software Engineering, University of Texas at Austin
+University of Texas at Austin
+
+Cockrell School of Engineering
+
+Software Engineering (Option III)
 
 May 2015
+
+## Current version (PDF)
+
+https://bitbucket.org/planders/planders-msreport/src/master/latex/planders-msreport.pdf?at=master
