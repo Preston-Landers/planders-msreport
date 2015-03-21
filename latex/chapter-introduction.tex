@@ -32,14 +32,12 @@ with billions and billions of pages served,
 and hundreds of millions of public and private web sites forming a major part of our information landscape~\cite{internetlivestats.com2015}.
 More than any other invention, other than perhaps email, the World Wide Web (WWW) has shaped how we see and use the global network.
 
-% 
 \begin{figure}[htb]
 \centering
  \includegraphics[width=6in]{images/screenshot_20150312_1630_v2.png}
 \caption{A Speakur thread inside a demonstration page.}
 \label{f:demo1}
 \end{figure}
-\index{commands!environments!figure}%
 
 Those designing and programming applications for the Web as a computing platform have long dreamed of the ability to mix and match independent, reusable chunks of functionality --- components --- in their documents without mutual coupling and interference. 
 The original and current Document Object Model (DOM)
@@ -116,11 +114,11 @@ This report also explores several related web standards initiatives that are fre
 but are not formally grouped under them, including mutation observers,
 \index{mutation observers}
 model driven views, 
-\index{Model-Driven Views}
+\index{Model-Driven View}
 and the CSS Flexible Boxes
-\index{Flex box} 
+\index{Flex} 
 and CSS Grid
-\index{CSS Grid}
+\index{Grid}
 systems. 
 In part because many of these technologies are not yet formally accepted as W3C standards and are not yet widely implemented in typical mobile and desktop browsers, 
 Speakur has been implemented using Google's experimental Polymer framework~\cite{polymercontributors2015}.\index{Polymer}
@@ -133,7 +131,7 @@ Some browsers like Google Chrome
 already have at least some native Web Component support and on these browsers the polyfill is effectively a `no-op'.
 
 The potential componentization of the web is one of the most exciting developments in web engineering in years and follows the overall growth in software-as-a-service (SaaS) 
-\index{SaaS}
+\index{Software as a Service (SaaS)}
 and the service oriented architecture
 \index{Service Oriented Architecture}
 model. 
@@ -153,9 +151,9 @@ The Background section provides an introduction to some of the architectural pro
 It also provides some background the on software engineering design patterns that are embodied in Web Components such as encapsulation and composition.
 It describes some of the motivations behind the development of Speakur and some of the specific software engineering questions it addresses, such as the ability to provide a hassle-free way to host an embedded discussion forum inside an arbitrary web resource in a way that is fully encapsulated.
 
-The Approach section describes the high level software architecture choices behind Speakur and details the specific structures and techniques used when constructing a Web Component.
-It describes how Speakur uses WC to implement encapsulated modules whose internals are protected from unintentional outside influence. 
-It also describes how the choice of the Firebase cloud database service and its Websocket-based event notification system impacts Speakur's architecture.
+The Approach section describes the high level software architecture\index{architecture} choices behind Speakur and details the specific structures and techniques used when constructing a Web Component.
+It describes how Speakur uses WC to implement encapsulated\index{encapsulation} modules whose internals are protected from unintentional outside influence. 
+It also describes how the choice of the Firebase\index{Firebase} cloud database service and its Websocket-based\index{Websockets} event notification system impacts Speakur's architecture.
 
 The Implementation section shows how to apply Web Component principles to the task of creating a flexible and generic discussion forum for both desktop and mobile browsers. 
 It describes the low level architecture, code flow, and synchronization process.
@@ -173,10 +171,10 @@ The source code for Speakur consists of HTML\index{HTML} and Javascript\index{Ja
 These files constitute an ``HTML Import''\index{HTML Imports} package that provides a
 \textbf{\tcode{<speakur-discussion>}}
 custom HTML element\index{Custom Elements} for the use of web authors in their own pages.
-An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in briefly in Listing~\ref{example1} below.
+An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in briefly in Listing~\ref{l:example1} below.
 
 \begin{lstlisting}[language=HTML5,numbers=none,caption=
-{Example of the Speakur custom HTML element},label=example1,captionpos=below]
+{Example of the Speakur custom HTML element},label=l:example1,captionpos=below]
  <!-- place this on your page
       where you want a discussion -->
  <speakur-discussion

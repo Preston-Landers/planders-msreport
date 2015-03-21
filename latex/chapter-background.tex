@@ -12,13 +12,13 @@ As of early 2015, modern web apps are typically written with a Javascript framew
 Angular\index{Angular}, Meteor\index{Meteor}, and Backbone\index{Backbone} are three such frameworks~\cite{dickey2014}.
 The difference between a `framework'\index{Framework} and a library is somewhat arbitrary, but typically frameworks are more comprehensive than narrowly focused utility libraries.
 Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model (DOM)\index{DOM}. 
-In this model, the entire web page or app belongs to a single `document', constituent parts are not encapsulated or isolated from each other, and authors are limited to working with the predefined HTML tags.
+In this model, the entire web page or app belongs to a single `document', constituent parts are not encapsulated\index{encapsulation} or isolated from each other, and authors are limited to working with the predefined HTML tags.
 These issues make it difficult to create and share generic, reusable \textit{web components} 
 --- in the abstract sense --- 
 among different users who may not use the same frameworks or follow the same set of assumptions and conventions.
 
 \section{Current challenges in web authoring}
-In object oriented programming, encapsulation is typically defined as a 
+In object oriented programming, encapsulation\index{encapsulation} is typically defined as a 
 ``language mechanism for restricting access to some of the object's components''
 ~\cite[p. 522]{mitchell2003}.
 The point of encapsulation is providing an \textit{abstraction} that consumers of the functionality can rely on without knowing the internals. 
@@ -28,14 +28,14 @@ Identifying the interface of a data structure~\dots~providing \textit{informatio
 structure~\dots~and allowing the data structure to be used in many different ways by many different components~\cite[p. 243]{mitchell2003}.
 \end{quote}
 
-Although techniques of abstraction and encapsulation have been widespread in object oriented programming for decades,
+Although techniques of abstraction\index{abstraction} and encapsulation\index{encapsulation} have been widespread in object oriented programming for decades,
 the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules~\cite{ihrig2012}.
 
 To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter Bootstrap library~\cite{bootstrapcontributors2015}.
 Twitter Bootstrap is a collection of Cascading Style Sheet (CSS) rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
 Bootstrap provides pre-styled User Interface (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
-Because Bootstrap must work within the confines of the DOM and the HTML5 standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
-For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
+Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
+For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
 
 \begin{figure}[htb]
 \centering
@@ -43,12 +43,11 @@ For example, to add a Bootstrap site navigation bar to your page, you must essen
 \caption{Partial example of Twitter Bootstrap navigation bar HTML.}
 \label{f:twbs1}
 \end{figure}
-\index{commands!environments!figure}%
 
 
 This forces Bootstrap's users to tightly couple the layout of their page with the internal structure required by Bootstrap's navigation bar widget. 
-This coupling hinders a significant refactoring of the navigation widget's internal structure because that would require the large community of developers to update their applications accordingly.
-In addition, because CSS rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure no unintended side-effects~\cite{walton2014}. 
+This coupling hinders a significant refactoring\index{refactoring} of the navigation widget's internal structure (HTML layout) because that would require the large community of developers to update their applications accordingly.
+In addition, because CSS\index{CSS} rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure no unintended side-effects~\cite{walton2014}. 
 Even then, conflicts are inevitable when the entire page is treated as a single sandbox and you combine components from many different vendors. 
 
 What if instead one could create and share a reusable chunk of functionality --- a web component -- that hid all of these tedious structural details and encapsulated its private, internal state? 
@@ -62,7 +61,6 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in figur
 %\caption{Hypothetical Bootstrap nav bar custom element.}
 %\label{f:twbs2}
 %\end{figure}
-%\index{commands!environments!figure}%
 
 \begin{lstlisting}[language=HTML5,numbers=none,caption=
 {Hypothetical Bootstrap nav bar custom element.},label=l:twbs2,captionpos=below]
@@ -86,27 +84,26 @@ For example, an author can write:
 \end{lstlisting}
 to cause the video to loop repeatedly.
 
-This shadow Document Object Model (DOM) inside the \tcode{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
+This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
+\tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
 These inner playback controls are themselves built out of HTML, CSS and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
 Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
 
-% 
 \begin{figure}[htb]
 \centering
  \includegraphics[width=5.5in]{images/html5_video_control.png}
-\caption{Opera's shadow DOM for \tcode{<video>} highlighting the Play button}
+\caption{Opera's shadow DOM for \tcode{<video>}\index{<video>} highlighting the Play button}
 \label{f:html5video}
 \end{figure}
-\index{commands!environments!figure}%
 
 At the bottom of Figure~\ref{f:html5video} a small \tcode{\#player-api} tag is visible in the DOM path.
 This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
 
 This example illustrates three component design principles that are widely followed in other areas of software engineering~\cite{fowler2012}:
 \begin{itemize}
-\item Create layers of \textbf{abstraction} to represent `public' details that are relevant to the surrounding code or environment.
-\item Use \textbf{encapsulation} and well defined interfaces to protect private state, hide implementation complexity, and leave implementors free to refactor internals.
-\item Prefer \textbf{composition} or \textit{has-a} relationships over inheritance or \textit{is-a} relationships when building modules to reduce coupling and simplify interface refactoring.
+\item Create layers of \textbf{abstraction}\index{abstraction} to represent `public' details that are relevant to the surrounding code or environment.
+\item Use \textbf{encapsulation}\index{encapsulation} and well defined interfaces to protect private state, hide implementation complexity, and leave implementors free to refactor internals.
+\item Prefer \textbf{composition}\index{composition} or \textit{has-a} relationships over inheritance or \textit{is-a} relationships when building modules to reduce coupling and simplify interface refactoring\index{refactoring}.
 \end{itemize}
 
 Composition helps reduce coupling or structural between modules by forcing them to interact using only public interfaces.
@@ -319,7 +316,7 @@ Flex boxes are useful for general user interface (UI) structure, not just device
 The exciting possibilities offered by Web Components seemed to call for a new framework engineered from the ground-up to take advantage of it.
 In light of that, a team within Google\index{Google} developed the 
 Polymer\index{Polymer} framework both to embody the Web Components\index{Web Components} 
-architecture~\cite{polymercontributors2015} and 
+architecture\index{architecture}~\cite{polymercontributors2015} and 
 to provide a suite of components and user interface widgets useful for building applications.
 Because Web Components are a bleeding-edge feature not yet natively implemented in most browsers,
 the Polymer developers opted to create a \textit{polyfill}\index{polyfill}, 
@@ -331,7 +328,7 @@ only native browser support can.
 
 Because both Web Components and Polymer are still experimental and under constant development, 
 they are both subject to frequent change.
-The version of Speakur described in this paper is based on Polymer release 0.5.
+The version of Speakur described in this report is based on Polymer release 0.5.
 As of the time of this writing, Polymer 0.8 is planned and will contain significant breaking changes to application structure~\cite{michaelbleigh2015}.
 Portions of this report relating to specific Polymer practices are likely to be out of date by the time you read this.
 
@@ -340,7 +337,7 @@ My desire to learn more about modern web development led me to investigate web f
 I spent a few weeks building elementary demos with these two frameworks in particular.
 Although they are expressive and powerful, and are used every day to power high-traffic applications, 
 I was unhappy with the non-standard and idiosyncratic nature of these frameworks. 
-They relied on `proprietary' (even if open source) extensions that were not native to HTML and not easily transportable across different frameworks and architectures.
+They relied on `proprietary' (even if open source) extensions that were not native to HTML and not easily transportable across different frameworks and architectures\index{architecture}.
 This dissatisfaction led me to learn about the Web Components\index{Web Components} initiative.
 
 \subsection{Origin}
@@ -368,7 +365,7 @@ internationalization\index{internationalization}
 localization\index{localization} (l10n) features for a global audience.
 
 \item Support distributed event notification similar to the 
-publish-subscribe\index{Publish-subscribe} (pubsub) design pattern. 
+publish-subscribe\index{publish-subscribe} (pubsub) design pattern. 
 
 In essence, `live' data updates:
 when someone replies to a post it should become instantly available to anyone viewing the thread.
