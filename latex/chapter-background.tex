@@ -1,6 +1,7 @@
 \chapter{Background}
 \index{Background%
 @\emph{Background}}%
+\label{ch:background}
 
 When the Web was first created by Tim Berners-Lee\index{Berners-Lee, Tim} in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
 The idea of composing a complex web application out of basic components like snapping together Lego blocks seemed like a distant dream at best.
@@ -31,22 +32,22 @@ structure~\dots~and allowing the data structure to be used in many different way
 Although techniques of abstraction\index{abstraction} and encapsulation\index{encapsulation} have been widespread in object oriented programming for decades,
 the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules~\cite{ihrig2012}.
 
-To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter Bootstrap library~\cite{bootstrapcontributors2015}.
-Twitter Bootstrap is a collection of Cascading Style Sheet (CSS) rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
-Bootstrap provides pre-styled User Interface (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
+To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter\index{Twitter} Bootstrap\index{Bootstrap} library~\cite{bootstrapcontributors2015}.
+Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
+Bootstrap provides pre-styled user interface\index{user interface (UI)} (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
 Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
 For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
 
 \begin{figure}[htb]
 \centering
  \includegraphics[width=6in]{images/bootstrap_navbar_html.png}
-\caption{Partial example of Twitter Bootstrap navigation bar HTML.}
+\caption{Partial example of Twitter\index{Twitter} Bootstrap\index{Bootstrap} navigation bar HTML.}
 \label{f:twbs1}
 \end{figure}
 
 
-This forces Bootstrap's users to tightly couple the layout of their page with the internal structure required by Bootstrap's navigation bar widget. 
-This coupling hinders a significant refactoring\index{refactoring} of the navigation widget's internal structure (HTML layout) because that would require the large community of developers to update their applications accordingly.
+This forces Bootstrap's\index{Bootstrap} users to tightly couple the layout of their page with the internal structure required by Bootstrap's navigation bar widget. 
+This coupling hinders a significant refactoring\index{refactoring} of the navigation widget's internal structure (HTML\index{HTML} layout) because that would require the large community of developers to update their applications accordingly.
 In addition, because CSS\index{CSS} rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure no unintended side-effects~\cite{walton2014}. 
 Even then, conflicts are inevitable when the entire page is treated as a single sandbox and you combine components from many different vendors. 
 
@@ -197,7 +198,8 @@ Prior to Web Components there was no way to import a snippet of HTML or Javascri
 similar to an \tcode{\#include} directive in the C language or the packaging and import systems popular in scripting languages\index{Scripting languages}
 like Python\index{Python language}, Go\index{Go language} and Ruby\index{Ruby language}. 
 Javascript could always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
-A component that uses a certain JS resource might be found in two different spots on the page but that resource would be requested from the server twice, degrading application performance.
+A component that uses a certain JS resource might be needed in two different spots on the page, 
+but that resource would be requested from the server twice and executed twice, degrading application performance.
 
 In order to fix these problems the HTML Imports\index{HTML Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The one major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
@@ -211,7 +213,7 @@ although one that is perhaps not widely used yet outside of WC~\cite{w3ccontribu
 While HTML5 templates have some similarities to the concept of templates popularized by frameworks like Angular\index{Angular} and Django\index{Django}, there are some important differences.
 
 HTML5 templates are inert hunks of HTML embedded in the page that can be instantiated into `real' elements by Javascript.
-Their basic function is to give a template for custom element representation.
+Their basic function is to give a source input for the shadow DOM\index{Shadow DOM} when you create a new (custom) element instance and place it on the page.
 
 However, templates are most useful in combination with `live' data, not static, unchanging text.
 Binding data into templates with special operators\footnote{
@@ -254,16 +256,16 @@ whether that change was generated by a user action or another
 component~\cite{w3ccontributors2014}.
 This helps decouple components by allowing them to react asynchronously to changes in each other's public state without directly interconnecting the components.
 The observers ``deliver mutations in batches asynchronously at the end of a micro-task rather than immediately after they occur''~\cite{addyosmani2014}.
-This aids performance and user experience (UX)\index{user experience (UX)} by ensuring that the callback\index{callback} is only called ``as-needed'' rather than once for each small change.
+This aids performance and user experience (UX)\index{user experience (UX)} by ensuring that the callback\index{callback} is only called as-needed rather than once for each small change.
 
 \subsection{Selectors}
 Another standardization initiative is in the area of DOM\index{DOM} / CSS\index{CSS} \textit{selectors}\index{Selectors},
-as popularized by the extremely widespread jQuery\index{jQuery} library
+as popularized by the highly successful jQuery\index{jQuery} library
 written by John Resig,\index{Resig, John} 
 which as of 2012 was used in half of all major websites~\cite{matthiasgelbmann2012}.
 The Selector\index{Selectors} API was officially standardized in 2013 and browser support is good in current versions~\cite{w3ccontributors2013}.
 
-The JS selector API allow you to quickly find DOM elements based on a rule-based description string (the selector) to perform further operations on their state such as reading or modifying, or observing future changes, attaching animations, and so on. 
+The JS selector API allow you to quickly find DOM elements based on a rule-based description string (the selector) to perform further operations on their state such as reading or modifying data, observing future changes, attaching animations, and so on. 
 The following example shows how to populate a JS variable with the element that has the \tcode{id} attribute equal to \tcode{some-id}:
 
 \begin{lstlisting}[language=JavaScript,numbers=none]
@@ -326,11 +328,11 @@ X-Tags\index{X-Tags}~\cite{x-tagscontributors2015}.
 Unfortunately polyfills cannot provide a 100\% complete Web Components implementation; 
 only native browser support can.
 
-Because both Web Components and Polymer are still experimental and under constant development, 
-they are both subject to frequent change.
+Because Polymer and to a lesser extent Web Components are still experimental and under development, 
+they are both subject to frequent changes.
 The version of Speakur described in this report is based on Polymer release 0.5.
 As of the time of this writing, Polymer 0.8 is planned and will contain significant breaking changes to application structure~\cite{michaelbleigh2015}.
-Portions of this report relating to specific Polymer practices are likely to be out of date by the time you read this.
+Portions of this report pertaining to specific Polymer practices or interfaces are likely to be out of date by the time you read this.
 
 \section{Speakur}
 My desire to learn more about modern web development led me to investigate web frameworks like Angular\index{Angular} and Meteor\index{Meteor}.
@@ -349,32 +351,34 @@ Some kind of `live' social plugin seemed like a natural fit for the capabilities
 My hope was that it would required little or nothing in the way of dedicated server resources in order to actually use it. 
 
 \subsection{Motivations}
-
+\label{motivations}
 I wanted my discussion component to have some of the following attributes:
 
-\begin{itemize}
-\item Provide a simple API to consumers that hid most implementation details.
+\begin{enumerate}
+\item A simple API that abstracted\index{abstraction} away most implementation details.\label{motive:abstraction}
 
-\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web developer tools like \url{https://jsbin.com}.
+\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online developer tools like \url{https://jsbin.com}.
+\label{motive:cors}
 
-\item Support Markdown\index{Markdown} formatted comments including syntax highlighting for code snippets.
+\item Support distributed event notification similar to the 
+publish-subscribe\index{publish-subscribe} (pubsub) design pattern.\label{motive:pubsub}
+
+In essence, `live' data updates:
+when someone replies to a post it should become instantly available to anyone viewing that thread.
+
+\item Support Markdown\index{Markdown} formatted comments including syntax highlighting for code snippets.\label{motive:markdown}
 
 \item Support 
 internationalization\index{internationalization}
 (i18n) and 
-localization\index{localization} (l10n) features for a global audience.
+localization\index{localization} (l10n) features for a global audience.\label{motive:i18n}
 
-\item Support distributed event notification similar to the 
-publish-subscribe\index{publish-subscribe} (pubsub) design pattern. 
-
-In essence, `live' data updates:
-when someone replies to a post it should become instantly available to anyone viewing the thread.
-
-\item If any framework was used at all, it should be based on Web Components\index{Web Components}. 
+\item If any framework was used at all, it should be based on Web Components\index{Web Components}.\label{motive:webcomponents} 
 
 This instantly ruled out the vast majority of frameworks, 
 leaving only Polymer\index{Polymer} and the less-comprehensive X-Tags\index{X-Tags} project~\cite{x-tagscontributors2015} and a few other less ambitious contenders.
 
-\end{itemize}
+\end{enumerate}
 
 In the next chapter we will discuss some of the high level architectural concerns that should be addressed when designing such a component.
+ 

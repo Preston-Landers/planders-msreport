@@ -1,5 +1,6 @@
 \chapter{Introduction}
 \index{Introduction@\emph{Introduction}}%
+\label{ch:intro}
 
 %\section{blah}
 %\index{blah@\emph{blah}}%
@@ -17,7 +18,7 @@
 This report is a case study of using W3C Web Components, 
 \index{Web Components}
 a proposed HTML5 extension,
-to implement techniques of encapsulation, abstraction, modularity in web application engineering.
+to implement techniques of encapsulation\index{encapsulation}, abstraction\index{abstraction}, modularity in web application engineering.
 The author designed Speakur, a real-time discussion social plugin for the web, 
 as an experiment to determine the viability and maturity of using Web Components to create modern, highly composable web applications. Figure~\ref{f:demo1} shows an example of a Speakur discussion.
 
@@ -69,16 +70,17 @@ but the difficulties of building a large application in the DOM soon became appa
 Over time, a bewildering array of frameworks and libraries sprang up around the HTML/JS ecosystem to help manage this complexity and to provide scaffolding and structure for the client side of web apps.
 For many years individual JS frameworks seemed to come and go as ephemerally as teenage pop idols~\cite{allenpike2015}. 
 Interoperability between these completing frameworks was virtually non-existent; 
-components from one framework typically couldn't be easily combined with those from an another.
+typically, components from one framework couldn't easily be combined with those from an another.
 The industry kept searching for the Next Big Thing that would make writing high quality web apps less of bug-ridden, messy chore~\cite{allenpike2015}. 
 
 In recent years (roughly 2011 to 2014) Google's Angular~\cite{googledevelopers2015-b}
 \index{Angular}
 has emerged as a dominant client framework, 
-due in part to its high perceived quality~\cite{dickey2014} and the fact that it represents an common point for a fragmented industry to rally around.
-Facebook's React~\cite{reactcontributors2015}
-\index{React}
-JS library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger.
+due in part to its perceived high quality~\cite{dickey2014} and the fact that it represents an common point for a fragmented industry to rally around.
+Facebook's React\index{React} library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger, 
+focusing primarily on the ``view'' part of the common 
+model-view-controller\index{model-view-controller}(MVC) 
+design pattern~\cite{reactcontributors2015}.
 
 Yet despite the emergence of the updated HTML5 standard in 2011 and the recent successes of web frameworks like Angular and React in capturing developer attention, 
 a clear picture still did not exist of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering.
@@ -107,7 +109,7 @@ The core Web Component technologies are~\cite{penades2015}:
 \item
 \textbf{Templates}\index{Templates}: scaffolding for instantiating blocks of HTML from inert templates
 \item
-\textbf{Imports}\index{Imports}: packaging for HTML components
+\textbf{Imports}\index{HTML Imports}: packaging for HTML components
 \end{itemize}
 
 This report also explores several related web standards initiatives that are frequently associated with Web Components 
@@ -135,7 +137,7 @@ The potential componentization of the web is one of the most exciting developmen
 and the service oriented architecture
 \index{Service Oriented Architecture}
 model. 
-The conversion of dynamic web logic---not mere snippets of plain HTML---into bundles of reusable, extendable, composable components enables web developers to move to a higher level of abstraction than was previously possible.
+The conversion of dynamic web logic---not mere snippets of plain HTML---into bundles of reusable, extendable, composable components enables web developers to move to a higher level of abstraction\index{abstraction} than was previously possible.
 
 The move towards a component-based Web will enable interesting new composite services, mashups, and may help broaden the potential pool of web developers. 
 What previously required a highly integrated, high-overhead development model or lots of tedious glue code can become as simple as importing a custom element and dropping it onto a page.
@@ -144,8 +146,8 @@ What previously required a highly integrated, high-overhead development model or
 \section{Structure of This Report}
 \index{Structure of This Report@\emph{Structure of This Report}}%
 
-The goal of this report is to demonstrate the application of software engineering design patterns embodied in the W3C proposed Web Components standard such as encapsulation, modular composition, and the synchronization of distributed application state. 
-This report discusses many of the goals and principles of the Web Components initiative and how a number of different technologies taken together help raise the overall level of abstraction for content authors, web engineers, and application developers --- which I will refer to collectively as (web) authors for short.
+The goal of this report is to demonstrate the application of software engineering design patterns embodied in the W3C proposed Web Components standard such as encapsulating\index{encapsulation} internal logic behind abstraction\index{abstraction} layers, modular composition, and the real-time synchronization of web application state. 
+This report discusses many of the goals and principles of the Web Components initiative and how a number of different technologies taken together help raise the overall level of abstraction\index{abstraction} for content authors, web engineers, and application developers --- which I will refer to collectively as (web) authors for short.
 
 The Background section provides an introduction to some of the architectural problems inherent in modern web authoring and how Web Components (WC) address them. 
 It also provides some background the on software engineering design patterns that are embodied in Web Components such as encapsulation and composition.
@@ -153,7 +155,7 @@ It describes some of the motivations behind the development of Speakur and some 
 
 The Approach section describes the high level software architecture\index{architecture} choices behind Speakur and details the specific structures and techniques used when constructing a Web Component.
 It describes how Speakur uses WC to implement encapsulated\index{encapsulation} modules whose internals are protected from unintentional outside influence. 
-It also describes how the choice of the Firebase\index{Firebase} cloud database service and its Websocket-based\index{Websockets} event notification system impacts Speakur's architecture.
+It also describes how the choice of the Firebase\index{Firebase} cloud database service and its WebSocket-based\index{WebSockets} event notification system impacts Speakur's architecture.
 
 The Implementation section shows how to apply Web Component principles to the task of creating a flexible and generic discussion forum for both desktop and mobile browsers. 
 It describes the low level architecture, code flow, and synchronization process.
@@ -183,7 +185,7 @@ An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in br
  </speakur-discussion>
 \end{lstlisting}
 
-The Speakur source code and component documentation can be found on the social coding site GitHub.com at~\cite{landers2015-b}:
+The Speakur source code and component documentation can be found on the social coding site GitHub.com\index{GitHub} at~\cite{landers2015-b}:
 
 \tcode{\url{https://github.com/Preston-Landers/speakur-discussion}}
 
