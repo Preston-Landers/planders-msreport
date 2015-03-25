@@ -76,7 +76,7 @@ The industry kept searching for the Next Big Thing that would make writing high 
 In recent years (roughly 2011 to 2014) Google's Angular~\cite{googledevelopers2015-b}
 \index{Angular}
 has emerged as a dominant client framework, 
-due in part to its perceived high quality~\cite{dickey2014} and the fact that it represents an common point for a fragmented industry to rally around.
+due in part to its perceived high quality and the fact that it represents an common point for a fragmented industry to rally around~\cite{dickey2014}.
 Facebook's React\index{React} library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger, 
 focusing primarily on the ``view'' part of the common 
 model-view-controller\index{model-view-controller}(MVC) 
@@ -95,7 +95,7 @@ to draft a new standard called \textbf{Web Components} that will extend and enha
 For example, as of the time of this writing, a rewrite of Angular called Angular 2.0 is slated to include Web Components as a core architectural element~\cite{santiagoesteva2015}.
 
 \section{Web Components Overview}
-Fundamentally, the Web Components standard consists of four new core DOM technologies --- extensions to the current HTML5\index{HTML5} standard.
+Fundamentally, the Web Components standard consists of four new core DOM technologies --- extensions to the current HTML5\index{HTML!HTML5} standard.
 If these standards are accepted by major browser vendors and the World Wide Web Consortium (W3C)
 \index{W3C}
 which maintains HTML, 
@@ -107,9 +107,9 @@ The core Web Component technologies are~\cite{penades2015}:
 \item
 \textbf{Shadow DOM}\index{Shadow DOM}: encapsulation for the internals of custom elements
 \item
-\textbf{Templates}\index{Templates}: scaffolding for instantiating blocks of HTML from inert templates
+\textbf{Templates}\index{HTML!Templates}: scaffolding for instantiating blocks of HTML from inert templates
 \item
-\textbf{Imports}\index{HTML Imports}: packaging for HTML components
+\textbf{Imports}\index{HTML!Imports}: packaging for HTML components
 \end{itemize}
 
 This report also explores several related web standards initiatives that are frequently associated with Web Components 
@@ -170,7 +170,7 @@ Finally, the Conclusion section is there and wraps up the report with various wo
 \index{Speakur source code@\emph{Speakur source code}}%
 
 The source code for Speakur consists of HTML\index{HTML} and Javascript\index{Javascript} files located in a Git\index{Git} version control repository. 
-These files constitute an ``HTML Import''\index{HTML Imports} package that provides a
+These files constitute an \textit{HTML Import}\index{HTML!Imports} package that provides a
 \textbf{\tcode{<speakur-discussion>}}
 custom HTML element\index{Custom Elements} for the use of web authors in their own pages.
 An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in briefly in Listing~\ref{l:example1} below.

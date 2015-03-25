@@ -7,9 +7,11 @@ When the Web was first created by Tim Berners-Lee\index{Berners-Lee, Tim} in 198
 The idea of composing a complex web application out of basic components like snapping together Lego blocks seemed like a distant dream at best.
 Until recently, web authors were limited to using the predefined HTML layout elements or `tags' that were listed in the W3C standard and understood by browser programs, such as \tcode{<title>} and \tcode{<video>}. 
 Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic\index{Mosaic}
-and Netscape Navigator \index{Netscape Navigator}.
+and Netscape Navigator\index{Netscape Navigator}.
 
-As of early 2015, modern web apps are typically written with a Javascript framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications, large or small, from a number of sub-components.
+As of early 2015, modern web apps are typically written with a Javascript framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications 
+--- large or small --- 
+from a number of sub-components.
 Angular\index{Angular}, Meteor\index{Meteor}, and Backbone\index{Backbone} are three such frameworks~\cite{dickey2014}.
 The difference between a `framework'\index{Framework} and a library is somewhat arbitrary, but typically frameworks are more comprehensive than narrowly focused utility libraries.
 Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model (DOM)\index{DOM}. 
@@ -35,7 +37,7 @@ the fundamental web client programming model has not allowed for significant enc
 To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter\index{Twitter} Bootstrap\index{Bootstrap} library~\cite{bootstrapcontributors2015}.
 Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
 Bootstrap provides pre-styled user interface\index{user interface (UI)} (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
-Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
+Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML!HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
 For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
 
 \begin{figure}[htb]
@@ -76,7 +78,9 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in figur
 
 The Web Components working group, consisting of software engineers from several major browser vendors, 
 looked at this situation and found that, in practice, browsers already had a suitable model for encapsulating components that hide complexity behind well-defined interfaces.
-That model was that one used internally by browsers to implement the newer HTML5 tags like the \textbf{\tcode{<video>}} element.\index{<video>} 
+That model was that one used internally by browsers to implement the newer 
+HTML5\index{HTML!HTML5} tags 
+like the \textbf{\tcode{<video>}} element.\index{<video>} 
 The \tcode{<video>} element presents a simple interface (API) to HTML authors that hides the complexities of playing high definition video.
 Internally, however, browsers implement \tcode{<video>} with a `shadow' or hidden document inside the object that contains the internal state~\cite{kitamura2014}. 
 For example, an author can write:
@@ -87,7 +91,7 @@ to cause the video to loop repeatedly.
 
 This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
 \tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
-These inner playback controls are themselves built out of HTML, CSS and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
+These inner playback controls are themselves built out of HTML, CSS\index{CSS} and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
 Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
 
 \begin{figure}[htb]
@@ -108,7 +112,7 @@ This example illustrates three component design principles that are widely follo
 \end{itemize}
 
 Composition helps reduce coupling or structural between modules by forcing them to interact using only public interfaces.
-In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS roles and the Volume and Play controls aren't particularly special objects, just \tcode{<divs>} with CSS rules and click handlers.
+In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS\index{CSS} roles and the Volume and Play controls aren't particularly special objects, just \tcode{<divs>} with CSS rules and click handlers.
 
 The solution, therefore, to these coupling problems in web authoring is to expose these internal brower APIs for creating elements in a safe and portable fashion. 
 This will allow web authors to create their own rich custom elements using standard portable APIs, encapsulate their internals, and enable easier sharing, composition and integration.
@@ -116,11 +120,11 @@ The question remains, which specific browser internals must be exposed and stand
 
 \section{Web Components}
 
-The Web Component initiative consists of two main technologies and two supporting features. 
-Custom HTML Elements\index{Custom Elements} and Shadow DOM\index{Shadow DOM} are the two key players while HTML Imports and Templates support these features. 
-One of the central goals of the Web Components\index{Web Components} initiatives is to maintain interoperability across different browsers and frameworks, 
+Web Components consists of two main technologies and two supporting features. 
+Custom HTML Elements\index{Custom Elements} and Shadow DOM\index{Shadow DOM} are the two key players while HTML Imports\index{HTML!Imports} and Templates\index{HTML!Templates} support these features. 
+One of the central goals of the Web Components\index{Web Components} initiative is to maintain interoperability across different browsers and frameworks, 
 so that modules which adhere to the Web Components standard can provide a consistent experience no matter what framework the developer chooses or which browser the user selects.
-For example, an important benefit of Custom Elements is that they \textit{are} standard HTML elements; they live in the DOM and can be accessed by the usual DOM methods and the majority of standard HTML/JS development tools~\cite{penades2015}.
+For example, an important benefit of Custom Elements is that they \textit{are} standard HTML elements; they live in the DOM\index{DOM} and can be accessed by the usual DOM methods and the majority of standard HTML/JS development tools~\cite{penades2015}.
 They also behave somewhat like objects in traditional object oriented programming (OOP) in that 
 they have \textit{methods} and hidden internal \textit{state} (data).
 
@@ -201,12 +205,12 @@ Javascript could always be loaded with a \tcode{<script>} tag\index{<script>} li
 A component that uses a certain JS resource might be needed in two different spots on the page, 
 but that resource would be requested from the server twice and executed twice, degrading application performance.
 
-In order to fix these problems the HTML Imports\index{HTML Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
+In order to fix these problems the HTML Imports\index{HTML!Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The one major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
 Dealing with HTML Imports in a consistent fashion will be discussed in the Implementation section.
 
 \subsection{Templates}
-The last major piece of the Web Component puzzle is the native HTML5 \tcode{<template>}\index{<template>} tag. 
+The last major piece of the Web Component puzzle is the native HTML5\index{HTML!HTML5} \tcode{<template>}\index{<template>} tag. 
 Unlike the rest of Web Components, \tcode{<template>} has already become a standard part of the HTML5 specification, 
 although one that is perhaps not widely used yet outside of WC~\cite{w3ccontributors2015-c}.
 \textit{Template} is a frequently overloaded word with different meanings in different programming environments.
@@ -243,7 +247,7 @@ Therefore the resources needed to use the custom element aren't downloaded until
 There are a number of related W3C\index{W3C} initiatives for web standards. 
 Sometimes these are loosely grouped under the label Web Components,
 and they do support componentization in web application design, 
-but they are a separate part of the HTML5\index{HTML5} standard.
+but they are a separate part of the HTML5\index{HTML!HTML5} standard.
 These include mutation observers\index{mutation observers}, 
 DOM selectors\index{Selectors}, 
 and so-called `responsive' attributes designed to adjust the layout automatically according to screen size.
@@ -298,7 +302,7 @@ The following example shows how to populate a JS variable with the element that 
 
 The rise of smartphones\index{smartphones} and other mobile\index{mobile} devices has accelerated the need for web developers to make their applications responsive to the type of client used to access it.
 Creating a web site or application that adjusts to the smaller screen of a mobile phone is often known as \textit{responsive design}\index{responsive design}.
-Before the addition of responsive design features to the HTML spec, 
+Before the addition of responsive design features to the HTML\index{HTML} spec, 
 it was always possible to make manual layout adjustments in Javascript but this was sometimes brittle and error-prone.
 
 Besides Javascript, there are three main CSS techniques that can be used to make a responsive design: 
@@ -339,7 +343,7 @@ My desire to learn more about modern web development led me to investigate web f
 I spent a few weeks building elementary demos with these two frameworks in particular.
 Although they are expressive and powerful, and are used every day to power high-traffic applications, 
 I was unhappy with the non-standard and idiosyncratic nature of these frameworks. 
-They relied on `proprietary' (even if open source) extensions that were not native to HTML and not easily transportable across different frameworks and architectures\index{architecture}.
+They relied on `proprietary' (even if open source) extensions that were not native to HTML\index{HTML} and not easily transportable across different frameworks and architectures\index{architecture}.
 This dissatisfaction led me to learn about the Web Components\index{Web Components} initiative.
 
 \subsection{Origin}

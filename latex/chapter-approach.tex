@@ -71,13 +71,15 @@ Speakur is built entirely from plain HTML, JS and CSS\index{CSS} files that can 
 such as \tcode{github.io} or your own server~\cite{landers2015-d}.
 
 This low-overhead design allows Speakur\index{Speakur} to be used on your own website without actually `installing' any software;
-just load Speakur directly from \tcode{github.io} with an \textit{import}~\cite{landers2015-d}
-and then insert a tiny bit of HTML into your document.
+just load Speakur directly from \tcode{github.io} with an HTML \textit{import}
+and then insert a tiny bit of HTML markup into your document~\cite{landers2015-d}.
 This helps fulfill the ease of use requirements 
 \#\ref{motive:abstraction} and \#\ref{motive:cors}
 in section~\ref{motivations}.
 
-Most of the user interface elements in Speakur\index{Speakur} --- things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements  --- are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
+Most of the user interface elements in Speakur\index{Speakur} 
+--- things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements  
+--- are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
 Speakur presents a simple API through \tcode{<speakur-discussion>}\index{<speakur-discussion>},
 but internally it consists of a number of internal abstraction layers or custom elements.
 In turn, these internal layers consist of still more focused layers, other Polymer components, simple HTML templates, and wrappers around external Javascript libraries like  \tcode{moment.js}\index{moment.js library}.
@@ -138,10 +140,10 @@ The Polymer project provides two (optional) libraries of Custom Elements\index{C
 \textbf{Core Elements}\index{Core Elements} includes both user interface\index{user interface (UI)}
 widgets and invisible functional elements.
 Core Elements are minimally styled and can be used standalone, 
-but they are also used as 'base classes' for 
+but they are also used as `base classes' for 
 \textbf{Paper Elements}\index{Paper Elements}, 
-which implement the Material Design\index{Material Design} look used by apps for Google's\index{Google} Android\index{Android} mobile\index{mobile} operating system.~\cite{imura2015}
-Speakur is implemented with a combination of native HTML5 elements, 
+which implement the so-called `Material Design'\index{Material Design} look and feel (design language) used by apps for Google's\index{Google} Android\index{Android} mobile\index{mobile} operating system~\cite{imura2015}.
+Speakur's\index{Speakur} layout is composed of native HTML5 elements, 
 Core and Paper Elements, 
 and Speaker's own custom elements that are used to abstract\index{abstraction} internal implementation details.
 
@@ -155,7 +157,10 @@ Node.js\index{Node.js}, a server-side Javascript\index{Javascript} environment,
 and the MongoDB\index{MongoDB} NoSQL database~\cite{dickey2014}.
 
 Firebase\index{Firebase} provides WebSockets\index{WebSockets}-based event notification and synchronization 
-as well as a JSON-based\index{JSON} security rule description format for securing\index{security} and validating user actions.
+as well as a security rule description format based on 
+JSON\index{JSON}\footnote{JavaScript Object Notation (JSON)\index{JSON} is a popular alternative to XML because it is more easily human-readable. 
+It mirrors the syntax for writing data structure literals in the Javascript language.} 
+for securing\index{security} and validating user actions.
 The use of Firebase as the only server component allows for easy deployment of Speakur with minimal dependencies, helping to keep the component small and focused.
 
 \subsection{Firebase API}
@@ -170,13 +175,13 @@ The term REST or RESTful is sometimes misunderstood,
 but in Roy Fielding's original 2000 Ph.D. thesis, 
 REST refers to transferring \textit{representations} of application state and using hypertext as the engine of 
 application state\index{HATEOAS}\footnote{Known under the somewhat awkward acronym HATEOAS\index{HATEOAS}.}.
-Specifically, 'objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP verbs} such as PUT and DELETE.
+Specifically, `objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP!verbs} such as PUT\index{PUT} and DELETE\index{DELETE}.
 
 Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\index{REST} include:
 \begin{enumerate}
 \item Treating URLs as endpoints for remote procedure calls (RPC\index{RPC}) instead of hypertext resources that are interlinked in exactly the same way a website is like a tree that starts from the home page and links to various resources.
-\item Using HTTP verbs\index{HTTP verbs} inappropriately, such as using POST for all actions including deletion.
-\item Not using content related HTTP headers appropriately for data representation and API versioning~\cite{steveklabnik2011}.
+\item Using HTTP verbs\index{HTTP!verbs} inappropriately, such as using POST for all actions including deletion.
+\item Not using content related HTTP headers\index{HTTP!headers} appropriately for data representation and API versioning\index{versioning}~\cite{steveklabnik2011}.
 \end{enumerate}
 
 The Firebase API follows typical RESTful\index{REST} patterns in data access, allowing the database and its metadata to be addressed as a set of linked HTTP resources.
@@ -187,7 +192,7 @@ WebSockets\index{WebSockets} are used for performance reasons but all of the dat
 
 \subsection{WebSockets}
 \label{sec:websockets}
-WebSockets\index{WebSockets}, formally known as RFC 6455\index{RFC 6455}, are a TCP/IP\index{TCP/IP} protocol that can be used alongside HTTP\index{HTTP} for persistent data connections between web clients and servers~\cite{mozillacontributors2015-a}.
+The WebSockets\index{WebSockets} protocol, formally known as RFC 6455\index{RFC 6455}, is a TCP/IP\index{TCP/IP} protocol that can be used alongside HTTP\index{HTTP} for persistent data connections between web clients and servers~\cite{mozillacontributors2015-a}.
 The primary purpose is to avoid the overhead of initiating a new HTTP connection to check on the status of something on the server, also known as polling\index{polling}.
 Firebase\index{Firebase} uses Web Sockets rather than traditional high-overhead HTTP requests to move data back and forth to the client.
 This always-on connection allows for sending nearly instant event notifications to all currently active clients with minimal overhead.
@@ -201,8 +206,9 @@ The security architecture\index{architecture} of the web is largely based around
 The server has to take its own steps to protect itself from unauthorized actions.
 Speaker has no 'server' as such other than the Firebase cloud service.
 That means the security mechanisms that do things like prevent users from deleting each other's posts are implemented entirely within Firebase security rules as discussed in section~\ref{sec:security}.
+Confidentiality of data in-transit is handled with the same Transport Layer Security (TLS)\index{transport layer security (TLS)} better known as the secure socket layer (SSL)\index{secure socket layer (SSL)} or HTTPS.
 
-Firebase implements the two major categories of user access control: authentication and 
+Firebase implements the two major categories of access control: authentication and 
 authorization. 
 Authentication (sometimes abbreviated \textit{authn}) answers the question ``who are you?'' 
 while authorization (\textit{authz}) asks ``what are you allowed to see and do?''~\cite{stallings2011}.
