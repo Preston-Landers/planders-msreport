@@ -19,14 +19,14 @@ Placing Speakur inside a web resource is very straightforward.
 As shown in Listing~\ref{l:example1},
 and in section \ref{publishing} below,
 you simply place the \tcode{<speakur-discussion>}\index{<speakur-discussion>}
- element in your page's HTML at the desired spot.
+ element in your page's HTML\index{HTML} at the desired spot.
 This requires two supporting steps detailed in section \ref{publishing}:
 \begin{enumerate}
-\item loading the Web Components polyfill\index{polyfill} library script
+\item loading the Web Components\index{Web Components} polyfill\index{polyfill} library script
 \item importing the \tcode{<speakur-discussion>}\index{<speakur-discussion>} element.
 \end{enumerate}
 
-Once an author imports the element and places it on their page, that site now has an integrated discussion forum that works equally well for desktop and mobile users. 
+Once an author imports the element and places it on their page, that site now has an integrated discussion forum that works equally well for desktop and mobile\index{mobile} users. 
 All forum data including user profiles and comment text is stored in an online cloud database called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
 The messy details of structuring a discussion forum are abstracted\index{abstraction} away from the web page author.
 
@@ -48,7 +48,7 @@ in 15 languages as shown in Figure~\ref{f:lang}.
 \label{f:lang}
 \end{figure}
 
-From a technical perspective, one of the more interesting features in Speaker is the use of Polymer's data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
+From a technical perspective, one of the more interesting features in Speaker\index{Speakur} is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
 to allow components to automatically reflect changes in far-flung areas of the application.
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
 Another example of the power of data-bound templates is that all of the user-visible text in the application updates immediately as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
@@ -65,10 +65,10 @@ Roy Fielding, the author of the influential REST\index{REST} web architecture\in
 At the heart of software architecture is the principle of abstraction: hiding some of the details of a system through encapsulation\index{encapsulation} in order to better identify and sustain its properties. A complex system will contain many levels of abstraction, each with its own architecture~\cite{fielding2000}.
 \end{quote}
 
-The architecture for Speakur is based on client-side (browser) Javascript code and HTML layout following Web Components design principles. 
+The architecture for Speakur\index{Speakur} is based on client-side (browser) JavaScript\index{JavaScript} code and HTML\index{HTML} layout following Web Components\index{Web Components} design principles. 
 There is no dedicated server component except for the Firebase\index{Firebase} cloud database service~\cite{firebasecontributors2015}.
 Speakur is built entirely from plain HTML, JS and CSS\index{CSS} files that can be served from a content distribution network (CDN)\index{content distribution network (CDN)} 
-such as \tcode{github.io} or your own server~\cite{landers2015-d}.
+such as \tcode{github.io}\index{GitHub} or your own server~\cite{landers2015-d}.
 
 This low-overhead design allows Speakur\index{Speakur} to be used on your own website without actually `installing' any software;
 just load Speakur directly from \tcode{github.io} with an HTML \textit{import}
@@ -77,12 +77,12 @@ This helps fulfill the ease of use requirements
 \#\ref{motive:abstraction} and \#\ref{motive:cors}
 in section~\ref{motivations}.
 
-Most of the user interface elements in Speakur\index{Speakur} 
+Most of the user interface\index{user interface (UI)} elements in Speakur\index{Speakur} 
 --- things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements  
 --- are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
 Speakur presents a simple API through \tcode{<speakur-discussion>}\index{<speakur-discussion>},
 but internally it consists of a number of internal abstraction layers or custom elements.
-In turn, these internal layers consist of still more focused layers, other Polymer components, simple HTML templates, and wrappers around external Javascript libraries like  \tcode{moment.js}\index{moment.js library}.
+In turn, these internal layers consist of still more focused layers, other Polymer components, simple HTML templates, and wrappers around external JavaScript\index{JavaScript} libraries like  \tcode{moment.js}\index{moment.js library}.
 
 As previously mentioned, in order to make the 
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} element available for use, you must first load the Web Components polyfill\index{polyfill} and then \textit{import} the Speakur element, either from \tcode{github.io} or your own server.
@@ -153,13 +153,13 @@ Anyone who wants to use Speakur\index{Speakur} can register for a free account o
 No other server component is required.
 Firebase is a NoSQL\index{NoSQL}-style key-value data store of the kind that has been popularized
 with the growth of 
-Node.js\index{Node.js}, a server-side Javascript\index{Javascript} environment,
+Node.js\index{Node.js}, a server-side JavaScript\index{JavaScript} environment,
 and the MongoDB\index{MongoDB} NoSQL database~\cite{dickey2014}.
 
 Firebase\index{Firebase} provides WebSockets\index{WebSockets}-based event notification and synchronization 
 as well as a security rule description format based on 
 JSON\index{JSON}\footnote{JavaScript Object Notation (JSON)\index{JSON} is a popular alternative to XML because it is more easily human-readable. 
-It mirrors the syntax for writing data structure literals in the Javascript language.} 
+It mirrors the syntax for writing data structure literals in the JavaScript\index{JavaScript} language.} 
 for securing\index{security} and validating user actions.
 The use of Firebase as the only server component allows for easy deployment of Speakur with minimal dependencies, helping to keep the component small and focused.
 
@@ -174,8 +174,8 @@ Firebase itself provides a REST API for data access by programs like Speakur.
 The term REST or RESTful is sometimes misunderstood,
 but in Roy Fielding's original 2000 Ph.D. thesis, 
 REST refers to transferring \textit{representations} of application state and using hypertext as the engine of 
-application state\index{HATEOAS}\footnote{Known under the somewhat awkward acronym HATEOAS\index{HATEOAS}.}.
-Specifically, `objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP!verbs} such as PUT\index{PUT} and DELETE\index{DELETE}.
+application state\index{HATEOAS}\footnote{Known under the somewhat awkward acronym of HATEOAS\index{HATEOAS}.}.
+Specifically, `objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP!verbs} such as PUT\index{HTTP!PUT} and DELETE\index{HTTP!DELETE}.
 
 Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\index{REST} include:
 \begin{enumerate}
@@ -188,28 +188,28 @@ The Firebase API follows typical RESTful\index{REST} patterns in data access, al
 In addition, Firebase client libraries use WebSockets\index{WebSockets}, 
 a lower-level TCP/IP protocol, 
 to perform event notification and distributed synchronization without the overhead of polling or high-overhead HTTP 1.1\index{HTTP} requests.
-WebSockets\index{WebSockets} are used for performance reasons but all of the data in Firebase\index{Firebase} (and hence, in Speakur\index{Speakur}) is accessible from the RESTful\index{REST} HTTP API\index{API} outside of a WebSocket\index{WebSocket}.
+WebSockets\index{WebSockets} are used for performance reasons but all of the data in Firebase\index{Firebase} (and hence, in Speakur\index{Speakur}) is accessible from the RESTful\index{REST} HTTP API\index{API} outside of a WebSocket\index{WebSockets}.
 
 \subsection{WebSockets}
 \label{sec:websockets}
 The WebSockets\index{WebSockets} protocol, formally known as RFC 6455\index{RFC 6455}, is a TCP/IP\index{TCP/IP} protocol that can be used alongside HTTP\index{HTTP} for persistent data connections between web clients and servers~\cite{mozillacontributors2015-a}.
 The primary purpose is to avoid the overhead of initiating a new HTTP connection to check on the status of something on the server, also known as polling\index{polling}.
-Firebase\index{Firebase} uses Web Sockets rather than traditional high-overhead HTTP requests to move data back and forth to the client.
+Firebase\index{Firebase} uses Web Sockets rather than traditional high-overhead HTTP\index{HTTP} requests to move data back and forth to the client.
 This always-on connection allows for sending nearly instant event notifications to all currently active clients with minimal overhead.
 In practice, this allows the application to update its state in real-time as different users read and write values the database.
 The Firebase client library 'subscribes' to an area of interest in the database, such as the replies to a particular thread, and receives notifications when these areas change and updates the local representation as appropriate.
 
 \section{Security}
-Because Speakur relies entirely on Firebase\index{Firebase} for data persistence, that means its security model is largely built around Firebase. 
+Because Speakur\index{Speakur} relies entirely on Firebase\index{Firebase} for data persistence, that means its security model is largely built around Firebase. 
 All Speakur code runs inside the client's web browser including the small `admin' mode.
 The security architecture\index{architecture} of the web is largely based around protecting the \textit{user} from malicious servers and other users, not protecting the \textit{server} from the user.
 The server has to take its own steps to protect itself from unauthorized actions.
 Speaker has no 'server' as such other than the Firebase cloud service.
 That means the security mechanisms that do things like prevent users from deleting each other's posts are implemented entirely within Firebase security rules as discussed in section~\ref{sec:security}.
-Confidentiality of data in-transit is handled with the same Transport Layer Security (TLS)\index{transport layer security (TLS)} better known as the secure socket layer (SSL)\index{secure socket layer (SSL)} or HTTPS.
+Confidentiality of data in-transit is handled with the same Transport Layer Security (TLS)\index{transport layer security (TLS)} better known as the secure socket layer (SSL)\index{secure socket layer (SSL)} or HTTPS\index{HTTP!HTTPS}.
 
-Firebase implements the two major categories of access control: authentication and 
-authorization. 
+Firebase implements the two major categories of access control: authentication\index{authentication} and 
+authorization\index{authorization}. 
 Authentication (sometimes abbreviated \textit{authn}) answers the question ``who are you?'' 
 while authorization (\textit{authz}) asks ``what are you allowed to see and do?''~\cite{stallings2011}.
 
@@ -223,7 +223,7 @@ Firebase\index{Firebase} supports other authorization schemes, including account
 Site owners who use Speakur can also designate certain threads to allow anonymous commenting.
 
 Every user who registers within a Speakur\index{Speakur} instance by signing in with one of those identity providers gets a unique identifier --- the \tcode{uid} or user ID. 
-This \tcode{uid} is used extensively in the database to refer to the user, including in the security (authorization) rules that are external to the actual database (i.e, security metadata\index{metadata}.) 
+This \tcode{uid} is used extensively in the database to refer to the user, including in the security (authorization\index{authorization}) rules that are external to the actual database (i.e, security metadata\index{metadata}.) 
 
 \subsection{Authorization}
 Authorization\index{authorization} rules determine what level of access a user has within the system, or what they are allowed to do or see.

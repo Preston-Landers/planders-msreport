@@ -9,7 +9,7 @@ Until recently, web authors were limited to using the predefined HTML layout ele
 Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic\index{Mosaic}
 and Netscape Navigator\index{Netscape Navigator}.
 
-As of early 2015, modern web apps are typically written with a Javascript framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications 
+As of early 2015, modern web apps are typically written with a JavaScript\index{JavaScript} framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications 
 --- large or small --- 
 from a number of sub-components.
 Angular\index{Angular}, Meteor\index{Meteor}, and Backbone\index{Backbone} are three such frameworks~\cite{dickey2014}.
@@ -35,7 +35,7 @@ Although techniques of abstraction\index{abstraction} and encapsulation\index{en
 the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules~\cite{ihrig2012}.
 
 To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter\index{Twitter} Bootstrap\index{Bootstrap} library~\cite{bootstrapcontributors2015}.
-Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and Javascript widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
+Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and JavaScript\index{JavaScript} widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
 Bootstrap provides pre-styled user interface\index{user interface (UI)} (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
 Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML!HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
 For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
@@ -76,7 +76,7 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in figur
 
 \subsection{Abstraction, encapsulation and composition}
 
-The Web Components working group, consisting of software engineers from several major browser vendors, 
+The Web Components working group, consisting of software engineers\index{software engineering} from several major browser vendors, 
 looked at this situation and found that, in practice, browsers already had a suitable model for encapsulating components that hide complexity behind well-defined interfaces.
 That model was that one used internally by browsers to implement the newer 
 HTML5\index{HTML!HTML5} tags 
@@ -104,7 +104,7 @@ Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (inter
 At the bottom of Figure~\ref{f:html5video} a small \tcode{\#player-api} tag is visible in the DOM path.
 This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
 
-This example illustrates three component design principles that are widely followed in other areas of software engineering~\cite{fowler2012}:
+This example illustrates three component design principles that are widely followed in other areas of software engineering\index{software engineering}~\cite{fowler2012}:
 \begin{itemize}
 \item Create layers of \textbf{abstraction}\index{abstraction} to represent `public' details that are relevant to the surrounding code or environment.
 \item Use \textbf{encapsulation}\index{encapsulation} and well defined interfaces to protect private state, hide implementation complexity, and leave implementors free to refactor internals.
@@ -151,7 +151,7 @@ Then you place your new element on the page, either declaratively in HTML:
  <my-element> hello, world! </my-element>
 \end{lstlisting}
 
-or imperatively with Javascript:
+or imperatively with JavaScript\index{JavaScript}:
 
 \begin{lstlisting}[language=JavaScript,numbers=none]
  var MyElement = document.registerElement('my-element');
@@ -191,21 +191,21 @@ It is also possible for elements to have multiple shadow DOM sub-trees.
 This is used particularly for emulating object-oriented-like inheritance relationships between custom elements.
 
 In languages like C\#\index{C\#} and Java\index{Java}, the encapsulation\index{encapsulation} of classes and the protection of private object fields are a relatively strong guarantee by the language.
-Javascript variables can be protected by \textit{closures}\index{closure}
+JavaScript\index{JavaScript} variables can be protected by \textit{closures}\index{closure}
 but shadow DOM and CSS\index{CSS} are not completely and utterly isolated from the containing page.
 It is possible to ``reach inside'' and break encapsulation to at least some degree, 
 but the point is that this must be an intentional act by the developer and not an unexpected side-effect~\cite{bidelman2014}.
 
 \subsection{HTML Imports}
 One significant problem faced by web developers is the lack of any built-in packaging system for modules in HTML.
-Prior to Web Components there was no way to import a snippet of HTML or Javascript from an external location and insert it exactly one time into the current document, 
+Prior to Web Components there was no way to import a snippet of HTML or JavaScript\index{JavaScript} from an external location and insert it exactly one time into the current document, 
 similar to an \tcode{\#include} directive in the C language or the packaging and import systems popular in scripting languages\index{Scripting languages}
 like Python\index{Python language}, Go\index{Go language} and Ruby\index{Ruby language}. 
-Javascript could always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
+JavaScript could always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
 A component that uses a certain JS resource might be needed in two different spots on the page, 
 but that resource would be requested from the server twice and executed twice, degrading application performance.
 
-In order to fix these problems the HTML Imports\index{HTML!Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or Javascript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
+In order to fix these problems the HTML Imports\index{HTML!Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or JavaScript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The one major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
 Dealing with HTML Imports in a consistent fashion will be discussed in the Implementation section.
 
@@ -216,7 +216,7 @@ although one that is perhaps not widely used yet outside of WC~\cite{w3ccontribu
 \textit{Template} is a frequently overloaded word with different meanings in different programming environments.
 While HTML5 templates have some similarities to the concept of templates popularized by frameworks like Angular\index{Angular} and Django\index{Django}, there are some important differences.
 
-HTML5 templates are inert hunks of HTML embedded in the page that can be instantiated into `real' elements by Javascript.
+HTML5 templates are inert hunks of HTML embedded in the page that can be instantiated into `real' elements by JavaScript\index{JavaScript}.
 Their basic function is to give a source input for the shadow DOM\index{Shadow DOM} when you create a new (custom) element instance and place it on the page.
 
 However, templates are most useful in combination with `live' data, not static, unchanging text.
@@ -235,12 +235,12 @@ The following example of a data bound template is something that does \textit{no
 Google\index{Google} engineers have advanced a proposal for standardizing 
 Model-Driven Views\index{Model-Driven View}
 but it is not yet part of the standard \tcode{<template>} element~\cite{googledevelopers2014}.
-Instead this functionality can be handled by a Javascript framework such as React or Polymer.
+Instead this functionality can be handled by a JavaScript\index{JavaScript} framework such as React or Polymer.
 Data-bound templates are discussed in more detail in the following chapter.
 
-The primary benefit of HTML Templates from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
+The primary benefit of HTML Templates\index{HTML!Templates} from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
 Templates are often used to declare the internal structure (shadow DOM\index{Shadow DOM}) of custom elements. 
-Therefore the resources needed to use the custom element aren't downloaded until they are actually needed, which is necessary when composing a large application out of numerous distinct elements.
+Therefore the resources needed to use the custom element\index{Custom Elements} aren't downloaded until they are actually needed, which is necessary when composing a large application out of numerous distinct elements.
 
 
 \section{Related W3C initiatives}
@@ -249,17 +249,17 @@ Sometimes these are loosely grouped under the label Web Components,
 and they do support componentization in web application design, 
 but they are a separate part of the HTML5\index{HTML!HTML5} standard.
 These include mutation observers\index{mutation observers}, 
-DOM selectors\index{Selectors}, 
+DOM\index{DOM} selectors\index{Selectors}, 
 and so-called `responsive' attributes designed to adjust the layout automatically according to screen size.
-All of these techniques have been used extensively in Speakur.
+All of these techniques have been used extensively in Speakur\index{Speakur}.
 
 \subsection{Mutation Observers}
 For example, \textit{mutation observers}\index{mutation observers}
 allow a component to register a `callback'\index{callback} function to observe and react to any changes in the state of an area of interest in the DOM\index{DOM}, 
 whether that change was generated by a user action or another 
 component~\cite{w3ccontributors2014}.
-This helps decouple components by allowing them to react asynchronously to changes in each other's public state without directly interconnecting the components.
-The observers ``deliver mutations in batches asynchronously at the end of a micro-task rather than immediately after they occur''~\cite{addyosmani2014}.
+This helps decouple components by allowing them to react asynchronously\index{asynchronous} to changes in each other's public state without directly interconnecting the components.
+The observers ``deliver mutations in batches asynchronously\index{asynchronous} at the end of a micro-task rather than immediately after they occur''~\cite{addyosmani2014}.
 This aids performance and user experience (UX)\index{user experience (UX)} by ensuring that the callback\index{callback} is only called as-needed rather than once for each small change.
 
 \subsection{Selectors}
@@ -303,9 +303,9 @@ The following example shows how to populate a JS variable with the element that 
 The rise of smartphones\index{smartphones} and other mobile\index{mobile} devices has accelerated the need for web developers to make their applications responsive to the type of client used to access it.
 Creating a web site or application that adjusts to the smaller screen of a mobile phone is often known as \textit{responsive design}\index{responsive design}.
 Before the addition of responsive design features to the HTML\index{HTML} spec, 
-it was always possible to make manual layout adjustments in Javascript but this was sometimes brittle and error-prone.
+it was always possible to make manual layout adjustments in JavaScript\index{JavaScript} but this was sometimes brittle and error-prone.
 
-Besides Javascript, there are three main CSS techniques that can be used to make a responsive design: 
+Besides JavaScript\index{JavaScript}, there are three main CSS techniques that can be used to make a responsive design: 
 the \tcode{@media}\index{@media} rule, 
 the Grid\index{Grid} layout, 
 and Flexible (Flex)\index{Flex} boxes.
@@ -315,7 +315,7 @@ The CSS Grid layout is primarily intended to control the overall page layout on 
 For example, a 'sidebar' might normally run alongside the main content down the side of the page in a desktop layout, but in a mobile layout the sidebar might come down at the end after the main content.
 This includes different layouts for portrait vs. landscape device orientation.
 The CSS Flexible Boxes model (Flex)\index{Flex} is intended for adjusting the flow of smaller page components~\cite{mozillacontributors2015}.
-Flex boxes are useful for general user interface (UI) structure, not just device-responsive design, and are widely used in Polymer\index{Polymer} and in Speakur\index{Speakur}.
+Flex boxes are useful for general user interface\index{user interface (UI)} (UI) structure, not just device-responsive design, and are widely used in Polymer\index{Polymer} and in Speakur\index{Speakur}.
 
 \section{Polymer Framework}
 
@@ -332,11 +332,11 @@ X-Tags\index{X-Tags}~\cite{x-tagscontributors2015}.
 Unfortunately polyfills cannot provide a 100\% complete Web Components implementation; 
 only native browser support can.
 
-Because Polymer and to a lesser extent Web Components are still experimental and under development, 
+Because Polymer\index{Polymer} and to a lesser extent Web Components are still experimental and under development, 
 they are both subject to frequent changes.
-The version of Speakur described in this report is based on Polymer release 0.5.
+The version of Speakur\index{Speakur} described in this report is based on Polymer release 0.5.
 As of the time of this writing, Polymer 0.8 is planned and will contain significant breaking changes to application structure~\cite{michaelbleigh2015}.
-Portions of this report pertaining to specific Polymer practices or interfaces are likely to be out of date by the time you read this.
+Portions of this report pertaining to specific Polymer\index{Polymer} practices or interfaces are likely to be out of date by the time you read this.
 
 \section{Speakur}
 My desire to learn more about modern web development led me to investigate web frameworks like Angular\index{Angular} and Meteor\index{Meteor}.
