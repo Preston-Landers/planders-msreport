@@ -340,8 +340,8 @@ Portions of this report pertaining to specific Polymer\index{Polymer} practices 
 
 \section{Speakur}
 My desire to learn more about modern web development led me to investigate web frameworks like Angular\index{Angular} and Meteor\index{Meteor}.
-I spent a few weeks building elementary demos with these two frameworks in particular.
-Although they are expressive and powerful, and are used every day to power high-traffic applications, 
+I built elementary demos with these two frameworks in particular.
+Although they certainly let you get stuff done, and are used every day to power high-traffic applications, 
 I was unhappy with the non-standard and idiosyncratic nature of these frameworks. 
 They relied on `proprietary' (even if open source) extensions that were not native to HTML\index{HTML} and not easily transportable across different frameworks and architectures\index{architecture}.
 This dissatisfaction led me to learn about the Web Components\index{Web Components} initiative.
@@ -359,16 +359,14 @@ My hope was that it would required little or nothing in the way of dedicated ser
 I wanted my discussion component to have some of the following attributes:
 
 \begin{enumerate}
-\item A simple API that abstracted\index{abstraction} away most implementation details.\label{motive:abstraction}
+\item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details.\label{motive:abstraction}
 
 \item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online developer tools like \url{https://jsbin.com}.
 \label{motive:cors}
 
-\item Support distributed event notification similar to the 
-publish-subscribe\index{publish-subscribe} (pubsub) design pattern.\label{motive:pubsub}
-
-In essence, `live' data updates:
-when someone replies to a post it should become instantly available to anyone viewing that thread.
+\item Event notification for changes similar to the 
+publish-subscribe\index{publish-subscribe} (pubsub) design pattern.\label{motive:pubsub} 
+For example, automatically updating when new replies are posted or existing posts are edited.
 
 \item Support Markdown\index{Markdown} formatted comments including syntax highlighting for code snippets.\label{motive:markdown}
 
@@ -377,9 +375,7 @@ internationalization\index{internationalization}
 (i18n) and 
 localization\index{localization} (l10n) features for a global audience.\label{motive:i18n}
 
-\item If any framework was used at all, it should be based on Web Components\index{Web Components}.\label{motive:webcomponents} 
-
-This instantly ruled out the vast majority of frameworks, 
+\item If any framework was used at all, it should be based on Web Components\index{Web Components}.\label{motive:webcomponents} This ruled out the vast majority of frameworks, 
 leaving only Polymer\index{Polymer} and the less-comprehensive X-Tags\index{X-Tags} project~\cite{x-tagscontributors2015} and a few other less ambitious contenders.
 
 \end{enumerate}

@@ -13,7 +13,7 @@ Discussions are grouped into topics or `threads', and within these threads, user
 Speakur\index{Speakur} 
 is a Custom Element\index{Custom Elements} 
 (\tcode{<speakur-discussion>}\index{<speakur-discussion>}) 
-that provides a drop-in discussion forum or comment hosting service for a blog, web page or other web application.
+that provides an embeddable discussion forum or comment hosting service for a blog, web page or other web application.
 Examples of Speakur's user interface\index{user interface (UI)} can be found in Figures~\ref{f:demo1} and~\ref{f:lang}.
 Placing Speakur inside a web resource is very straightforward.
 As shown in Listing~\ref{l:example1},
@@ -22,7 +22,7 @@ you simply place the \tcode{<speakur-discussion>}\index{<speakur-discussion>}
  element in your page's HTML\index{HTML} at the desired spot.
 This requires two supporting steps detailed in section \ref{publishing}:
 \begin{enumerate}
-\item loading the Web Components\index{Web Components} polyfill\index{polyfill} library script
+\item loading the Web Components\index{Web Components} polyfill\index{polyfill} script
 \item importing the \tcode{<speakur-discussion>}\index{<speakur-discussion>} element.
 \end{enumerate}
 
@@ -32,8 +32,8 @@ The messy details of structuring a discussion forum are abstracted\index{abstrac
 
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} presents a simplified interface (API)\index{API} to users.
 There are only a few options to set including the URL of the Firebase instance and the thread target URL or \tcode{href}\index{href}.
-If you do not provide your own a Firebase\index{Firebase} URL, by default, my own resource-limited database is used instead.
-Therefore serious users will wish to use their own Firebase account and instance.
+If you do not provide your own a Firebase\index{Firebase} URL, by default, my resource-limited database is used instead.
+Therefore serious users will wish to use their own Firebase account with their own database.
 
 In addition to basic commenting features, Speakur offers the ability to vote comments up or down, custom profiles, 
 the ability to leave comments in Markdown\index{Markdown} syntax~\cite{githubcontributors2015} with syntax highlighting\index{syntax highlighting} for common programming languages, 
@@ -65,7 +65,7 @@ Roy Fielding, the author of the influential REST\index{REST} web architecture\in
 At the heart of software architecture is the principle of abstraction: hiding some of the details of a system through encapsulation\index{encapsulation} in order to better identify and sustain its properties. A complex system will contain many levels of abstraction, each with its own architecture~\cite{fielding2000}.
 \end{quote}
 
-The architecture for Speakur\index{Speakur} is based on client-side (browser) JavaScript\index{JavaScript} code and HTML\index{HTML} layout following Web Components\index{Web Components} design principles. 
+The architecture for Speakur\index{Speakur} is based on client-side (browser) JavaScript\index{JavaScript} code and HTML\index{HTML} layout following Web Components\index{Web Components} design principles from section~\ref{sec:wcprinciples} below. 
 There is no dedicated server component except for the Firebase\index{Firebase} cloud database service~\cite{firebasecontributors2015}.
 Speakur is built entirely from plain HTML, JS and CSS\index{CSS} files that can be served from a content distribution network (CDN)\index{content distribution network (CDN)} 
 such as \tcode{github.io}\index{GitHub} or your own server~\cite{landers2015-d}.
@@ -117,7 +117,7 @@ Web Components\index{Web Components} developers
 for general purpose components. 
 It's worth quoting those here in full, 
 because they are applicable to software engineering\index{software engineering} in general. They are:
-
+\label{sec:wcprinciples}
 \begin{quote}
 \begin{enumerate}
 \item Address a common need.\label{wcp:commonneed}
