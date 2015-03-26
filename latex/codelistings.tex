@@ -124,9 +124,14 @@
 % \renewcommand{\lstlistingname}{Algorithm}% Listing -> Algorithm
 % \renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
 
+% http://tex.stackexchange.com/questions/10159/grouping-the-list-of-listings-by-chapter
+%\let\Chapter\chapter
+%\def\chapter{\addtocontents{lol}{\protect\addvspace{10pt}}\Chapter}
+
 \def\lstlistoflistings{%
     \shortchapter*{List of Source Listings}
     \addcontentsline{toc}{chapter}{List of Source Listings}
     \pagestyle{plain}
     \baselineskip=12pt plus .5pt minus .5pt
     \@starttoc{lol}}
+
