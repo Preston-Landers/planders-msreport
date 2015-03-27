@@ -186,7 +186,7 @@ with the growth of
 Node.js\index{Node.js}, a server-side JavaScript\index{JavaScript} environment,
 and the MongoDB\index{MongoDB} NoSQL\index{NoSQL} database\index{database}~\cite{dickey2014}.
 
-Firebase\index{Firebase} provides WebSockets\index{WebSockets}-based event notification and synchronization 
+Firebase\index{Firebase} provides WebSockets\index{WebSockets}-based event notification\index{event notification} and synchronization 
 as well as a security rule description format based on 
 JSON\index{JSON}\footnote{JavaScript Object Notation (JSON)\index{JSON} is a popular data format because it's easily human-readable, 
 but its free-form structure compared to XML\index{XML} can be both a blessing and a curse.  
@@ -198,7 +198,7 @@ The use of Firebase as the only server component allows for easy deployment of S
 Firebase\index{Firebase} can be used by itself as the sole provider of data services to an application, as Speakur does, or else it can be used as an auxiliary to other services or REST\index{REST} APIs\index{API}.
 One of the key architectural benefits of using Firebase, 
 besides its ease of deployment, 
-is that its data binding and event notification system allows for 
+is that its data binding and event notification\index{event notification} system allows for 
 applications to respond to changes in real-time while remaining performant.
 
 Firebase\index{Firebase} itself provides a REST\index{REST} API\index{API} for data access by programs like Speakur.
@@ -247,7 +247,7 @@ The Firebase\index{Firebase} API\index{API} follows typical RESTful\index{REST} 
 and its metadata\index{metadata} to be addressed as a set of linked HTTP resources.
 In addition, Firebase client libraries use WebSockets\index{WebSockets}, 
 a lower-level TCP/IP\index{TCP/IP} protocol, 
-to perform event notification and distributed synchronization without the overhead of polling or high-overhead HTTP 1.1\index{HTTP} requests.
+to perform event notification\index{event notification} and distributed synchronization without the overhead of polling or high-overhead HTTP 1.1\index{HTTP} requests.
 WebSockets\index{WebSockets} are used to enhance performance but all of the data in Firebase\index{Firebase} 
 (and hence, in Speakur\index{Speakur}) 
 is accessible from the RESTful\index{REST} HTTP API\index{API} outside of a WebSocket\index{WebSockets}.
@@ -262,7 +262,7 @@ there is no direct connection or dependency between HTTP and WebSockets.
 They can be used independently.
 
 Firebase\index{Firebase} uses WebSockets\index{WebSockets} rather than traditional high-overhead HTTP\index{HTTP} requests to move data back and forth to the client.
-This always-on connection allows for sending nearly instant event notifications to all currently active clients with minimal overhead.
+This always-on connection allows for sending nearly instant event notifications\index{event notification} to all currently active clients with minimal overhead.
 In practice, this allows the application to update its state in real-time as different users read and write values the database.
 The Firebase client library 'subscribes' to an area of interest in the database, such as the replies to a particular thread, and receives notifications when these areas change and updates the local representation as appropriate.
 
@@ -305,7 +305,7 @@ The set of security rules for a Speakur database is contained in a JSON\index{JS
 For example, Speakur has defined security rules which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator.
 Here is an excerpt for the \tcode{posts} resource from the security rules file:
 
-\begin{lstlisting}[language=JavaScript,numbers=none,caption=
+\begin{lstlisting}[language=JavaScript,numbers=left,numberstyle=\scriptsize,caption=
 {Security rule for posts (user messages).},label=l:sec_rule1,captionpos=below]
 "posts": {
   ".read": true, // anyone can read posts
@@ -334,14 +334,31 @@ One big file with all the JSON formatted security expressions needed for a datab
 
 \section{Data Flow and Event Handling}
 One important area of Speakur's architecture is the flow of data within the system and responding asynchronously\index{asynchronous} to local and remote user events.
-To understand the general flow of information in Speakur (and Polymer\index{Polymer}), imagine the component as an inverted tree, with the `root' at the top 
-In this model, information flows \textit{down} through data bindings and bubbles \textit{up} through events.
+To understand the general flow of information in Speakur (and Polymer\index{Polymer}), imagine the component as an inverted tree, with the `root' at the top being the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element, 
+and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls.
+In this model, information flows \textit{down} through data bindings and bubbles \textit{up} through events\index{event notification}.
+
+Data binding\index{data-bound template} is one of the most important extensions to standard DOM that is provided by the Polymer\index{Polymer} framework. 
+This ties (or `binds') a variable from the data model to one or more spots in the shadow DOM, or else to an input or output from some other component, 
+such that any change in the variable is reflected in the bound locations.
+Two primary uses of data bindings are
+binding a custom element's representation (shadow DOM template) to live data, 
+and sending data to other elements or components~\cite{polymercontributors2015-b}. 
+Data binding helps provide separation or decoupling between the user interface or \textit{view} and the underlying data \textit{model}, 
+a design pattern that is commonly known as 
+Model-View-Controller (MVC)\index{model-view-controller}.
+A short example can be found in listing~\ref{l:dbtemplate} and a longer one in section~\ref{sec:databindings}.
+
+Although Polymer does support 2-way bindings\index{data-bound template}, 
+experience has shown that when exchanging data with external components, 1-way (top-down) bindings are easier to reason about and should be preferred.
+Bound variables should flow in one direction, generally parent to child as mentioned above.
+So how should a child communicate changes back to the parent? 
+The parent (or any other interested party) can register a DOM\index{DOM} mutation observer to be notified when the child value changes, or the child can fire an \textit{events}\index{event notification} that the parent can respond to.
 
 As mentioned in section~\ref{sec:bgmutation}, 
-DOM\index{DOM} mutation observers\index{mutation observers} are a standard way to register a callback to be run when some area of the page (DOM) changes. 
+mutation observers\index{mutation observers} are a standard way to register a callback\index{callback} to be run when some area of the page (DOM) changes. 
 A callback in this case is a function that reacts to a change in some other part of the system.
-
-TODO more here...
+This doesn't necessarily have to be tied to a specific variable like with data-bound templates\index{data-bound template} and can reflect any change in any DOM attribute for standard \textit{and} custom elements. 
 
 \section{Deployment}
 Speakur\index{Speakur} is designed to be easy to deploy\index{deployment}.
@@ -363,7 +380,7 @@ This is known as cross-origin resource sharing, or CORS\index{Cross-origin resou
 Speakur\index{Speakur} avoids a common security restriction associated with CORS known as Same-Origin Policy\index{Same-Origin Policy}, which is used to prevent a class of attacks called Cross-site Request Forgery (CSRF)~\cite{mozillacontributors2015-b}.
 It does this by relying entirely on Firebase for live data,
 which in turn uses WebSockets\index{WebSockets},
-which are not subject to Same-Origin Policy\index{Same-Origin Policy} restrictions.
+which are not subject to Same-Origin Policy\index{Same-Origin Policy} restrictions on asynchronous JavaScript HTTP\index{HTTP} requests (also known as AJAX\index{AJAX} or XMLHttpRequest\index{XMLHttpRequest}).
 This allows Speakur to be used on a site without that site having installed a copy of its files.
 
 \subsection{Dependencies}
