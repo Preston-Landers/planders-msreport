@@ -8,7 +8,63 @@
 
 Speakur\index{Speakur} is delivered as a single Custom Element\index{Custom Elements}, \tcode{<speakur-discussion>}\index{<speakur-discussion>}.
 You must import the tag with \tcode{<link rel=import href=...>} tag to make it available to place on the page. 
-This element has a \tcode{<template>}\index{<template>} that 
+This element has a data-bound\index{data-bound template} \tcode{<template>}\index{<template>} that provides the element's visual representation (shadow DOM).
+Actually, a custom element's representation, or logical DOM\index{Logical DOM}, may consist of both encapsulated shadow DOM\index{Shadow DOM} as well as light DOM\index{Light DOM} that is supplied by the \textit{user} of the custom element and \textit{projected} into the shadow DOM as discussed in section~\ref{bg:shadowdom}.
+In the case of Speakur, the discussion forum is self-contained in terms of content and light DOM is not needed or used.
+Speakur's\index{Speakur} options or parameters are controlled with attributes\index{HTML!attributes}:
+
+\begin{lstlisting}[language=HTML5,caption=
+{Using HTML attributes to set Speakur options},label=l:options1,captionpos=below]
+ <speakur-discussion
+   firebaseLocation="https://speakur-demo.firebaseio.com"
+   xtitle="This is the thread's (initial) title."
+   href="demo1"
+   initiallyOpen="true"
+   allowAnonymous="true">
+ </speakur-discussion>
+\end{lstlisting}
+
+Structurally, Speakur\index{Speakur} consists of JavaScript\index{JavaScript}, HTML, and CSS\index{CSS} files, along with a few other resource types like images and JSON\index{JSON} language files. 
+All of the these internal resources and components are hidden from consumers who only have to import and place the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element as discussed in section~\ref{publishing} below.
+
+\begin{table*}\centering
+\ra{1.3}
+\begin{tabular}{@{}lp{8cm}@{}}
+\toprule
+Name & Function \\
+\midrule
+$Structural~containers$\\
+\tcode{<speakur-discussion>} & Top-level public component. \\
+\tcode{<speakur-thread-view>} & Container for the comments displayed in an entire thread. \\
+\tcode{<speakur-card>} & Provides a Material Design\index{Material Design} `card' container. \\
+\tcode{<speakur-post-set>} & A container for a list of posts such as replies to a specific post. \\
+\\
+$Logical~services$\\
+\tcode{<speakur-base>} & Base `class' for most other Speakur components. \\
+\tcode{<speakur-i18next>} & Element wrapper around i18next library. \\
+\tcode{<speakur-profile>} & User session data and preferences. \\
+\tcode{<speakur-post-vote>} & Controller for voting posts up or down. \\
+\\
+$Interface$\\
+\tcode{<speakur-compose>} & Composing replies and posts. \\
+\tcode{<speakur-post>} & Displays a single user post/comment. \\
+\tcode{<speakur-login-button>} & Login/logout button and dropdown. \\
+\tcode{<speakur-theme>} & Base class for all themes, mainly CSS rules. \\
+\tcode{<speakur-theme-blue>} & A specific theme. \\
+\tcode{<speakur-dialog-profile>} & Dialog to edit user preferences. \\
+\tcode{<speakur-lang-select>} & Dropdown to choose the UI language. \\
+\bottomrule
+\end{tabular}
+\caption{A selection of Speakur's internal components.}
+\label{table:speakurcomponents}
+\end{table*}
+
+
+Internally, Speakur\index{Speakur} is composed of a few broad categories of sub-components that are listed in table~\ref{table:speakurcomponents}. 
+
+asdf
+
+
 
 \section{Database Design}
 \label{sec:database}

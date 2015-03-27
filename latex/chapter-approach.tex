@@ -218,7 +218,7 @@ where \tcode{\$PostId} is an identifier (id) for the post itself, and \tcode{\$P
 which could be the top-level post (thread id.) 
 In order to delete this post, one would issue an HTTP\index{HTTP} request to this URL with the \tcode{DELETE}\index{HTTP!DELETE} verb, as in this \tcode{bash} shell script snippet:
 
-\begin{lstlisting}[language=bash,numbers=none,caption=
+\begin{lstlisting}[language=bash,caption=
 {Deleting a post with the REST API.},label=l:rest_delete,captionpos=below]
 set DATABASE="https://my-firebase.firebaseio.com"
 set POST="fake_post_id"  # the post to delete
@@ -305,7 +305,7 @@ The set of security rules for a Speakur database is contained in a JSON\index{JS
 For example, Speakur has defined security rules which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator.
 Here is an excerpt for the \tcode{posts} resource from the security rules file:
 
-\begin{lstlisting}[language=JavaScript,numbers=left,numberstyle=\scriptsize,caption=
+\begin{lstlisting}[language=JavaScript,caption=
 {Security rule for posts (user messages).},label=l:sec_rule1,captionpos=below]
 "posts": {
   ".read": true, // anyone can read posts

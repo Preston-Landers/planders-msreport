@@ -65,8 +65,7 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in figur
 %\label{f:twbs2}
 %\end{figure}
 
-\begin{lstlisting}[language=HTML5,numbers=none,caption=
-{Hypothetical Bootstrap nav bar custom element.},label=l:twbs2,captionpos=below]
+\begin{lstlisting}[language=HTML5,caption={Hypothetical Bootstrap nav bar custom element.},label=l:twbs2]
  <twbs-navbar>
    <a href="#">Home</a>
    <a href="#">About</a>
@@ -153,7 +152,7 @@ Then you place your new element on the page, either declaratively in HTML:
 
 or imperatively with JavaScript\index{JavaScript}:
 
-\begin{lstlisting}[language=JavaScript,numbers=none]
+\begin{lstlisting}[language=JavaScript]
  var MyElement = document.registerElement('my-element');
 
  // instantiate a new instance of the element
@@ -165,6 +164,7 @@ With a quick example like this the result does not look all that different from 
 To do something more interesting with your custom element you will need to the other features of Web Components: Shadow DOM, templates and imports.
 
 \subsection{Shadow DOM}
+\label{bg:shadowdom}
 Shadow DOM\index{Shadow DOM} encapsulates the internal structure of an element~\cite{w3ccontributors2015}. 
 As we have seen, browsers already use Shadow DOM to encapsulate the private state of standard elements like \tcode{<video>}\index{<video>} but now this capability is extended to custom-defined elements.
 
@@ -226,9 +226,7 @@ also known as a Model-Driven View\index{Model-Driven View},
 is \textbf{not} a part of the standard HTML5\index{HTML!HTML5} template spec.
 The following example of a data bound template is something that does \textit{not} work with plain Web Components alone:
 
-\begin{lstlisting}[language=HTML5,
-caption={An example of a data-bound template.},label=l:dbtemplate,captionpos=below,
-numbers=none]
+\begin{lstlisting}[language=HTML5,caption={An example of a data-bound template.},label=l:dbtemplate]
 	<template> 
 		The temperature is {{ temp }} in {{ city }} right now.
 	</template>
@@ -238,7 +236,7 @@ Google\index{Google} engineers have advanced a proposal for standardizing
 Model-Driven Views\index{Model-Driven View}
 but it is not yet part of the standard \tcode{<template>} element~\cite{googledevelopers2014}.
 Instead this functionality can be handled by a JavaScript\index{JavaScript} framework such as React or Polymer.
-Data-bound templates are discussed in more detail in the following chapter.
+Data-bound templates are discussed in more detail in the following chapters.
 
 The primary benefit of HTML Templates\index{HTML!Templates} from a performance perspective is that external resources referenced from the template (images, stylesheets, etc) will not be fetched until the template is actually instantiated.
 Templates are often used to declare the internal structure (shadow DOM\index{Shadow DOM}) of custom elements. 
@@ -276,7 +274,7 @@ The Selector\index{Selectors} API was officially standardized in 2013 and browse
 The JS selector API allow you to quickly find DOM elements based on a rule-based description string (the selector) to perform further operations on their state such as reading or modifying data, observing future changes, attaching animations, and so on. 
 The following example shows how to populate a JS variable with the element that has the \tcode{id} attribute equal to \tcode{some-id}:
 
-\begin{lstlisting}[language=JavaScript,numbers=none]
+\begin{lstlisting}[language=JavaScript,caption={JavaScript query selector example.}]
 	// find an element whose id is equal to 'some-id'
 	var someElem = document.querySelector("#some-id");
 \end{lstlisting}
