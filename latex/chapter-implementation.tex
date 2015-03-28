@@ -88,13 +88,14 @@ Logical elements are also used to provide abstract `controllers'
 facades, pseudo-OOP\index{object oriented programming (OOP)} base classes and other design patterns.
 
 \begin{figure}[htb]
-	\centering
+	\centerline{
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/file_layout_a.png}
 	\end{subfigure} %
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/file_layout_b.png}
 	\end{subfigure} %
+	}
 	\caption{Internal elements file layout (partial).}
 	\label{f:file_layout}
 \end{figure}
@@ -181,7 +182,21 @@ which can be difficult in a more sophisticated application.
 \section{Synchronization}
 \label{sec:sync}
 
-\subsection{Data Bindings}
+Speakur\index{Speakur} consists of a number of Polymer components which break down the problem of presenting a discussion forum into smaller tasks.
+Some of these components are listed in table~\ref{table:speakurcomponents}.
+They form a hierarchy with <speakur-discussion> at the top (root). 
+Figure~\ref{f:component_layout} illustrates this, with many components omitted for brevity.
+
+\begin{figure}[htb]
+	\centerline{\includegraphics[width=6.2in]{images/components.png}}
+	\caption{Speakur component hierarchy (partial).}
+	\label{f:component_layout}
+\end{figure}
+
+Blah blah...
+
+
+\subsection{Data Bindings and Events}
 \label{sec:databindings}
 
 \subsection{Data-Bound Templates}
