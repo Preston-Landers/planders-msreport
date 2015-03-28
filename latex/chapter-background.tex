@@ -277,6 +277,8 @@ The following example shows how to populate a JS variable with the element that 
 \begin{lstlisting}[language=JavaScript,caption={JavaScript query selector example.}]
 	// find an element whose id is equal to 'some-id'
 	var someElem = document.querySelector("#some-id");
+	if (someElem) console.log("Found it!");
+	else console.log("Wasn't there.");
 \end{lstlisting}
 
 

@@ -175,7 +175,7 @@ but they are also used as `base classes' for
 which implement the so-called `Material Design'\index{Material Design} look and feel (design language) used by apps for Google's\index{Google} Android\index{Android} mobile\index{mobile} operating system~\cite{imura2015}.
 Speakur's\index{Speakur} layout is composed of native HTML5 elements, 
 Core and Paper Elements, 
-and Speaker's own custom elements that are used to abstract\index{abstraction} internal implementation details.
+and Speaker's own custom elements that are used to abstract\index{abstraction} internal details.
 
 \section{Data store and synchronization}
 All persistent data in Speakur is stored in a cloud database\index{database} called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
@@ -306,7 +306,7 @@ For example, Speakur has defined security rules which prohibit anyone from editi
 Here is an excerpt for the \tcode{posts} resource from the security rules file:
 
 \begin{lstlisting}[language=JavaScript,caption=
-{Security rule for posts (user messages).},label=l:sec_rule1,captionpos=below]
+{Security rule for \tcode{posts} (user messages).},label=l:sec_rule1,captionpos=below]
 "posts": {
   ".read": true, // anyone can read posts
   ".write": false,  // deny modification by default
@@ -328,7 +328,7 @@ As seen in listing~\ref{l:sec_rule1} above, this setup has certain pros and cons
 On one hand, it's logically designed and the expressions provide a powerful and fairly comprehensive way to specify the 
 security\index{security} and authorization\index{authorization} logic for your database.
 On the other hand, non-trivial rule expressions can get awkwardly long and in complex cases can devolve into a maze of nested ternary operators.
-One big file with all the JSON formatted security expressions needed for a database works great for simpler cases but may become unwieldy in a more complex application.
+Having one big file with all the JSON formatted security expressions needed for a database works great for simpler cases but may become unwieldy in a more complex application.
 
 % Move the above to the analysis section?
 
@@ -353,7 +353,7 @@ Although Polymer does support 2-way bindings\index{data-bound template},
 experience has shown that when exchanging data with external components, 1-way (top-down) bindings are easier to reason about and should be preferred.
 Bound variables should flow in one direction, generally parent to child as mentioned above.
 So how should a child communicate changes back to the parent? 
-The parent (or any other interested party) can register a DOM\index{DOM} mutation observer to be notified when the child value changes, or the child can fire an \textit{events}\index{event notification} that the parent can respond to.
+The parent (or any other interested party) can register a DOM\index{DOM} mutation observer to be notified when the child value changes, or the child can fire an \textit{event}\index{event notification} that the parent can respond to.
 
 As mentioned in section~\ref{sec:bgmutation}, 
 mutation observers\index{mutation observers} are a standard way to register a callback\index{callback} to be run when some area of the page (DOM) changes. 
@@ -380,8 +380,8 @@ This is known as cross-origin resource sharing, or CORS\index{Cross-origin resou
 Speakur\index{Speakur} avoids a common security restriction associated with CORS known as Same-Origin Policy\index{Same-Origin Policy}, which is used to prevent a class of attacks called Cross-site Request Forgery (CSRF)~\cite{mozillacontributors2015-b}.
 It does this by relying entirely on Firebase for live data,
 which in turn uses WebSockets\index{WebSockets},
-which are not subject to Same-Origin Policy\index{Same-Origin Policy} restrictions on asynchronous JavaScript HTTP\index{HTTP} requests (also known as AJAX\index{AJAX} or XMLHttpRequest\index{XMLHttpRequest}).
-This allows Speakur to be used on a site without that site having installed a copy of its files.
+which are not subject to Same-Origin Policy\index{Same-Origin Policy} restrictions on asynchronous JavaScript HTTP\index{HTTP} requests (also known as AJAX\index{AJAX} or \tcode{XMLHttpRequest}\index{XMLHttpRequest}).
+This allows Speakur to be used on a site without that site having installed a copy of its files or directly serving them to clients.
 
 \subsection{Dependencies}
 Like most applications, Speakur\index{Speakur} relies heavily on other libraries and frameworks to implement some of its underlying behaviors. 
@@ -393,21 +393,21 @@ See Appendix 2 for the full list of Speakur's\index{Speakur} direct dependencies
 Taking advantage of the de-duping\index{de-duping} feature of HTML Imports\index{HTML!Imports}
 requires that you name the path to your resources and dependencies in a consistent fashion.
 In other words, if component A and component B both require component Z, both A and B must use the same URL when requesting (importing) component Z.
-Furthermore, each of these dependencies must also follow this same pattern when importing their own dependencies.
+Furthermore, each of Z's dependencies must also follow this same pattern when importing their own dependencies in order to fully realize de-duping\index{de-duping}.
 Therefore Speakur follows the recommendation of the Polymer\index{Polymer} framework and uses Bower\index{Bower} to manage dependencies~\cite{bowercontributors2015}. 
 Speakur only has to list which packages it needs, either by name or their Git\index{Git} repository address, 
 and Bower\index{Bower} handles downloading these to a managed component directory alongside Speakur itself.
 
 \subsection{Vulcanize}
 One possible `problem' with adopting Web Components\index{Web Components} architecture\index{architecture} is that it encourages the partition of a large application into numerous smaller components or files.
-Of course, that is really a \textit{feature} designed to enhance code organization, encapsulation\index{encapsulation} and productivity, 
+Of course, this is really a \textit{feature} designed to enhance code organization, encapsulation\index{encapsulation} and productivity, 
 but it has one important side effect: 
 under the HTTP\index{HTTP} 1.1 protocol that powers the web, each small component requires a separate request which degrades page loading times.
 Techniques like \tcode{Keep-Alive} headers can help, and the forthcoming HTTP 2.0\index{HTTP!HTTP 2.0} will address this question more comprehensively.
 
 In the meantime, the Polymer\index{Polymer} project provides a tool called Vulcanize\index{Vulcanize} which concatenates and minifies\index{minify} your web components into a single file.
 Concatenation puts all of the required text resources (HTML, CSS, and JS) into a 
-single\footnote{Except when Content Security Policy (CSP)\index{content security policy (CSP)} requires enforced separation of HTML, CSS, and JS. In this case, three files are used.}
+single\footnote{Except when Content Security Policy (CSP)\index{content security policy (CSP)} requires the enforced separation of HTML, CSS, and JS. In this case, three files are used.}
 file to reduce the number of HTTP\index{HTTP} requests.
 Minification\index{minify} removes all comments, whitespace and non-essential elements from the code to compact it and reduce transfer times.
 Whether using Vulcanize results in an overall faster site ultimately depends on a number of factors including how and when the components are used.
