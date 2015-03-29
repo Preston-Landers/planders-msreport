@@ -55,7 +55,7 @@ Even then, conflicts are inevitable when the entire page is treated as a single 
 
 What if instead one could create and share a reusable chunk of functionality --- a web component -- that hid all of these tedious structural details and encapsulated its private, internal state? 
 What if web authors could create their \textit{own} HTML elements?  
-Using Bootstrap's navigation bar could be as easy as replacing the code in figure~\ref{f:twbs1} with a custom element like the one in the following example:
+Using Bootstrap's navigation bar could be as easy as replacing the code in Figure~\ref{f:twbs1} with a custom element like the one in the following example:
 
 % 
 %\begin{figure}[htb]
@@ -101,7 +101,7 @@ Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (inter
 \label{f:html5video}
 \end{figure}
 
-At the bottom of Figure~\ref{f:html5video} a small \tcode{\#player-api} tag is visible in the DOM path.
+A small \tcode{\#player-api} tag is visible in the DOM path at the bottom of Figure~\ref{f:html5video}.
 This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
 
 This example illustrates three component design principles that are widely followed in other areas of software engineering\index{software engineering}~\cite{fowler2012}:
@@ -180,7 +180,7 @@ and then project that content through its shadow DOM,
 therefore its visual representation.
 In the example in Listing~\ref{l:twbs2} above, 
 a \textbf{\tcode{<twbs-navbar>}} element consumes a set of three 
-\textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like the example in figure~\ref{f:twbs1}, 
+\textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like the example in Figure~\ref{f:twbs1}, 
 projecting the set of links into the nav menu structure with appropriate wrappers.
 
 The \tcode{<content>}\index{<content>} tag is used inside a custom element's template to indicate the spot where the consumed (wrapped) content should be \textit{projected}. 
@@ -191,7 +191,7 @@ Together the shadow DOM and light DOM form the \textit{logical DOM}\index{Logica
 It is also possible for elements to have multiple shadow DOM sub-trees. 
 This is used particularly for emulating object-oriented-like inheritance relationships between custom elements.
 
-In languages like C\#\index{C\#} and Java\index{Java}, the encapsulation\index{encapsulation} of classes and the protection of private object fields are a relatively strong guarantee by the language.
+In languages like C\#\index{C\# language} and Java\index{Java}, the encapsulation\index{encapsulation} of classes and the protection of private object fields are a relatively strong guarantee by the language.
 JavaScript\index{JavaScript} variables can be protected by \textit{closures}\index{closure}
 but shadow DOM and CSS\index{CSS} are not completely and utterly isolated from the containing page.
 It is possible to ``reach inside'' and break encapsulation to at least some degree, 
@@ -200,7 +200,7 @@ but the point is that this must be an intentional act by the developer and not a
 \subsection{HTML Imports}
 One significant problem faced by web developers is the lack of any built-in packaging system for modules in HTML.
 Prior to Web Components there was no way to import a snippet of HTML or JavaScript\index{JavaScript} from an external location and insert it exactly one time into the current document, 
-similar to an \tcode{\#include} directive in the C language or the packaging and import systems popular in scripting languages\index{Scripting languages}
+similar to an \tcode{\#include}\index{\tcode{\#include}} directive in the C language\index{C language} or the packaging and import systems popular in scripting languages\index{scripting languages}
 like Python\index{Python language}, Go\index{Go language} and Ruby\index{Ruby language}. 
 JavaScript could always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this did not ensure that resources were loaded and executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
 A component that uses a certain JS resource might be needed in two different spots on the page, 
@@ -305,7 +305,7 @@ The following example shows how to populate a JS variable with the element that 
 
 \subsection{Responsive Layout for Mobile}
 
-The rise of smartphones\index{smartphones} and other mobile\index{mobile} devices has accelerated the need for web developers to make their applications responsive to the type of client used to access it.
+The rise of smartphones and other mobile\index{mobile} devices has accelerated the need for web developers to make their applications responsive to the type of client used to access it.
 Creating a web site or application that adjusts to the smaller screen of a mobile phone is often known as \textit{responsive design}\index{responsive design}.
 Before the addition of responsive design features to the HTML\index{HTML} spec, 
 it was always possible to make manual layout adjustments in JavaScript\index{JavaScript} but this was sometimes brittle and error-prone.

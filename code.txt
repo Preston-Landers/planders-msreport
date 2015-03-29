@@ -1,0 +1,69 @@
+// speakur-lang-select.js
+domReady: function () {
+    this.$.menu.addEventListener('core-select', function (e) {
+        if (e.detail.isSelected) {
+            var oldLocale = this.locale;
+            var newLocale = e.detail.item.id;
+            this.fire('speakur-locale-change', 
+               {oldLocale: oldLocale, newLocale: newLocale});
+        }
+    });
+}
+
+
+
+// speakur-discussion.html (data binding)
+<speakur-i18next 
+    locale="{{ currentLocale }}">
+</speakur-i18next>
+
+// speakur-discussion.js
+eventDelegates: {
+    'speakur-locale-change': 'localeChanged'
+}
+
+localeChanged: function (e, details, sender) {
+    // Tells the i18next element to change locales
+    this.currentLocale = details.newLocale;
+    e.stopPropagation();
+}
+
+
+<firebase-element
+   data="{{post}}"
+   location=
+     "{{fbLocation(firebaseLocation, 'posts', parentId, postId) }}">
+</firebase-element>
+
+
+<template 
+ if="{{canEditPost(post, globals.profile, globals.isAdmin)}}">
+  <div on-click="{{editPost}}">
+    {{ 'Edit' | $$(lc) }}
+  </div>
+</template>
+
+
+// speakur-en.json
+{
+  "View Comments": null,
+  "apples_oranges": "Mary has __apples__ apples and __oranges__ oranges.",
+  "replies_count": "__count__ reply",
+  "replies_count_plural": "__count__ replies"
+}
+
+// speakur-fr.json
+{
+    "View Comments": "Voir les commentaires",
+    "apples_oranges": "Marie a __apples__ pommes et __oranges__ oranges.",
+    "replies_count": "réponse de __count__",
+    "replies_count_plural": "__count__ réponses"
+}
+
+// speakur-ru.json
+{
+    "View Comments": "Посмотреть комментарии",
+    "apples_oranges": "Мэри имеет __apples__ яблоки и апельсины __oranges__.",
+    "replies_count": "ответ __count__",
+    "replies_count_plural": "__count__ ответы"
+}

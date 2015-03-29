@@ -102,6 +102,7 @@ and data security\index{security} rules described below.
 The simplicity of this arrangement makes it easier to fit Speakur\index{Speakur} into almost any web application architecture\index{architecture}.
 
 \section{Responsive Design}
+\label{bg:mobile}
 Although `native' apps are frequently preferred by mobile users and developers, 
 the mobile web remains an important development platform for the same reason that 
 desktop web apps live alongside native desktop apps; 
@@ -123,9 +124,9 @@ and CSS \tcode{@media}\index{@media} rules that apply varied styles to different
 In addition, Speakur's JavaScript\index{JavaScript} code exposes a \tcode{smallScreen} flag to the HTML templates\index{HTML!templates} that can trigger layout adjustments, 
 such as moving the user photo to a different location.
 
-The desktop version in figure~\ref{f:demo1} shows the user photo to the left of the main post area, 
-but the mobile version in figure~\ref{f:mobile1} shows how the user photo is moved to the right side of the post header. 
-A CSS\index{CSS} \tcode{@media}\index{@media} rule for small screens disables the indentation of replies shown at the bottom of figure~\ref{f:demo1}. 
+The desktop version in Figure~\ref{f:demo1} shows the user photo to the left of the main post area, 
+but the mobile version in Figure~\ref{f:mobile1} above shows how the user photo is moved to the right side of the post header. 
+A CSS\index{CSS} \tcode{@media}\index{@media} rule for small screens disables the indentation of replies shown at the bottom of Figure~\ref{f:demo1}. 
 The extensive use of CSS flex\index{Flex} box attributes ensures that structural elements like headers and toolbars automatically adjust their layout to available space. 
 This will be described in more detail in section~\ref{sec:responsive}.
 
@@ -207,7 +208,6 @@ but in Roy Fielding's original 2000 Ph.D. thesis,
 REST\index{REST} refers to transferring \textit{representations} of application state and using hypertext as the engine of 
 application state\index{HATEOAS}\footnote{Known under the somewhat awkward acronym of HATEOAS\index{HATEOAS}.}~\cite{fielding2000}.
 Specifically, `objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP!verbs} such as PUT\index{HTTP!PUT} and DELETE\index{HTTP!DELETE}.
-
 For example, in a Speakur\index{Speakur} thread, a particular user comment (post) is an abstract \textit{resource} located at the following uniform resource locator (URL):
 
 \tcode{https://YOUR-DB.firebaseio.com/posts/\$ParentId/\$PostId}
@@ -244,7 +244,7 @@ Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\i
 \end{enumerate}
 
 The Firebase\index{Firebase} API\index{API} follows typical RESTful\index{REST} patterns in data access, allowing the database\index{database} 
-and its metadata\index{metadata} to be addressed as a set of linked HTTP resources.
+and its metadata\index{metadata} to be addressed as a set of linked HTTP resources starting from a single root.
 In addition, Firebase client libraries use WebSockets\index{WebSockets}, 
 a lower-level TCP/IP\index{TCP/IP} protocol, 
 to perform event notification\index{event notification} and distributed synchronization without the overhead of polling or high-overhead HTTP 1.1\index{HTTP} requests.
@@ -300,31 +300,31 @@ Thread owners also have the option of allowing anonymous posts by users who are 
 
 \subsection{Authorization}
 Authorization\index{authorization} security\index{security} rules determine what level of access a user has within the system and what they are allowed to do or see.
-Speakur's\index{Speakur} actual rules are described in greater detail in section~\ref{sec:security}.
+Speakur's\index{Speakur} security\index{security} rules are described in more detail in section~\ref{sec:security}.
 The set of security rules for a Speakur database is contained in a JSON\index{JSON} encoded file that contains expressions that determined whether a given database read or write (change) is allowed. 
 For example, Speakur has defined security rules which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator.
 Here is an excerpt for the \tcode{posts} resource from the security rules file:
 
+\begin{changemargin}{-0.5cm}{-1cm}
 \begin{lstlisting}[language=JavaScript,caption=
 {Security rule for \tcode{posts} (user messages).},label=l:sec_rule1,captionpos=below]
 "posts": {
   ".read": true, // anyone can read posts
   ".write": false,  // deny modification by default
-
   "$parentId": {
     "$childId": {
       // must be admin or post owner to modify a post.
       ".write": "data.exists() ? ( auth.uid === data.child('author').child('uid').val() || root.child('admins').child(auth.uid).child('scope').val() === '*' ) : true",
-      
       // validate structure of new posts
       ".validate": "newData.hasChildren(['threadId', 'text', 'author']) && newData.child('timestamp').val() > 1"
     }
   }
 }
 \end{lstlisting}
+\end{changemargin}
 
 This rule structure is dictated by the architecture\index{architecture} of Firebase\index{Firebase}.
-As seen in listing~\ref{l:sec_rule1} above, this setup has certain pros and cons. 
+This setup has certain pros and cons that can be seen from Listing~\ref{l:sec_rule1}. 
 On one hand, it's logically designed and the expressions provide a powerful and fairly comprehensive way to specify the 
 security\index{security} and authorization\index{authorization} logic for your database.
 On the other hand, non-trivial rule expressions can get awkwardly long and in complex cases can devolve into a maze of nested ternary operators.
@@ -335,7 +335,7 @@ Having one big file with all the JSON formatted security expressions needed for 
 \section{Data Flow and Event Handling}
 One important area of Speakur's architecture is the flow of data within the system and responding asynchronously\index{asynchronous} to local and remote user events.
 To understand the general flow of information in Speakur (and Polymer\index{Polymer}), imagine the component as an inverted tree, with the `root' at the top being the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element, 
-and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls.
+and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls as shown in Figure~\ref{f:component_layout}.
 In this model, information flows \textit{down} through data bindings and bubbles \textit{up} through events\index{event notification}.
 
 Data binding\index{data-bound template} is one of the most important extensions to standard DOM that is provided by the Polymer\index{Polymer} framework. 
@@ -347,7 +347,7 @@ and sending data to other elements or components~\cite{polymercontributors2015-b
 Data binding helps provide separation or decoupling between the user interface or \textit{view} and the underlying data \textit{model}, 
 a design pattern that is commonly known as 
 Model-View-Controller (MVC)\index{model-view-controller}.
-A short example can be found in listing~\ref{l:dbtemplate} and a longer one in section~\ref{sec:databindings}.
+A short example can be found in Listing~\ref{l:dbtemplate} and a longer one in section~\ref{sec:databindings}.
 
 Although Polymer does support 2-way bindings\index{data-bound template}, 
 experience has shown that when exchanging data with external components, 1-way (top-down) bindings are easier to reason about and should be preferred.
@@ -367,10 +367,8 @@ Adding a discussion forum to a blog or web app is as simple as altering the page
 \begin{enumerate}
 \item load Polymer's\index{Polymer} Web Components\index{Web Components} polyfill\index{polyfill},
 \item import the \tcode{<speakur-discussion>}\index{<speakur-discussion>} element,
-\item then place \tcode{<speakur-discussion>}\index{<speakur-discussion>} on the page at the desired location.
+\item then place \tcode{<speakur-discussion>}\index{<speakur-discussion>} on the page at the desired location. 
 \end{enumerate}
-
-This process is discussed further in section~\ref{publishing}. 
 
 Because steps 1 and 2 above can load these resources from an external service or content delivery network\index{content delivery network (CDN)},
 Speakur does not require installing any software to the web host serving the blog/app.

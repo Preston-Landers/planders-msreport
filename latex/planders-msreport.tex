@@ -18,6 +18,18 @@
 %\usepackage[driver=pdftex,margin=1.2in,letterpaper]{geometry}
 %\usepackage[driver=xetex,margin=1.2in,letterpaper]{geometry}
 
+\usepackage{geometry}
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Optional packages used for this sample dissertation. If you don't  %
@@ -422,7 +434,7 @@ Subsidiary topics include assessing the maturity and suitability of current Web 
 \appendices
 \index{Appendices@\emph{Appendices}}%
 
-\include{chapter-appendix1}
+%\include{chapter-appendix1}
 
 \include{chapter-appendix2}
 
