@@ -42,20 +42,20 @@ The rest of the components are brought in by imports inside \tcode{<speakur-disc
 \toprule
 Name & Function \\
 \midrule
-$Structural~containers$\\
+\textbf{Structural~containers}\\
 \tcode{<speakur-discussion>} & Top-level public component. \\
 \tcode{<speakur-thread-view>} & Container for the comments displayed in an entire thread. \\
 \tcode{<speakur-card>} & Provides a Material Design\index{Material Design} `card' container. \\
 \tcode{<speakur-post-set>} & A container for a list of posts such as replies to a specific post. \\
 \\
-$Logical~services$\\
-\tcode{<firebase-element>}\index{<firebase-element>} & Web Component wrapper around Firebase\index{Firebase}. \\
+\textbf{Logical~services}\\
+\tcode{<firebase-element>}\index{<firebase-element>} & Polymer's\index{Polymer} Web Component wrapper around Firebase\index{Firebase}. \\
 \tcode{<speakur-base>} & Base-class for most other Speakur components. \\
-\tcode{<speakur-i18next>} & WC wrapper around i18next library. \\
+\tcode{<speakur-i18next>} & My Web Component wrapper around the i18next library~\cite{i18nextcontributors2015}. \\
 \tcode{<speakur-profile>} & Users' session data and preferences. \\
 \tcode{<speakur-post-vote>} & Controller for voting posts up or down. \\
 \\
-$User~Interface$\\
+\textbf{User~Interface}\\
 \tcode{<speakur-compose>} & Composing replies and posts. \\
 \tcode{<speakur-post>} & Displays a single user post/comment. \\
 \tcode{<speakur-login-button>} & Login/logout button and dropdown. \\
@@ -82,7 +82,7 @@ They perform data-related services, provide purely abstract APIs, and wrap exter
 For example, the Firebase\index{Firebase} client library is a general purpose JavaScript library, and is not specifically adapted to Web Components or custom elements.
 Therefore it is often useful to provide a custom element wrapper around a non-WC-aware library.
 For this reason the Polymer project maintains \tcode{<firebase-element>}\index{<firebase-element>} as a wrapper around the main Firebase library~\cite{polymercontributors2015-c}.
-Within Speakur, each component gets its data either directly from its own internal \tcode{<firebase-element>}\index{<firebase-element>}, or else from a data binding from a parent element that it got from its own \tcode{<firebase-element>}\index{<firebase-element>}.
+Within Speakur, each component gets its data either directly from its own internal \tcode{<firebase-element>}\index{<firebase-element>}, or else from a data binding from an immediate parent element that has its own \tcode{<firebase-element>}\index{<firebase-element>}.
 
 Figure~\ref{f:file_layout} shows a partial listing of the internal component files.
 One of these is abstraction layer for an internationalization\index{internationalization} library.
@@ -164,7 +164,7 @@ a given record is not guaranteed to follow any particular structure unless this 
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.95\textwidth]{images/firebase_admin_posts_b.png}
+\includegraphics[width=0.93\textwidth]{images/firebase_admin_posts_b.png}
 \caption{Structure of the \tcode{posts} table.}
 \label{f:firebase_admin_posts}
 \end{figure}
@@ -182,7 +182,7 @@ Figure~\ref{f:firebase_admin_posts} shows Firebase's administrative view of the 
 showing the parent and child id layers, 
 and the actual post nested within.
 Deeply nested data structures are not good for scalability; 
-relatively flat tables are best.
+relatively flat tables are best~\cite{firebasecontributors2015,sadalage2012}.
 The key structure will become important when we apply security rules in section~\ref{sec:security}.
 
 
@@ -253,10 +253,11 @@ whether locally or remotely initiated,
 will be reflected in the \tcode{post} variable
 and any associated data-bound\index{data-bound template} \tcode{<template>}\index{<template>}s, 
 and vice-versa.
-Note that the \textit{source} URL of this \tcode{<firebase-element>}\index{<firebase-element>} 
-is itself a \tcode{\{\{ \}\}} bound variable (\tcode{location}) which finds the location with the \tcode{fbLocation} method.
+Note that the \tcode{location=} attribute (the database source URL for this \tcode{<firebase-element>}\index{<firebase-element>})
+is bound to an expression which finds the location with the \tcode{fbLocation} method.
 Any changes in the variables \tcode{firebase\-Location}, \tcode{parentId} or \tcode{postId} will cause \tcode{fbLocation} to be recomputed,
 which could in turn cause \tcode{post} to pull from a different location.
+Note that \tcode{location=} has the same structure as the resource path in the \tcode{DELETE} example from Listing~\ref{l:rest_delete}.
 
 DOM events carry state changes up from children to elements above it.
 Polymer provides the \tcode{fire()} method to trigger a named event with extra data attached.
@@ -298,7 +299,7 @@ This allows embedding variables directly in the HTML representation of a compone
 <!-- from speakur-post-footer.html -->
 <div on-click="{{editPost}}" hidden?=
     "{{!canEditPost(post, globals.profile, globals.isAdmin)}}">
-  {{ 'Edit' | $$(lc) }}
+  {{ "Edit" | $$(lc) }}
 </div>
 \end{lstlisting}
 
@@ -335,7 +336,7 @@ Future versions may support additional identity providers like GitHub\index{GitH
 
 Inside Speakur, authentication is handled by the \tcode{<firebase-login>} element, provided by \tcode{<firebase-element>}~\cite{polymercontributors2015-c}.
 A binding is set up between that and the \tcode{user} variable in \tcode{<speakur-discussion>}\index{<speakur-discussion>} so that when user authentication is completed, the \tcode{user} variable contains an object with user properties like their authentication ID and other data.
-The authentication\index{authentication} session is automatically used by any \tcode{<firebase-element>} anywhere on the page provided their \tcode{location=} points to the same database URL.
+The authentication\index{authentication} session is automatically used by any \tcode{<firebase-element>} anywhere on the page provided that their \tcode{location=} points to the same database base URL.
 
 \subsection{Firebase Security Policy Rules}
 \label{sec:fbsecurity}
@@ -382,7 +383,7 @@ Of course, the users' posts themselves are not translated; just the application'
 
 The i18next library loads translation strings out of JSON\index{JSON} files, one for each supported language.
 The current translations were obtained by taking the English language file and passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh},
-a Python\index{Python} package that I wrote for another project~\cite{landers2015-b}.
+a Python\index{Python language} package that I wrote for another project~\cite{landers2015-b}.
 The i18next library includes the ability to handle variable interpolation insertion points and pluralization rules which are important for producing grammatically correct text.
 Here is a short excerpt from the English file followed by the Russian version:
 
@@ -410,7 +411,7 @@ The other two keys illustrate variable interpolation and pluralization logic whe
 in this case the number of replies that a post has.
 These translation strings would be used in a template like:
 
-\begin{lstlisting}[language=HTML5,caption={Internationalizing a data-bound template.},label=l:i18n_template,captionpos=below]
+\begin{lstlisting}[float,language=HTML5,caption={Internationalizing a data-bound template.},label=l:i18n_template,captionpos=below]
 <!-- from speakur-post.html -->
 <div class='post-replies-count'>
   {{ 'replies' | $$({count: replyCount}, lc) }}
