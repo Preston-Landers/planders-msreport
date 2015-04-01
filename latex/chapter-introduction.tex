@@ -159,25 +159,26 @@ abstraction\index{abstraction} for content authors, web engineers, and applicati
 
 The Background section provides an introduction to some of the architectural problems inherent in modern web authoring and how Web Components\index{Web Components} (WC) address them. 
 It also provides some background the on software engineering design patterns that are embodied in Web Components such as encapsulation and composition.
-It describes some of the motivations behind the development of Speakur\index{Speakur} and some of the specific software engineering questions it addresses, such as the ability to provide a hassle-free way to host an embedded discussion forum inside an arbitrary web resource in a way that is fully encapsulated.
+It describes some of the motivations behind the development of Speakur\index{Speakur} and some of the specific software engineering questions it addresses.
 
-The Approach section describes the high level software architecture\index{architecture} choices behind Speakur and details the specific structures and techniques used when constructing a Web Component.
+The Approach section describes the high level software architecture\index{architecture} choices behind Speakur and details the specific structures and techniques used when constructing Web Components\index{Web Components}.
 It describes how Speakur\index{Speakur} uses WC to implement encapsulated\index{encapsulation} modules whose internals are protected from unintentional outside influence. 
-It also describes how the choice of the Firebase\index{Firebase} cloud database service and its WebSocket-based\index{WebSockets} event notification system impacts Speakur's architecture.
+It also describes how the choice of the Firebase\index{Firebase} cloud database service, its WebSocket-based\index{WebSockets} event notification system, and its security subsystem have impacted Speakur's architecture.
 
 The Implementation section shows how to apply Web Component\index{Web Components} principles to the task of creating a flexible and generic discussion forum for both desktop and mobile browsers. 
-It describes the low level architecture\index{architecture}, code flow, and synchronization process.
-An important topic in this section is security\index{security}: how can we implement a largely client-based system while maintaining some kind of data integrity?
+It describes the low level architecture\index{architecture}, code flow, and data synchronization process, 
+as well as how to internationalize\index{internationalization} an JavaScript application such that the interface language (locale) can be switched on the fly.
+Another important topic in this section is security\index{security}: how can we implement a largely client-based system while maintaining some kind of data integrity?
 
-This is followed by an Analysis section which discusses some of the outcomes as compared to the original goals and also looks at the impact of the selection of Web Components\index{Web Components}, Polymer\index{Polymer}, Firebase\index{Firebase} and some of the other architectural choices. 
-A few quantitative results are included, I hope \textbf{(TODO)}.
-
-Finally, the Conclusion section is there and wraps up the report with various words \textbf{(TODO)}. 
+This is followed by an Analysis section which discusses some of the outcomes 
+as compared to the original goals and also looks at the impact of the selection of Web Components\index{Web Components}, 
+Polymer\index{Polymer}, Firebase\index{Firebase} and some of the other architectural\index{architecture} choices. 
+Finally, the Conclusion summarizes how the Web Components\index{Web Components} initiative will impact the future of software engineering\index{software engineering} for the web. 
 
 \section{Source code and demonstration resources}
 \index{Speakur source code@\emph{Speakur source code}}%
 
-The source code for Speakur consists of HTML\index{HTML} and JavaScript\index{JavaScript} files located in a Git\index{Git} version control repository. 
+The source code for Speakur\index{Speakur} consists of HTML\index{HTML} and JavaScript\index{JavaScript} files located in a Git\index{Git} version control repository. 
 These files constitute an \textit{HTML Import}\index{HTML!Imports} package that provides a
 \textbf{\tcode{<speakur-discussion>}}
 custom HTML element\index{Custom Elements} for the use of web authors in their own pages.

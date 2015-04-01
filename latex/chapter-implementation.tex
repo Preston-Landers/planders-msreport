@@ -115,7 +115,7 @@ Elements are also reused extensively in different contexts;
 for example \tcode{<speakur-post>} is used for a `live editor preview' inside \tcode{<speakur-compose>} as well as for showing posts in the main \tcode{<speakur-thread-view>.}
 
 Some of Speakur's internal components like \tcode{<speakur-theme>} are also `base classes' for other elements
-in a way that is similar but not identical to classes in object oriented programming (OOP)\index{object oriented programming (OOP)}\footnote{Note that JavaScript\index{JavaScript} itself is \textit{prototype}-based\index{prototype \textit{(JavaScript)}} and does not have traditional classes or inheritance. 
+in a way that is similar but not identical to classes in object oriented programming (OOP)\index{object oriented programming (OOP)}\footnote{Note that JavaScript\index{JavaScript} itself is \textit{prototype}-based\index{prototype (JavaScript)} and does not have traditional classes or inheritance. 
 Similar behavior is obtained by using regular object instances (instead of classes) as the prototype for instantiating new objects.}. 
 Although composition or \textit{has-a} relationships are generally preferred, inheritance or \textit{is-a} relationships can make sense when you truly want to be able to substitute one instance for another interchangeably.
 
@@ -123,7 +123,7 @@ Although composition or \textit{has-a} relationships are generally preferred, in
 \label{sec:database}
 
 Speakur uses Firebase for NoSQL\index{NoSQL}-style database storage.
-Traditional relational databases\index{relational database} (SQL\index{SQL}) have emphasized data normalization\index{normalization} -- the removal of informational redundancies from databases such that a given \textit{fact} is only recorded in a single place.
+Traditional relational databases\index{relational database} (SQL\index{SQL}) have emphasized data normalization\index{normalization (database)} -- the removal of informational redundancies from databases such that a given \textit{fact} is only recorded in a single place.
 While this helps ensure data integrity, it can adversely affect query time and scalability as additional joins are required to bring in the necessary facts.
 One of the defining characteristics of the NoSQL movement is denormalization\index{denormalization}
 --- that is, the principle of eliminating redundancy is sacrificed in order to gain performance~\cite{sadalage2012}.
@@ -285,15 +285,16 @@ domReady: function () {
 }
 \end{lstlisting}
 
-A handler in the top level container (\tcode{<speakur-discussion>}\index{<speakur-discussion>}) responds to this named event (\tcode{speakur-locale-change}) and tells the internationalization component to update the language.
+A handler in the top level container (\tcode{<speakur-discussion>}\index{<speakur-discussion>}) responds to this named event (\tcode{speakur-locale-change}) and tells the
+internationalization\index{internationalization} component to update the language.
 This in turn sets the \tcode{\textbf{lc}} (locale) property in the base element.
 This property is then used in translation expressions as discussed in section~\ref{sec:i18n} below.
 
 \subsection{Data-bound templates}
 Speakur translates internal variables (the model) into visible output with the use of data-bound templates\index{data-bound template}.
 This is similar in effect to the model-view-controller\index{model-view-controller} design pattern.
-As mentioned above, the custom element itself is the `model' and its \tcode{<template>} is the view.
-This allows embedding variables directly in the HTML representation of a component as shown in Listing~\ref{l:dbtemplate} and here:
+As mentioned above, the custom element itself is the `model' and its \tcode{<template>}\index{<template>} is the view.
+This allows embedding variables directly in the HTML\index{HTML} representation of a component as shown in Listing~\ref{l:dbtemplate} and here:
 
 \begin{lstlisting}[language=HTML5,caption={User interface control with data bindings (edit post link).},label=l:bind_ui,captionpos=below]
 <!-- from speakur-post-footer.html -->
@@ -313,17 +314,17 @@ In other words, is this user allowed to edit this post? If not, hide this Edit \
 
 The \tcode{\{\{ \}\}} operators are not limited to binding to simple variables.
 Polymer supports a rich expression language within binding operators. 
-That said, keeping \tcode{<template>} expressions simple and moving more complex logic to methods in the JavaScript controller helps uphold separation of concerns between controller and view.
+That said, keeping \tcode{<template>}\index{<template>} expressions simple and moving more complex logic to methods in the JavaScript\index{JavaScript} controller helps uphold separation of concerns between controller and view.
 
 \section{Security}
 \label{sec:security}
 Because Firebase\index{Firebase} is Speakur's only `server', 
-most of its security\index{security} rests in Firebase's authentication and authorization rules.
+most of its security\index{security} rests in Firebase's authentication\index{authentication} and authorization\index{authorization} rules.
 Obviously the user interface should be crafted such that undesirable actions are not presented as options for the user,
 but one also has to consider malicious users stepping outside of the allowed interface
 and/or directly accessing the REST\index{REST} API\index{API}.
-Authentication ensures that we know the identity of anyone making database changes,
-and the Firebase\index{Firebase} security rules enforce authorization requirements.
+Authentication\index{authentication} ensures that we know the identity of anyone making database changes,
+and the Firebase\index{Firebase} security rules enforce authorization\index{authorization} requirements.
 
 \subsection{Authentication}
 Speakur\index{Speakur} currently supports signing in (authenticating\index{authentication}) users with Google\index{Google} and Facebook\index{Facebook} profiles.
@@ -331,7 +332,7 @@ This avoids the need to create a dedicated user registration and password system
 In this scenario, Google or Facebook is an OAuth\index{OAuth} identity provider (IdP),
 and Firebase\index{Firebase} (standing in for Speakur) is a service provider (SP).
 The identity provider gives the service provider a limited selection of personal information, generally their name, profile picture, and email address.
-The user authenticates directly to the chosen IdP (e.g. Facebook\index{Facebook}) and their password is never sent to Firebase or Speakur.
+The user authenticates directly to the chosen IdP (e.g. Facebook\index{Facebook}) and their password is never sent to Firebase or Speakur\index{Speakur}.
 Future versions may support additional identity providers like GitHub\index{GitHub} and Twitter\index{Twitter} as well as Firebase's\index{Firebase} own simple user registration system.
 
 Inside Speakur, authentication is handled by the \tcode{<firebase-login>} element, provided by \tcode{<firebase-element>}~\cite{polymercontributors2015-c}.
@@ -341,7 +342,7 @@ The authentication\index{authentication} session is automatically used by any \t
 \subsection{Firebase security rules}
 \label{sec:fbsecurity}
 
-Authorization to perform any given action in the Speakur database is determined by consulting the nested rules in the 
+Authorization to perform any given action in the Speakur\index{Speakur} database is determined by consulting the nested rules in the 
 JSON-formatted\index{JSON} security\index{security} object, 
 whose documentation can be found at~\cite{firebasecontributors2015-a}.
 These rules can be entered directly into the Firebase\index{Firebase} administrative console
@@ -382,8 +383,8 @@ This wrapper provides a Polymer filter named \tcode{\$\$} which is used in \tcod
 Of course, the users' posts themselves are not translated; just the application's interface strings.
 
 The i18next library loads translation strings out of JSON\index{JSON} files, one for each supported language.
-The current translations were obtained by taking the English language file and passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh},
-a Python\index{Python language} package that I wrote for another project~\cite{landers2015-b}.
+The current translations were obtained by taking the English language file and passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
+a Python\index{Python language} package that I wrote for another project~\cite{landers2015-a}.
 The i18next library includes the ability to handle variable interpolation insertion points and pluralization rules which are important for producing grammatically correct text.
 Here is a short excerpt from the English file followed by the Russian version:
 
