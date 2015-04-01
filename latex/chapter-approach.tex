@@ -53,7 +53,7 @@ to allow components to automatically reflect changes in far-flung areas of the a
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
 Another example of the power of data-bound templates is that all of the user-visible text in the application updates immediately as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
 
-\section{Architecture Overview}
+\section{Architecture overview}
 It has been said that ``any problem in computer science can be solved with another layer of indirection\index{indirection}'' (usually attributed to Wheeler).
 The key to understanding a software package is learning its architecture\index{architecture},
 which is really a map of these layers of indirection\index{indirection} and abstraction\index{abstraction}.
@@ -101,7 +101,7 @@ is handled entirely through the Firebase\index{Firebase} authentication\index{au
 and data security\index{security} rules described below.
 The simplicity of this arrangement makes it easier to fit Speakur\index{Speakur} into almost any web application architecture\index{architecture}.
 
-\section{Responsive Design}
+\section{Responsive design}
 \label{bg:mobile}
 Although `native' apps are frequently preferred by mobile users and developers, 
 the mobile web remains an important development platform for the same reason that 
@@ -334,7 +334,7 @@ Having one big file with all the JSON formatted security expressions needed for 
 
 % Move the above to the analysis section?
 
-\section{Data Flow and Event Handling}
+\section{Data flow and event handling}
 One important area of Speakur's architecture is the flow of data within the system and responding asynchronously\index{asynchronous} to local and remote user events.
 To understand the general flow of information in Speakur (and Polymer\index{Polymer}), imagine the component as an inverted tree, with the `root' at the top being the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element, 
 and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls as shown in Figure~\ref{f:component_layout}.
@@ -404,7 +404,7 @@ One possible `problem' with adopting Web Components\index{Web Components} archit
 Of course, this is really a \textit{feature} designed to enhance code organization, encapsulation\index{encapsulation} and productivity, 
 but it has one important side effect: 
 under the HTTP\index{HTTP} 1.1 protocol that powers the web, each small component requires a separate request which degrades page loading times.
-Techniques like \tcode{Keep-Alive} headers can help, and the forthcoming HTTP 2.0\index{HTTP!HTTP 2.0} will address this question more comprehensively.
+Techniques like \tcode{Keep-Alive} headers can help, and the HTTP 2.0\index{HTTP!HTTP 2.0} protocol addresses this question more comprehensively but is not yet finalized or widely adopted.
 
 In the meantime, the Polymer\index{Polymer} project provides a tool called Vulcanize\index{Vulcanize} which concatenates and minifies\index{minify} your web components into a single file.
 Concatenation puts all of the required text resources (HTML, CSS, and JS) into a 
@@ -413,4 +413,4 @@ file to reduce the number of HTTP\index{HTTP} requests.
 Minification\index{minify} removes all comments, whitespace and non-essential elements from the code to compact it and reduce transfer times.
 Whether using Vulcanize results in an overall faster site ultimately depends on a number of factors including how and when the components are used.
 For that reason, empirical testing is needed to know whether it should be used in production on a real site~\cite{polymercontributors2015-a}.
-Table~\ref{table:speakurloading} illustrates how Vulcanize helps improve loading performance in three browsers.
+Table~\ref{table:speakurloading} illustrates how Vulcanize\index{Vulcanize} helps improve loading performance in three browsers.
