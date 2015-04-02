@@ -87,12 +87,6 @@ For example, an author can write:
 \end{lstlisting}
 to cause the video to loop repeatedly.
 
-This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
-\tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
-These inner playback controls are themselves built out of HTML, CSS\index{CSS} and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
-Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
-
-
 \begin{figure}[htb]
 %\centering
 \centerline{\includegraphics[width=6in]{images/html5_video_control.png}} 
@@ -100,6 +94,10 @@ Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (inter
 \label{f:html5video}
 \end{figure}
 
+This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
+\tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
+These inner playback controls are themselves built out of HTML, CSS\index{CSS} and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
+Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
 A small \tcode{\#player-api} tag is visible in the DOM path at the bottom of Figure~\ref{f:html5video}.
 This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
 

@@ -3,7 +3,7 @@
 @\emph{Analysis}}%
 
 This report aims to demonstrate how certain traditionally difficult problems in web development have been addressed by Web Components\index{Web Components}.
-The philosophy behind Web Components and Polymer\index{Polymer} is summarized by the list in section~\ref{sec:wcprinciples}~\cite{webcomponentscontributors2014}.
+The philosophy behind Web Components and Polymer\index{Polymer} is summarized by the list in section~\ref{sec:wcprinciples} from ~\cite{webcomponentscontributors2014}.
 I have tried to make Speakur adhere to these principles both internally and externally,
 and to demonstrate how abstraction\index{abstraction} and encapsulation\index{encapsulation} can be applied to create flexible, composable, reusable, sharable web components.
 My goal is to understand how the W3C Web Component\index{Web Components} initiative will impact web application engineering\index{software engineering} in the future.
@@ -64,16 +64,17 @@ at least until the standard is finalized and browser support is improved.
 A project version below 1.0 is a general indicator of how ready its authors feel it is for production deployment, and Polymer's\index{Polymer} current version is at 0.5, soon to be 0.8, 
 which suggests that 1.0 is not that far off.
 Even the massively popular Angular\index{Angular} framework has announced that the controversial 2.0 re-write will be based on the Web Components standard,
-so it appears that they are here to stay~\cite{santiagoesteva2015}.
+so it appears that it is here to stay~\cite{santiagoesteva2015}.
 
-Web Components\index{Web Components} are much bigger than just the Polymer project.
-They are due to be formally adopted as an official HTML5\index{HTML!HTML5} standard by the World Wide Web Consortium\index{W3C}.
+The Web Components\index{Web Components} initiative is much bigger than just the Polymer project.
+The draft is due to be formally adopted as an official HTML5\index{HTML!HTML5} standard by the World Wide Web Consortium\index{W3C}.
 Although it will still be a long time before full-speed native Web Component support is found in a majority of browsers worldwide, 
 polyfill\index{polyfill} libraries can help bring these capabilities to current browsers.
-However the prospect of forcing visitors to download a several hundred KB library just to use basic DOM functionality is not very appealing to most web performance engineers, 
-so the lack of native browser support may be a limiting factor in Web Component adoption.
-In essence, Web Component's key problem is that one has to download a large JavaScript framework in order to use it, 
+However the prospect of forcing visitors to download a several hundred KB library just to use basic DOM functionality is not very appealing to most web engineers from a performance and user experience\index{user experience (UX)} perspective, 
+so the lack of native browser support may be a limiting factor in Web Component adoption in the near term.
+
+In essence, Web Component's\index{Web Components} key problem is that one has to download a large JavaScript\index{JavaScript} framework in order to use it, 
 yet one of its main premises is that it frees you from needing a JavaScript framework.
 Of course, the path out of this chicken-and-egg problem is for browser vendors to fully implement native Web Components in their products,
 a process which won't be complete until well after the standard is finalized by the W3C.
-Still, Speakur has demonstrated that it's possible to create small yet full-featured reusable Web Components right now.
+Still, Speakur has demonstrated that it's possible to create focused, extensible, yet full-featured Web Components right now with the help of tools like Polymer\index{Polymer} and Firebase\index{Firebase}.
