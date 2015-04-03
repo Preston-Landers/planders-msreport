@@ -108,7 +108,7 @@ This example illustrates three component design principles that are widely follo
 \item Prefer \textbf{composition}\index{composition} or \textit{has-a} relationships over inheritance or \textit{is-a} relationships when building modules to reduce coupling and simplify interface refactoring\index{refactoring}.
 \end{itemize}
 
-Composition helps reduce coupling or structural between modules by forcing them to interact using only public interfaces.
+Composition helps reduce coupling or structural connections between modules by forcing them to interact using only public interfaces.
 In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS\index{CSS} roles and the Volume and Play controls aren't particularly special objects, just \tcode{<divs>} with CSS rules and click handlers.
 
 The solution, therefore, to these coupling problems in web authoring is to expose these internal brower APIs for creating elements in a safe and portable fashion. 
@@ -117,7 +117,7 @@ The question remains, which specific browser internals must be exposed and stand
 
 \section{Web Components}
 
-Web Components consists of two main technologies and two supporting features. 
+The Web Components standard consists of two main technologies and two supporting features. 
 Custom HTML Elements\index{Custom Elements} and Shadow DOM\index{Shadow DOM} are the two key players while HTML Imports\index{HTML!Imports} and Templates\index{HTML!Templates} support these features. 
 One of the central goals of the Web Components\index{Web Components} initiative is to maintain interoperability across different browsers and frameworks, 
 so that modules which adhere to the Web Components standard can provide a consistent experience no matter what framework the developer chooses or which browser the user selects.
