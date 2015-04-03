@@ -47,7 +47,7 @@ into 15 languages as shown in Figure~\ref{f:lang}.
 \label{f:lang}
 \end{figure}
 
-From a technical perspective, one of the more interesting features in Speaker\index{Speakur} is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
+From a technical perspective, one of the more interesting features in Speakur\index{Speakur} is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
 to allow components to automatically reflect changes in far-flung areas of the application.
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
 Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
@@ -174,7 +174,7 @@ but they are also used as `base classes' for
 which implement the so-called `Material Design'\index{Material Design} look and feel (design language) used by apps for Google's\index{Google} Android\index{Android} mobile\index{mobile} operating system~\cite{imura2015}.
 Speakur's\index{Speakur} layout is composed of native HTML5 elements, 
 Core and Paper Elements, 
-and Speaker's own custom elements that are used to abstract\index{abstraction} internal details.
+and Speakur's own custom elements that are used to abstract\index{abstraction} internal details.
 
 \section{Data store and synchronization}
 All persistent data in Speakur is stored in a cloud database\index{database} called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
@@ -273,8 +273,8 @@ Because Speakur\index{Speakur} relies entirely on Firebase\index{Firebase} for d
 All Speakur code runs inside the client's web browser including the small `admin' mode.
 The security architecture\index{architecture} of the web is for the most part about protecting the \textit{user} from malicious servers (and other users), not protecting the \textit{server} from the user.
 It is assumed that servers protect themselves from unauthorized actions.
-Because Speaker\index{Speakur} has no `server' as such, 
-other than the Firebase cloud service,
+Because Speakur\index{Speakur} has no `server' as such, 
+other than the Firebase\index{Firebase} cloud service,
 that means the security mechanisms that do things like prevent users from deleting each other's posts 
 must be implemented entirely within Firebase security rules.
 This is discussed in more detail in section~\ref{sec:security}.
