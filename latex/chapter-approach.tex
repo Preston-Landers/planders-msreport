@@ -32,14 +32,13 @@ The messy details of structuring a discussion forum are abstracted\index{abstrac
 
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} presents a simplified interface (API)\index{API} to users.
 There are only a few options available including the URL of the Firebase instance and the thread target URL or \tcode{href}\index{href}.
-If you do not provide your own a Firebase\index{Firebase} URL, by default, my resource-limited database is used instead.
+If you do not provide your own Firebase\index{Firebase} URL, by default, my resource-limited database is used instead.
 Therefore serious users will wish to use their own Firebase account with their own database.
 
 In addition to basic commenting features, Speakur\index{Speakur} offers the ability to vote comments up or down, custom profiles, 
 the ability to leave comments in Markdown\index{Markdown} syntax~\cite{githubcontributors2015} with syntax highlighting\index{syntax highlighting} for common programming languages, 
-and (rough) user interface translations 
-(localizations\index{localization}\index{internationalization}) 
-in 15 languages as shown in Figure~\ref{f:lang}.
+and (rough) user interface translations  or localizations\index{localization}\index{internationalization} 
+into 15 languages as shown in Figure~\ref{f:lang}.
 
 \begin{figure}[htb]
 \centering
@@ -51,7 +50,7 @@ in 15 languages as shown in Figure~\ref{f:lang}.
 From a technical perspective, one of the more interesting features in Speaker\index{Speakur} is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
 to allow components to automatically reflect changes in far-flung areas of the application.
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
-Another example of the power of data-bound templates is that all of the user-visible text in the application updates immediately as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
+Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
 
 \section{Architecture overview}
 It has been said that ``any problem in computer science can be solved with another layer of indirection\index{indirection}'' (usually attributed to Wheeler).
@@ -69,7 +68,6 @@ The architecture for Speakur\index{Speakur} is based on client-side (browser) Ja
 There is no dedicated server component except for the Firebase\index{Firebase} cloud database service~\cite{firebasecontributors2015}.
 Speakur is built entirely from plain HTML, JS and CSS\index{CSS} files that can be served from a content delivery network (CDN)\index{content delivery network (CDN)} 
 such as \tcode{github.io}\index{GitHub} or your own server~\cite{landers2015-d}.
-
 This low-overhead design allows Speakur\index{Speakur} to be used on your own website without actually `installing' any software;
 just load Speakur directly from \tcode{github.io} with an HTML \textit{import}
 and then insert a tiny bit of HTML markup into your document~\cite{landers2015-d}.
@@ -92,8 +90,8 @@ As previously mentioned, in order to make the
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} element available for use, 
 you must first load the Web Components polyfill\index{polyfill} and then \textit{import} the Speakur element, 
 either from \tcode{github.io} or your own server.
-I recommended that you create your own Firebase\index{Firebase} instance for data security and resource limitation reasons, but even this is not required. 
-The author's demonstration database will be used by default.
+I recommend that you create your own Firebase\index{Firebase} instance for data security and resource limitation reasons, but even this is not required. 
+The author's demonstration database is used by default.
 
 Security\index{security} for web clients engaging in data manipulation 
 (i.e, posting, editing or deleting comments) 
@@ -103,7 +101,7 @@ The simplicity of this arrangement makes it easier to fit Speakur\index{Speakur}
 
 \section{Responsive design}
 \label{bg:mobile}
-Although `native' apps are frequently preferred by mobile users and developers, 
+Although native apps are frequently preferred by mobile users and developers, 
 the mobile web remains an important development platform for the same reason that 
 desktop web apps continue to live alongside native desktop apps; 
 web apps typically do not require installing anything to the device, are always up-to-date, and have a lower barrier to entry overall for users and developers.
@@ -210,7 +208,7 @@ but in Roy Fielding's original 2000 Ph.D. thesis,
 REST\index{REST} refers to transferring \textit{representations} of application state and using hypertext as the engine of 
 application state\index{HATEOAS}\footnote{Known under the somewhat awkward acronym of HATEOAS\index{HATEOAS}.}~\cite{fielding2000}.
 Specifically, `objects' of whatever type are represented as interlinked hypertext \textbf{\textit{resources}} that are operated on by standard HTTP verbs\index{HTTP!verbs} such as \tcode{PUT}\index{HTTP!PUT} and \tcode{DELETE}\index{HTTP!DELETE}.
-For example, in a Speakur\index{Speakur} thread, a particular user comment (post) is an abstract \textit{resource} located at the following uniform resource locator (URL):
+For example, in a Speakur\index{Speakur} thread, a particular user comment (a post) is an abstract \textit{resource} located at the following uniform resource locator (URL):
 
 \tcode{https://YOUR-DB.firebaseio.com/posts/\$ParentId/\$PostId}
 
@@ -236,7 +234,7 @@ Creating a brand new post can be done with \tcode{PUT}\index{HTTP!PUT}.
 Updating an existing post's text is done with the \tcode{POST}\index{HTTP!POST} verb.
 By default, the resources are \textit{represented} as JSON\index{JSON} encoded data, 
 but a client can request an alternative representation such as XML\index{XML}.
-The storage format for the resource `at rest' in the server database is irrelevant from the API\index{API} perspective.
+The storage format for the resource `at rest' inside the server database is irrelevant from the API\index{API} perspective.
 
 Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\index{REST} include:
 \begin{enumerate}
@@ -266,7 +264,8 @@ They can be used independently.
 Firebase\index{Firebase} uses WebSockets\index{WebSockets} rather than traditional high-overhead HTTP\index{HTTP} requests to move data back and forth to the client.
 This always-on connection allows for sending nearly instant event notifications\index{event notification} to all currently active clients with minimal overhead.
 In practice, this allows the application to update its state in real-time as different users read and write values the database.
-The Firebase client library 'subscribes' to an area of interest in the database, such as the replies to a particular thread, and receives notifications when these areas change and updates the local representation as appropriate.
+The Firebase client library `subscribes' to an area of interest in the database, such as the replies to a particular thread.
+It then receives notifications when these areas change and so it can update the local representation as appropriate.
 
 \section{Security}
 \label{sec:arch_security}
@@ -389,21 +388,21 @@ Like most applications, Speakur\index{Speakur} relies heavily on other libraries
 Some of these libraries in turn depend on other libraries.
 Collectively, all of the 3rd party modules required to run Speakur\index{Speakur} are called \textit{dependencies}\index{dependencies}.
 For example, safe HTML rendering of user-supplied Markdown-style text is handled by the excellent Marked library\index{Marked library}~\cite{christopherjeffrey2014}.
-See Appendix 2 for the full list of Speakur's\index{Speakur} direct dependencies.
+See Appendix~\ref{appendix:credits} for the full list of Speakur's\index{Speakur} direct dependencies.
 
 Taking advantage of the de-duping\index{de-duping} feature of HTML Imports\index{HTML!Imports}
 requires that you name the path to your resources and dependencies in a consistent fashion.
 In other words, if component A and component B both require component Z, both A and B must use the same URL when requesting (importing) component Z.
 Furthermore, each of Z's dependencies must also follow this same pattern when importing their own dependencies in order to fully realize de-duping\index{de-duping}.
 Therefore Speakur follows the recommendation of the Polymer\index{Polymer} framework and uses Bower\index{Bower} to manage dependencies~\cite{bowercontributors2015}. 
-Speakur only has to list which packages it needs, either by name or their Git\index{Git} repository address, 
+Speakur only needs to list which packages it requires, either by name or their Git\index{Git} repository address, 
 and Bower\index{Bower} handles downloading these to a managed component directory alongside Speakur itself.
 
 \subsection{Vulcanize}
 One possible `problem' with adopting Web Components\index{Web Components} architecture\index{architecture} is that it encourages the partition of a large application into numerous smaller components or files.
 Of course, this is really a \textit{feature} designed to enhance code organization, encapsulation\index{encapsulation} and productivity, 
 but it has one important side effect: 
-under the HTTP\index{HTTP} 1.1 protocol that powers the web, each small component requires a separate request which degrades page loading times.
+under the HTTP\index{HTTP} 1.1 protocol that currently powers the web, each small component requires a separate request which degrades page loading times.
 Techniques like \tcode{Keep-Alive} headers can help, and the HTTP 2.0\index{HTTP!HTTP 2.0} protocol addresses this question more comprehensively but is not yet finalized or widely adopted.
 
 In the meantime, the Polymer\index{Polymer} project provides a tool called Vulcanize\index{Vulcanize} which concatenates and minifies\index{minify} your web components into a single file.
@@ -414,3 +413,5 @@ Minification\index{minify} removes all comments, whitespace and non-essential el
 Whether using Vulcanize results in an overall faster site ultimately depends on a number of factors including how and when the components are used.
 For that reason, empirical testing is needed to know whether it should be used in production on a real site~\cite{polymercontributors2015-a}.
 Table~\ref{table:speakurloading} illustrates how Vulcanize\index{Vulcanize} helps improve loading performance in three browsers.
+Every time I release a new version of Speakur\index{Speakur}, I update the \tcode{gh-pages} branch in its Git\index{Git} repository with a Vulcanized edition that includes everything needed to run it, including Polymer\index{Polymer} and all of its other dependencies.
+This publishes it to the \tcode{github.io} CDN and makes it available to users.

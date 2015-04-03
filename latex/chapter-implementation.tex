@@ -10,7 +10,7 @@ You import the tag with \tcode{<link rel=import href=...>} to make it available 
 This element has a data-bound\index{data-bound template} \tcode{<template>}\index{<template>} that provides the element's visual representation (shadow DOM).
 Actually, a custom element's representation, or logical DOM\index{Logical DOM}, may consist of both encapsulated shadow DOM\index{Shadow DOM} as well as light DOM\index{Light DOM} that is supplied by the \textit{user} of the custom element and \textit{projected} into the shadow DOM as discussed in section~\ref{bg:shadowdom}.
 In Speakur's case, the discussion forum is self-contained in terms of content; light DOM is not needed or used in the top-level element.
-Speakur's\index{Speakur} options or parameters are controlled with attributes\index{HTML!attributes}:
+Speakur's\index{Speakur} options or parameters are controlled with attributes\index{HTML!attributes} like this:
 
 \begin{lstlisting}[language=HTML5,caption=
 {Using HTML attributes to set Speakur options},label=l:options1,captionpos=below]
@@ -34,7 +34,7 @@ Speakur's\index{Speakur} options or parameters are controlled with attributes\in
 
 Structurally, Speakur\index{Speakur} consists of JavaScript\index{JavaScript}, HTML, and CSS\index{CSS} files, along with a few other resource types like images and JSON\index{JSON} language files. 
 All of the these internal resources and components are hidden from consumers who only have to import and place the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element as discussed in section~\ref{publishing} below.
-The rest of the components are brought in by imports inside \tcode{<speakur-discussion>}\index{<speakur-discussion>}.
+The rest of the components are brought in by internal imports inside \tcode{<speakur-discussion>}\index{<speakur-discussion>}.
 
 \begin{table}\centering
 \ra{1.3}
@@ -133,7 +133,7 @@ For example, some information about a post's author
 such as their public username, id, and photo url is saved inside each post they write 
 so that it's not necessary to look up this information separately just to display the post.
 One consequence of this is that changing your public name doesn't retroactively change the name on all of your previous posts, just new posts going forward.
-Certainly, if that name updating was deemed necessary per business requirements it could be accomplished.
+Certainly, if that name updating was deemed necessary according to business requirements it could be accomplished.
 
 % p{8cm}
 \begin{table}\centering
@@ -223,7 +223,7 @@ Speakur\index{Speakur} as a whole doesn't know or care what storage solution its
 
 \subsection{Data bindings and events}
 \label{sec:databindings}
-From an MVC\index{model-view-controller} viewpoint, a Polymer element with instance variables \textit{is} the `model'.
+From an MVC\index{model-view-controller} viewpoint, a Polymer element with instance variables is the `model'.
 The element's data-bound\index{data-bound template} \tcode{<template>}\index{<template>} is the `view', 
 and the JavaScript\index{JavaScript} code is the `controller'.
 Data bindings carry data information down from parent to child while DOM\index{DOM} events\index{event notification} propagate upwards.
@@ -253,11 +253,11 @@ whether locally or remotely initiated,
 will be reflected in the \tcode{post} variable
 and any associated data-bound\index{data-bound template} \tcode{<template>}\index{<template>}s, 
 and vice-versa.
-Note that the \tcode{location=} attribute (the database source URL for this \tcode{<firebase-element>}\index{<firebase-element>})
+The \tcode{location=} attribute (the database source URL for this \tcode{<firebase-element>}\index{<firebase-element>})
 is bound to an expression which finds the location with the \tcode{fbLocation} method.
 Any changes in the variables \tcode{firebase\-Location}, \tcode{parentId} or \tcode{postId} will cause \tcode{fbLocation} to be recomputed,
 which could in turn cause \tcode{post} to pull from a different location.
-Note that \tcode{location=} has the same structure as the resource path in the \tcode{DELETE} example from Listing~\ref{l:rest_delete}.
+Notice that \tcode{location=} has the same structure as the resource path in the \tcode{DELETE} example from Listing~\ref{l:rest_delete}.
 
 DOM events carry state changes up from children to elements above it.
 Polymer provides the \tcode{fire()} method to trigger a named event with extra data attached.
@@ -327,7 +327,7 @@ Authentication\index{authentication} ensures that we know the identity of anyone
 and the Firebase\index{Firebase} security rules enforce authorization\index{authorization} requirements.
 
 \subsection{Authentication}
-Speakur\index{Speakur} currently supports signing in (authenticating\index{authentication}) users with Google\index{Google} and Facebook\index{Facebook} profiles.
+Speakur\index{Speakur} supports signing in (authenticating\index{authentication}) users with Google\index{Google} and Facebook\index{Facebook} profiles.
 This avoids the need to create a dedicated user registration and password system by using single sign-on\index{single sign-on (SSO)} with popular Internet identity providers.
 In this scenario, Google or Facebook is an OAuth\index{OAuth} identity provider (IdP),
 and Firebase\index{Firebase} (standing in for Speakur) is a service provider (SP).
@@ -411,8 +411,8 @@ This example shows that with the \tcode{'View Comments'} key, the corresponding 
 The other two keys illustrate variable interpolation and pluralization logic where different grammatical forms can be selected based on a numeric variable, 
 in this case the number of replies that a post has.
 These translation strings would be used in a template like:
-
-\begin{lstlisting}[float,language=HTML5,caption={Internationalizing a data-bound template.},label=l:i18n_template,captionpos=below]
+\pagebreak
+\begin{lstlisting}[language=HTML5,caption={Internationalizing a data-bound template.},label=l:i18n_template,captionpos=below]
 <!-- from speakur-post.html -->
 <div class='post-replies-count'>
   {{ 'replies' | $$({count: replyCount}, lc) }}
@@ -442,7 +442,7 @@ Speakur\index{Speakur} uses this in post headers to show how long ago they were 
 and ties them to a timer-based value dependency such that the ``ago time'' updates automatically on the page as time passes. 
 For example, immediately after posting a new reply, its header will say ``posted a few moments ago.'' 
 After a minute it will say ``posted a minute ago'', and so on in idiomatic fashion appropriate to the current language.
-This text has a tooltip which gives the localized full date such as ``Wednesday, March 11th 2015 7:53 pm''.
+This text has a tooltip which gives the full localized date such as ``Wednesday, March 11th 2015 7:53 pm''.
 
 \section{Device responsive design}
 \label{sec:responsive}
@@ -458,7 +458,7 @@ The three main responsive design techniques used in Speakur are:
 In Speakur's style sheets, a small screen is treated as the base case and 
 larger tablet or desktop-style devices are given extra rules with \tcode{@media}.
 For example, the following rule gives the main Speakur container more padding on large screen devices:
-
+\pagebreak
 \begin{lstlisting}[language=HTML5,caption={CSS @media rule for large screen devices.},label=l:responsive_media,captionpos=below]
 <!-- from speakur-discussion.css -->
 @media only screen and (min-device-width : 800px) {
@@ -495,28 +495,29 @@ because the HTML component transfer times are largely dwarfed by the cost of loa
 Future protocol enhancements like HTTP 2\index{HTTP!HTTP 2.0} may eliminate this discrepancy.
 That said, vulcanization does offer current benefits,
 as shown in 
-Table~\ref{table:speakurloading} which compares the time (in milliseconds) to initially display the Speakur component and then fully load a thread with 25 comments.
+Table~\ref{table:speakurloading} which compares the time (in milliseconds) to initially display the Speakur component and then fully load a thread with 25 comments in three popular desktop browsers.
+These figures partly reflect the degree to which each of these browsers natively supports Web Components\index{Web Components} at this time.
 
 % p{8cm}
 \begin{table}\centering
 \ra{1.3}
-\begin{tabular}{@{}lrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-State & Raw & Vulcanized \\
+State & Raw & Vulcanized & Reduction \\
 \midrule
 \textbf{Google Chrome}\index{Google!Google Chrome} \\ 
-visible & 2200 & 1150 \\
-complete & 4200 & 2900 \\
+visible & 2200 & 1150 & 47.7\% \\
+complete & 4200 & 2900 & 31.0\% \\
 \\
 \textbf{Mozilla Firefox}\index{Mozilla!Mozilla Firefox}\index{Firefox} \\ 
-visible & 7400 & 6050 \\
-complete & 12000 & 10500 \\
+visible & 7400 & 6050 & 18.2\% \\
+complete & 12000 & 10500 & 12.5\% \\
 \\
 \textbf{Opera}\index{Opera} \\ 
-visible & 2800 & 1100 \\
-complete & 7000 & 2800 \\
+visible & 2800 & 1100 & 60.7\% \\
+complete & 7000 & 2800 & 60.0\% \\
 \bottomrule
 \end{tabular}
-\caption{Loading time (in milliseconds) in three browsers.}
+\caption{Loading time (in milliseconds) in three desktop browsers.}
 \label{table:speakurloading}
 \end{table}

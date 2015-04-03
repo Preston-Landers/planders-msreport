@@ -3,68 +3,89 @@
 @\emph{Analysis}}%
 
 This report aims to demonstrate how certain traditionally difficult problems in web development have been addressed by Web Components\index{Web Components}.
-The philosophy behind Web Components and Polymer\index{Polymer} is summarized by the list in section~\ref{sec:wcprinciples} from ~\cite{webcomponentscontributors2014}.
-I have tried to make Speakur adhere to these principles both internally and externally,
-and to demonstrate how abstraction\index{abstraction} and encapsulation\index{encapsulation} can be applied to create flexible, composable, reusable, sharable web components.
+The principles underlying Web Components and Polymer\index{Polymer} are summarized by the list in section~\ref{sec:wcprinciples} taken from ~\cite{webcomponentscontributors2014}.
+I have tried to make Speakur\index{Speakur} adhere to these principles both internally and externally,
+and to demonstrate the application of abstraction\index{abstraction} and encapsulation\index{encapsulation} patterns to creating flexible, composable, reusable, sharable components.
 My goal is to understand how the W3C Web Component\index{Web Components} initiative will impact web application engineering\index{software engineering} in the future.
-By all appearances, the impact will be substantial.
+By all appearances, the long term impact will be substantial.
 
 \section{Web Components architecture}
+Web Component's\index{Web Components} essential benefit is that it allows decoupling of components, 
+separation of concerns, 
+and the encapsulation of internal structure.
+This raises bundles of discrete functionality or `components' to a higher level of abstraction and 
+will help open up a new ecosystem of reusable, extendable, sharable modules.
 The Web Component principles from section~\ref{sec:wcprinciples} emphasize thinking small, 
 breaking the problem down into manageable chunks and being adaptable, extendable and composable.
+Web developers were already doing this in many cases, but without formal support from the browser.
+
 Perhaps the most interesting piece of advice is to ``deliver the key benefit to HTML authors, not just coders''~\cite{webcomponentscontributors2014}.
-It emphasizes that the web fundamentally consists of \textit{documents} with \textit{authors}, 
-a fact that is sometimes forgotten by the myriad of JavaScript\index{JavaScript} libraries and frameworks out there.
-The components that will find the most success will be those which focus first and foremost on providing convenience and benefit to HTML authors and content developers, 
+It underscores that, fundamentally, 
+the web consists of \textit{documents} with \textit{authors}, 
+a fact that is sometimes forgotten by the myriad of JavaScript\index{JavaScript} libraries and frameworks\index{framework}.
+The components that will find the most success will be those which focus first and foremost on providing convenience and benefit to HTML\index{HTML} authors and content developers, 
 not just the software engineers\index{software engineering} who maintain the libraries and frameworks behind the scenes.
-Speakur aims to provide as small a deployment surface as possible to web authors so they can easily add a discussion forum to their site without embedding a big blob of HTML.
-This decoupling and encapsulation is the essence of what Web Component technology provides.
+Speakur\index{Speakur} aims to provide as small a deployment surface as possible to web authors so they can easily add a discussion forum to their site without embedding a big blob of HTML.
+The growth of social coding sites like GitHub\index{GitHub} will further encourage the sharing and reuse of Web Components designed along these principles.
 
-\section{Lessons learned}
-This section is very rough draft.
+\section{Writing Web Components with Polymer}
+This section details some of the lessons learned developing Speakur\index{Speakur} on top of Google's\index{Google} Polymer\index{Polymer} framework.
+Polymer's data bindings\index{data-bound template} are a powerful feature for driving `live' web applications.
+Their utility extends well beyond user interface\index{user interface (UI)} views.
+A 3-way automatic binding between the local model, the UI view, and the remote database is an extremely powerful abstraction,
+even more so when combined with Firebase's\index{Firebase} 
+Web\-Socket-based\index{WebSockets} event notification\index{event notification} system.
+JavaScript variables can automatically update to reflect changes made by users on the other side of the world.
+Of course, care must be taken to design the interface so the user doesn't accidentally make changes that are immediate and can't be undone. 
+For example, Speakur's user preferences screen doesn't commit changes to the database until the user clicks the Save button.
+Editing the text of an existing post also saves a copy of the previous version.
 
-In general, only use two-way data bindings within a component.
-Across component boundaries, use a one-way binding to send data `down' to a child,
+Data bindings and synchronization are described in section~\ref{sec:sync}.
+In general, two-way data bindings should only be used \textit{within} a component.
+Across component boundaries, use a one-way binding to send data down to a child,
 and fire events to notify containers of state changes.
-DOM Mutation Observers can be useful for making one component react to a change in another without directly tying their code together.
-
-
-Polymer specific stuff:
-
-
-Avoid using Polymer's inheritance unless there is a clear case for providing polymorphism-like behavior.
-One reason to avoid using them, at least in Polymer's current version as of this writing, is that when a base class provides computed properties, 
-these property definitions have to be repeated in any subclasses, 
-violating the ``don't repeat yourself'' (DRY) principle.
-
-As the \tcode{lc} example demonstrated in section XXX, 
-sometimes it is necessary to `shoehorn' certain variables into a Polymer binding expression 
+DOM Mutation Observers\index{mutation observers} can be useful for making one component react to a change in another without directly tying their code together.
+As the example with \tcode{lc} (locale) showed in section~\ref{sec:i18n}, 
+sometimes it's necessary to `shoehorn' certain variables into a Polymer binding expression 
 to ensure that the expression is recalculated when that variable changes.
 
-Polymer's this.\$ element map is not dynamic; objects created in inner templates are not automatically added.
+Component load times are currently one problem area for Web Components.
+The Vulcanize\index{Vulcanize} tool offers definite benefits for load times as seen in Table~\ref{table:speakurloading},
+but Speakur is a relatively simple application where all 20 or so components are used more or less immediately.
+Vulcanization must be applied at the level of the site or app, not by the individual component authors.
+Larger single page applications (SPAs) will face more complex challenges when trying to optimize load times, and performance in general,
+before Web Components are fully native in browsers, especially when combining frameworks.
 
-Menu items:
-Don't put on-click on the individual menu item. This seems to work in chrome but not elsewhere. It doesn't respond to more than one selection
-Instead respond to core-select like in Listing TODO.
+The \tcode{<template>}\index{<template>} element is a powerful new tool for web authors, 
+but current implementations can have performance issues when rendering large lists of items, such as with a long list of comments. 
+Polymer's \tcode{<core-list>} is more optimized for this use case.
+Also, the \tcode{if=} attribute on nested \tcode{<template>}\index{<template>} elements should not be used in those cases where you could use the \tcode{hidden?=} attribute on the inner content instead.
+There are several reasons for this, including performance and 
+the fact that Polymer's handy \tcode{this.\$} \tcode{id}-to-object map is not dynamic; 
+that is, element objects created conditionally in inner templates are not automatically added to \tcode{this.\$}.
 
-Don't use lots of nested <template if=> when you can use \tcode{hidden?=} instead.
+I recommend avoiding the use of Polymer's\index{Polymer} inheritance unless there is a clear case for providing polymorphism-like behavior.
+One reason for that is that (as of this writing) when a base class provides computed properties, 
+these property definitions have to be repeated in any subclasses if any new ones are required,
+which violates the ``don't repeat yourself'' (DRY)\index{don't repeat yourself (DRY)} principle.
+Speakur uses Polymer inheritance in its CSS\index{CSS} theme components; 
+most of the functionality is defined in the base class and the subclasses mainly provide numeric parameters for things like colors and margins.
+Composition could achieve these behaviors almost as easily.
 
-You can get bad performance with templates rendering large lists of items. Use Polymer's <core-list> instead, possibly <core-overlay>.
-
-Having multiple <core-overlay> active at the same time can cause problems. I created a simple fix that adjusts the CSS \tcode{z-index} property. 
-You can find the fix here:~\cite{landers2015-d}.
-
+%Having multiple <core-overlay> active at the same time can cause problems. 
+% I created a simple fix that adjusts the CSS \tcode{z-index} property. 
+%You can find the fix here:~\cite{landers2015-d}.
 
 \section{The future of Web Components}
 
 Polymer\index{Polymer} and Web Components\index{Web Components} are extremely powerful tools.
-They are also relatively immature as a technology.
-Those who wish to deploy a large, full-featured ``prod\-uction-quality'' web application based on these technologies may have a difficult road ahead, 
+They are relatively immature as a technology but quickly improving.
+Those who wish to deploy a large, full-featured ``prod\-uction-quality'' web application based on these technologies may face some bumps in the road, 
 at least until the standard is finalized and browser support is improved.
 A project version below 1.0 is a general indicator of how ready its authors feel it is for production deployment, and Polymer's\index{Polymer} current version is at 0.5, soon to be 0.8, 
 which suggests that 1.0 is not that far off.
 Even the massively popular Angular\index{Angular} framework has announced that the controversial 2.0 re-write will be based on the Web Components standard,
-so it appears that it is here to stay~\cite{santiagoesteva2015}.
+so it appears that Web Components are here for the long haul~\cite{santiagoesteva2015}.
 
 The Web Components\index{Web Components} initiative is much bigger than just the Polymer project.
 The draft is due to be formally adopted as an official HTML5\index{HTML!HTML5} standard by the World Wide Web Consortium\index{W3C}.
@@ -73,8 +94,8 @@ polyfill\index{polyfill} libraries can help bring these capabilities to current 
 However the prospect of forcing visitors to download a several hundred KB library just to use basic DOM functionality is not very appealing to most web engineers from a performance and user experience\index{user experience (UX)} perspective, 
 so the lack of native browser support may be a limiting factor in Web Component adoption in the near term.
 
-In essence, Web Component's\index{Web Components} key problem is that one has to download a large JavaScript\index{JavaScript} framework in order to use it, 
+In essence, Web Component's\index{Web Components} key problem at the moment is that one has to download a large JavaScript\index{JavaScript} framework\index{framework} in order to use it, 
 yet one of its main premises is that it frees you from needing a JavaScript framework.
 Of course, the path out of this chicken-and-egg problem is for browser vendors to fully implement native Web Components in their products,
 a process which won't be complete until well after the standard is finalized by the W3C.
-Still, Speakur has demonstrated that it's possible to create focused, extensible, yet full-featured Web Components right now with the help of tools like Polymer\index{Polymer} and Firebase\index{Firebase}.
+Still, Speakur\index{Speakur} has demonstrated that it's possible to create focused, extensible, yet full-featured Web Components right now with the help of tools like Polymer\index{Polymer} and Firebase\index{Firebase}.
