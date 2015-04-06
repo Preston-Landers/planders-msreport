@@ -40,13 +40,13 @@ Of course, care must be taken to design the interface so the user doesn't accide
 For example, Speakur's user preferences screen doesn't commit changes to the database until the user clicks the Save button.
 Editing the text of an existing post also saves a copy of the previous version.
 
-Data bindings and synchronization are described in section~\ref{sec:sync}.
+Data bindings and synchronization are discussed in section~\ref{sec:sync}.
 In general, two-way data bindings should only be used \textit{within} a component.
 Across component boundaries, use a one-way binding to send data down to a child,
 and fire events to notify containers of state changes.
 DOM Mutation Observers\index{mutation observers} can be useful for making one component react to a change in another without directly tying their code together.
-As the example with \tcode{lc} (locale) showed in section~\ref{sec:i18n}, 
-sometimes it's necessary to `shoehorn' certain variables into a Polymer binding expression 
+As the example with \tcode{lc} (locale) in section~\ref{sec:i18n} showed, 
+it's sometimes necessary to `shoehorn' certain variables into a Polymer binding expression 
 to ensure that the expression is recalculated when that variable changes.
 
 Component load times are currently one problem area for Web Components.
@@ -98,4 +98,5 @@ In essence, Web Component's\index{Web Components} key problem at the moment is t
 yet one of its main premises is that it frees you from needing a JavaScript framework.
 Of course, the path out of this chicken-and-egg problem is for browser vendors to fully implement native Web Components in their products,
 a process which won't be complete until well after the standard is finalized by the W3C.
-Still, Speakur\index{Speakur} has demonstrated that it's possible to create focused, extensible, yet full-featured Web Components right now with the help of tools like Polymer\index{Polymer} and Firebase\index{Firebase}.
+Given the enormous size of the job that the polyfill library must accomplish, the results obtained so far are impressive. 
+Speakur\index{Speakur} has demonstrated that it's possible to create focused, extensible, yet full-featured Web Components right now with the help of tools like Polymer\index{Polymer} and Firebase\index{Firebase}.

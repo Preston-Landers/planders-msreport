@@ -77,10 +77,10 @@ The structural elements provide a container and abstraction layer for a group of
 For example, \tcode{<speakur-card>} provides a Material Design-styled\index{Material Design} generic `card' consisting of a styled header, body, and footer.
 These containers may have certain visible elements such as lines around their border, but most of their representation comes from the components inside.
 
-The logical service elements do not have any visual representation at all.
-They perform data-related services, provide purely abstract APIs, and wrap external libraries.
+The logical service elements do not have any direct visual representation.
+They perform data-related services, provide APIs, and wrap external libraries.
+It is often useful to provide a custom element wrapper around a non-WC-aware library.
 For example, the Firebase\index{Firebase} client library is a general purpose JavaScript library, and is not specifically adapted to Web Components or custom elements.
-Therefore it is often useful to provide a custom element wrapper around a non-WC-aware library.
 For this reason the Polymer project maintains \tcode{<firebase-element>}\index{<firebase-element>} as a wrapper around the main Firebase library~\cite{polymercontributors2015-c}.
 Within Speakur, each component gets its data either directly from its own internal \tcode{<firebase-element>}\index{<firebase-element>}, or else from a data binding from an immediate parent element that has its own \tcode{<firebase-element>}\index{<firebase-element>}.
 
@@ -114,7 +114,7 @@ Speakur has a number of user interface (UI)\index{user interface (UI)} custom el
 Elements are also reused extensively in different contexts; 
 for example \tcode{<speakur-post>} is used for a `live editor preview' inside \tcode{<speakur-compose>} as well as for showing posts in the main \tcode{<speakur-thread-view>.}
 
-Some of Speakur's internal components like \tcode{<speakur-theme>} are also `base classes' for other elements
+Some of Speakur's internal components like \tcode{<speakur-theme>} are also base clas\-ses for other elements
 in a way that is similar but not identical to classes in object oriented programming (OOP)\index{object oriented programming (OOP)}\footnote{Note that JavaScript\index{JavaScript} itself is \textit{prototype}-based\index{prototype (JavaScript)} and does not have traditional classes or inheritance. 
 Similar behavior is obtained by using regular object instances (instead of classes) as the prototype for instantiating new objects.}. 
 Although composition or \textit{has-a} relationships are generally preferred, inheritance or \textit{is-a} relationships can make sense when you truly want to be able to substitute one instance for another interchangeably.
@@ -170,13 +170,13 @@ a given record is not guaranteed to follow any particular structure unless this 
 \end{figure}
 
 The key structure column in Table~\ref{table:speakurtables} signifies the meaning of the keys underneath a table. 
-For example, the main \tcode{posts} table has a \tcode{\$parent->\$child} key structure, 
-which means that the first layer of keys beneath \tcode{posts} are post \textit{parent} ids, 
-meaning the id of the post that this post is a reply to, 
+For example, the main \tcode{posts} table has a \tcode{\$parent->\$child} key structure.
+The first layer of keys beneath \tcode{posts} are post \textit{parent} ids: 
+the id of the post that this is a reply to,
 or the thread id in the case of a `top-level' post.
-The next nested object down is the \textit{child} id, 
-or the id of the actual post itself, 
-and the keys under that are the `fields' of the table, 
+The next object down the key hierarchy is the \textit{child} id, 
+which is the id of the actual post itself.
+The keys beneath that are the `fields' of the table, 
 such as the \tcode{text} and \tcode{replyTo} values.
 Figure~\ref{f:firebase_admin_posts} shows Firebase's administrative view of the database where the \tcode{posts} table is expanded, 
 showing the parent and child id layers, 
@@ -214,7 +214,7 @@ Two-way bindings are possible in that a child element can modify a bound variabl
 but in some scenarios this makes it difficult to determine an `authoritative' value 
 or causes other circularity problems.
 For this reason, bindings should be used one-way across component lines,
-but two-way bindings are useful within a component to update its `data model' automatically from user input~\cite{polymercontributors2015-b}.
+but two-way bindings are useful within a component to update its data model automatically from user input~\cite{polymercontributors2015-b}.
 
 Each component keeps its own \tcode{<firebase-element>}\index{<firebase-element>} to pull data from Firebase\index{Firebase} as needed,
 or in some cases the relevant object is passed in as a binding from a parent element that has its own \tcode{<firebase-element>}\index{<firebase-element>}.
@@ -230,7 +230,7 @@ Data bindings carry data information down from parent to child while DOM\index{D
 
 Using \tcode{<firebase-element>}\index{<firebase-element>} isolates each component from direct interaction with the general purpose Firebase\index{Firebase} JavaScript library
 and ties the database directly into the Polymer\index{Polymer} data binding system.
-Persisting changes is incredibly easy; 
+Persisting a change is incredibly easy; 
 writing a new value to a variable not only saves it to the database but pushes the change
 to all other `subscribers' --- whoever is viewing that post or other object at the time.
 The \tcode{data=} attribute on 
@@ -336,7 +336,7 @@ The user authenticates directly to the chosen IdP (e.g. Facebook\index{Facebook}
 Future versions may support additional identity providers like GitHub\index{GitHub} and Twitter\index{Twitter} as well as Firebase's\index{Firebase} own simple user registration system.
 
 Inside Speakur, authentication is handled by the \tcode{<firebase-login>} element, provided by \tcode{<firebase-element>}~\cite{polymercontributors2015-c}.
-A binding is set up between that and the \tcode{user} variable in \tcode{<speakur-discussion>}\index{<speakur-discussion>} so that when user authentication is completed, the \tcode{user} variable contains an object with user properties like their authentication ID and other data.
+A binding is set up between that and the \tcode{user} variable in \tcode{<speakur-discussion>}\index{<speakur-discussion>} so that when user authentication is completed, the \tcode{user} variable contains an object with user properties like their full name and authentication ID.
 The authentication\index{authentication} session is automatically used by any \tcode{<firebase-element>} anywhere on the page provided that their \tcode{location=} points to the same database base URL.
 
 \subsection{Firebase security rules}
@@ -383,7 +383,7 @@ This wrapper provides a Polymer filter named \tcode{\$\$} which is used in \tcod
 Of course, the users' posts themselves are not translated; just the application's interface strings.
 
 The i18next library loads translation strings out of JSON\index{JSON} files, one for each supported language.
-The current translations were obtained by taking the English language file and passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
+I obtained the current translations by creating an English language file and then passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
 a Python\index{Python language} package that I wrote for another project~\cite{landers2015-a}.
 The i18next library includes the ability to handle variable interpolation insertion points and pluralization rules which are important for producing grammatically correct text.
 Here is a short excerpt from the English file followed by the Russian version:
@@ -409,7 +409,7 @@ Here is a short excerpt from the English file followed by the Russian version:
 
 This example shows that with the \tcode{'View Comments'} key, the corresponding value can be null if the key itself can serve as the text. 
 The other two keys illustrate variable interpolation and pluralization logic where different grammatical forms can be selected based on a numeric variable, 
-in this case the number of replies that a post has.
+in this case, the number of replies that a post has.
 These translation strings would be used in a template like:
 \pagebreak
 \begin{lstlisting}[language=HTML5,caption={Internationalizing a data-bound template.},label=l:i18n_template,captionpos=below]
@@ -423,7 +423,7 @@ These translation strings would be used in a template like:
 In this expression the \tcode{lc} variable (the second parameter to the \tcode{\$\$} call) reflects the user's current language setting, such as \tcode{lc=en} for English or \tcode{lc=ru} for Russian.
 Interestingly, the \tcode{lc} variable is \textit{not} required by the \tcode{\$\$} filter because it already knows the current locale.
 Instead, \tcode{lc} is included in the expression merely to register a value dependency with Polymer\index{Polymer}
-such that when the locale is changed elsewhere, all dependent expressions are recalculated, or in this case, the strings are re-translated to the current 
+such that when the locale is changed elsewhere, all dependent expressions are recalculated, or in this example, the strings are re-translated to the current 
 locale\footnote{
 Polymer expression dependencies are implemented internally with DOM mutation observers\index{mutation observers}~\cite{polymercontributors2015-b}.}.
 In this case it would output something like ``1 reply'' or ``2 replies'' as needed.
@@ -434,8 +434,8 @@ Adding \tcode{lc} to this expression ensures that the text is updated when the l
 %\subsection{Libraries}
 
 Another powerful internationalization\index{internationalization} feature is provided by the moment.js library\index{moment.js library}, 
-a general purpose date/time library that also provides localizing\index{localization} services.
-The date/time localizations are not provided by Speakur\index{Speakur} but are included in moment.js itself.
+a general purpose date/time library that also provides date-related localization\index{localization} services.
+Unlike the general UI strings, the date translations are not provided by Speakur\index{Speakur}, but are included in moment.js itself.
 In addition to formatting dates and times (like the time of a post) according to local conventions, 
 it also provides a \tcode{fromNow} function that outputs a localized ``ago'' string --- the amount of time elapsed since a certain point such as ``10 seconds ago'' or ``3 weeks ago''.
 Speakur\index{Speakur} uses this in post headers to show how long ago they were posted,
@@ -497,6 +497,9 @@ That said, vulcanization does offer current benefits,
 as shown in 
 Table~\ref{table:speakurloading} which compares the time (in milliseconds) to initially display the Speakur component and then fully load a thread with 25 comments in three popular desktop browsers.
 These figures partly reflect the degree to which each of these browsers natively supports Web Components\index{Web Components} at this time.
+At the moment Firefox\index{Mozilla!Mozilla Firefox} does not natively support as many Web Component features as Google Chrome\index{Google!Google Chrome} or Opera\index{Opera}, 
+so the polyfill\index{polyfill} must do more work, negatively impacting load times on that browser.
+
 
 % p{8cm}
 \begin{table}\centering
@@ -509,7 +512,7 @@ State & Raw & Vulcanized & Reduction \\
 visible & 2200 & 1150 & 47.7\% \\
 complete & 4200 & 2900 & 31.0\% \\
 \\
-\textbf{Mozilla Firefox}\index{Mozilla!Mozilla Firefox}\index{Firefox} \\ 
+\textbf{Mozilla Firefox}\index{Mozilla!Mozilla Firefox} \\ 
 visible & 7400 & 6050 & 18.2\% \\
 complete & 12000 & 10500 & 12.5\% \\
 \\
