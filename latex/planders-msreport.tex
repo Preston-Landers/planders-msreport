@@ -98,13 +98,13 @@
  citecolor=black,  % green
  urlcolor=black,
 % pdffitwindow=true,
- pdftitle={Speakur: leveraging Web Components for composable applications},
+ pdftitle={Speakur: Leveraging Web Components for Composable Applications},
  pdfauthor={Preston Landers <planders@utexas.edu>},
  pdfsubject={A case study in HTML5 Web Components, the Polymer framework, and Firebase.},
  pdfkeywords={Polymer} {Web Components} {HTML5} {Speakur} {Firebase},
  }
 
-
+\usepackage[capitalize]{cleveref}
 
 
 %\pretolerance=10000
@@ -125,7 +125,7 @@
 \address{\texttt{planders@utexas.edu}}  % Required
 
 % Required
-\title{Speakur: leveraging Web Components \\ for composable applications}
+\title{Speakur: Leveraging Web Components \\ for Composable Applications}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOTICE: The total number of supervisors and other members %%%%%%%%%%
@@ -356,7 +356,7 @@
 \begin{dedication}
 \index{Dedication@\emph{Dedication}}%
 This report is dedicated to my wife for her patience,\linebreak
-and to my parents for their support and guidance.
+and to my parents for their support and guidance
 \end{dedication}
 
 
@@ -366,8 +366,8 @@ I would like to thank Bill Balcezak for strongly encouraging and facilitating th
 I would also like to thank Curt Finch, John Maddalozzo and everyone else at Journyx for their patience, understanding and encouragement.
 
 I would also like to thank my supervisor, Dr. Adnan Aziz, 
-for his enthusiasm, feedback, wisdom, and for teaching one of best classes I've ever taken.
-In addition I would like to thank Dr. Christine Julien, Mr. Bill Bard, Dr. Kathleen Barber and all of the other excellent instructors in the CLEE program.
+for his enthusiasm, invaluable feedback, wisdom, and for teaching one of best classes I've ever taken.
+In addition I would like to thank Dr. Christine Julien, Mr. Bill Bard, Dr. Kathleen Barber, and all of the other excellent instructors in the CLEE program.
 Without this amazing program and everyone mentioned above, I would not be who I am today.
 \end{acknowledgments}
 
@@ -382,14 +382,14 @@ Without this amazing program and everyone mentioned above, I would not be who I 
 \indent
 
 This report is a case study of applying abstraction, encapsulation, and composition techniques to web application architecture with the use of Web Components, 
-a proposed extension to the W3C HTML5 document standard. 
-The author presents Speakur, a real-time social discussion plugin for the mobile and desktop web, 
-as an example of using HTML5 Web Components to realize software engineering principles such as encapsulation and interface-based abstraction, and the composition of applications from components sourced from diverse authors and frameworks.
+a proposed extension to the HTML5 document object model. 
+I created Speakur, a real-time social discussion plugin for the mobile and desktop web, 
+to show how Web Components can help realize software engineering principles and design patterns, including the composition of applications from components sourced from diverse authors and frameworks.
 
 Web authors can add a Speakur discussion to their page by inserting a simple HTML element at the desired spot to give the page a real-time discussion or feedback system.
-Speakur uses the Polymer framework's implementation of the draft Web Components (WC) standard to achieve encapsulation of its internal implementation details from the containing page and present a simplified, well defined interface (API).
+Speakur uses the Polymer framework's implementation of the draft Web Components standard to achieve the encapsulation of its internal implementation details from the containing page behind a simplified, well defined interface.
 
-Web Components are a proposed World Wide Web Consortium (W3C) standard for writing custom HTML tags that take advantage of new browser technologies like Shadow DOM, package importing, CSS Flexboxes and data-bound templates.
+Web Components are a proposed World Wide Web Consortium standard for writing custom HTML tags that take advantage of new browser technologies like Shadow DOM, package importing, CSS Flexboxes and data-bound templates.
 This report reviews Web Component technologies and provides a case study for structuring a real-world WC applet that is embedded in a larger app or system.
 The major research question is whether W3C Web Components provide a viable path towards the encapsulation and composition principles that have largely eluded web engineers thus far. 
 In other words, \textit{are components really the future of the web}? 

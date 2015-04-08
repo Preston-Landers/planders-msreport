@@ -3,7 +3,7 @@
 @\emph{Analysis}}%
 
 This report aims to demonstrate how certain traditionally difficult problems in web development have been addressed by Web Components\index{Web Components}.
-The principles underlying Web Components and Polymer\index{Polymer} are summarized by the list in section~\ref{sec:wcprinciples} taken from ~\cite{webcomponentscontributors2014}.
+The principles underlying Web Components and Polymer\index{Polymer} are summarized by the list in~\cref{sec:wcprinciples} taken from ~\cite{webcomponentscontributors2014}.
 I have tried to make Speakur\index{Speakur} adhere to these principles both internally and externally,
 and to demonstrate the application of abstraction\index{abstraction} and encapsulation\index{encapsulation} patterns to creating flexible, composable, reusable, sharable components.
 My goal is to understand how the W3C Web Component\index{Web Components} initiative will impact web application engineering\index{software engineering} in the future.
@@ -15,7 +15,7 @@ separation of concerns,
 and the encapsulation of internal structure.
 This raises bundles of discrete functionality or `components' to a higher level of abstraction and 
 will help open up a new ecosystem of reusable, extendable, sharable modules.
-The Web Component principles from section~\ref{sec:wcprinciples} emphasize thinking small, 
+The Web Component principles from~\cref{sec:wcprinciples} emphasize thinking small, 
 breaking the problem down into manageable chunks and being adaptable, extendable and composable.
 Web developers were already doing this in many cases, but without formal support from the browser.
 
@@ -40,17 +40,17 @@ Of course, care must be taken to design the interface so the user doesn't accide
 For example, Speakur's user preferences screen doesn't commit changes to the database until the user clicks the Save button.
 Editing the text of an existing post also saves a copy of the previous version.
 
-Data bindings and synchronization are discussed in section~\ref{sec:sync}.
+Data bindings and synchronization are discussed in~\cref{sec:sync}.
 In general, two-way data bindings should only be used \textit{within} a component.
 Across component boundaries, use a one-way binding to send data down to a child,
 and fire events to notify containers of state changes.
 DOM Mutation Observers\index{mutation observers} can be useful for making one component react to a change in another without directly tying their code together.
-As the example with \tcode{lc} (locale) in section~\ref{sec:i18n} showed, 
+As the example with \tcode{lc} (locale) in~\cref{sec:i18n} showed, 
 it's sometimes necessary to `shoehorn' certain variables into a Polymer binding expression 
 to ensure that the expression is recalculated when that variable changes.
 
 Component load times are currently one problem area for Web Components.
-The Vulcanize\index{Vulcanize} tool offers definite benefits for load times as seen in Table~\ref{table:speakurloading},
+The Vulcanize\index{Vulcanize} tool offers definite benefits for load times as seen in~\cref{table:speakurloading},
 but Speakur is a relatively simple application where all 20 or so components are used more or less immediately.
 Vulcanization must be applied at the level of the site or app, not by the individual component authors.
 Larger single page applications (SPAs) will face more complex challenges when trying to optimize load times, and performance in general,

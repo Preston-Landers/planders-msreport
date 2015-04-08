@@ -14,13 +14,13 @@ Speakur\index{Speakur}
 is a Custom Element\index{Custom Elements} 
 (\tcode{<speakur-discussion>}\index{<speakur-discussion>}) 
 that provides an embeddable discussion forum or comment hosting service for a blog, web page or other web application.
-Examples of Speakur's user interface\index{user interface (UI)} can be found in Figures~\ref{f:demo1} and~\ref{f:lang}.
+Examples of Speakur's user interface\index{user interface (UI)} can be found in~\cref{f:demo1,f:lang}.
 Placing Speakur inside a web resource is very straightforward.
-As shown in Listing~\ref{l:example1},
-and in section \ref{publishing} below,
+As shown in~\cref{l:example1},
+and in~\cref{publishing} below,
 you simply place the \tcode{<speakur-discussion>}\index{<speakur-discussion>}
  element in your page's HTML\index{HTML} at the desired spot.
-This requires two supporting steps detailed in section~\ref{publishing}:
+This requires two supporting steps detailed in~\cref{publishing}:
 \begin{enumerate}
 \item loading the Web Components\index{Web Components} polyfill\index{polyfill} script
 \item importing the \tcode{<speakur-discussion>}\index{<speakur-discussion>} element.
@@ -38,7 +38,7 @@ Therefore serious users will wish to use their own Firebase account with their o
 In addition to basic commenting features, Speakur\index{Speakur} offers the ability to vote comments up or down, custom profiles, 
 the ability to leave comments in Markdown\index{Markdown} syntax~\cite{githubcontributors2015} with syntax highlighting\index{syntax highlighting} for common programming languages, 
 and (rough) user interface translations  or localizations\index{localization}\index{internationalization} 
-into 15 languages as shown in Figure~\ref{f:lang}.
+into 15 languages as shown in~\cref{f:lang}.
 
 \begin{figure}[htb]
 \centering
@@ -50,7 +50,7 @@ into 15 languages as shown in Figure~\ref{f:lang}.
 From a technical perspective, one of the more interesting features in Speakur\index{Speakur} is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
 to allow components to automatically reflect changes in far-flung areas of the application.
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
-Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in Figure~\ref{f:lang}.
+Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in~\cref{f:lang}.
 
 \section{Architecture overview}
 It has been said that ``any problem in computer science can be solved with another layer of indirection\index{indirection}'' (usually attributed to Wheeler).
@@ -64,7 +64,7 @@ Roy Fielding, the author of the influential REST\index{REST} web architecture\in
 At the heart of software architecture is the principle of abstraction: hiding some of the details of a system through encapsulation\index{encapsulation} in order to better identify and sustain its properties. A complex system will contain many levels of abstraction, each with its own architecture~\cite{fielding2000}.
 \end{quote}
 
-The architecture for Speakur\index{Speakur} is based on client-side (browser) JavaScript\index{JavaScript} code and HTML\index{HTML} layout following the Web Components\index{Web Components} design principles listed in section~\ref{sec:wcprinciples} below. 
+The architecture for Speakur\index{Speakur} is based on client-side (browser) JavaScript\index{JavaScript} code and HTML\index{HTML} layout following the Web Components\index{Web Components} design principles listed in~\cref{sec:wcprinciples} below. 
 There is no dedicated server component except for the Firebase\index{Firebase} cloud database service~\cite{firebasecontributors2015}.
 Speakur is built entirely from plain HTML, JS and CSS\index{CSS} files that can be served from a content delivery network (CDN)\index{content delivery network (CDN)} 
 such as \tcode{github.io}\index{GitHub} or your own server~\cite{landers2015-d}.
@@ -73,18 +73,16 @@ just load Speakur directly from \tcode{github.io} with an HTML \textit{import}
 and then insert a tiny bit of HTML markup into your document~\cite{landers2015-d}.
 This helps fulfill the ease of use requirements 
 \#\ref{motive:abstraction} and \#\ref{motive:cors}
-in section~\ref{motivations}.
+in~\cref{motivations}.
 
-Most of the user interface\index{user interface (UI)} elements in Speakur\index{Speakur} 
---- things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements  
---- are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
+Most of the user interface\index{user interface (UI)} elements in Speakur\index{Speakur}---things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements---are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
 Speakur presents a simple API through \tcode{<speakur-discussion>}\index{<speakur-discussion>},
 but internally it consists of a number of internal abstraction layers or custom elements.
 In turn, these internal layers consist of still more focused layers, other Polymer\index{Polymer} components, 
 simple HTML templates, 
 and wrappers around external JavaScript\index{JavaScript} libraries 
 like \tcode{moment.js}\index{moment.js library}.
-These internal layers are described in section~\ref{sec:layout}.
+These internal layers are described in~\cref{sec:layout}.
 
 As previously mentioned, in order to make the 
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} element available for use, 
@@ -122,14 +120,14 @@ and CSS \tcode{@media}\index{@media} rules that apply varied styles to different
 In addition, Speakur's JavaScript\index{JavaScript} code exposes a \tcode{smallScreen} flag to the HTML templates\index{HTML!templates} that can trigger layout adjustments, 
 such as moving the user photo to a different location.
 
-The desktop version in Figure~\ref{f:demo1} shows the user photo to the left of the main post area, 
-but the mobile version in Figure~\ref{f:mobile1} above shows how the user photo is moved to the right side of the post header. 
-A CSS\index{CSS} \tcode{@media}\index{@media} rule for small screens disables the indentation of replies shown at the bottom of Figure~\ref{f:demo1}. 
+The desktop version in~\cref{f:demo1} shows the user photo to the left of the main post area, 
+but the mobile version in~\cref{f:mobile1} above shows how the user photo is moved to the right side of the post header. 
+A CSS\index{CSS} \tcode{@media}\index{@media} rule for small screens disables the indentation of replies shown at the bottom of~\cref{f:demo1}. 
 The extensive use of CSS flex\index{Flex} box attributes ensures that structural elements like headers and toolbars automatically adjust their layout to available space~\cite{polymercontributors2015-d}. 
-This will be described in more detail in section~\ref{sec:responsive}.
+This will be described in more detail in~\cref{sec:responsive} on~\cpageref{sec:responsive}.
 
 \section{Polymer and Web Components}
-As described in Chapter~\ref{ch:background}, 
+As described in~\cref{ch:background}, 
 Web Components\index{Web Components} are a 
 W3C\index{W3C} initiative 
 to expose certain native browser features in a public, standardized way. 
@@ -144,8 +142,7 @@ In general, Speakur tries to adhere to the core principles laid out by the
 Web Components\index{Web Components} developers 
 for general purpose components. 
 It's worth quoting those here in full, 
-because they are applicable to software engineering\index{software engineering} in general. They are:
-\label{sec:wcprinciples}
+because they are applicable to software engineering\index{software engineering} in general. They are:\label{sec:wcprinciples}
 \begin{quote}
 \begin{enumerate}
 \item Address a common need.\label{wcp:commonneed}
@@ -160,11 +157,10 @@ because they are applicable to software engineering\index{software engineering} 
 \item Deliver the key benefit to HTML authors, not just coders~\label{wcp:htmlauthors}\cite{webcomponentscontributors2014}.
 \end{enumerate}
 \end{quote}
-
 % Explain how I follow those guidelines... [TODO]
 % Will be explained in ch 4 and 5, should I mention that here? probably not
 
-The Polymer project provides two (optional) libraries of Custom Elements\index{Custom Elements} for use in your own projects. 
+The Polymer\index{Polymer} project provides two (optional) libraries of Custom Elements\index{Custom Elements} for use in your own projects. 
 \textbf{Core Elements}\index{Core Elements} includes both user interface\index{user interface (UI)}
 widgets and invisible functional elements.
 Core Elements are minimally styled and can be used directly, 
@@ -276,7 +272,7 @@ Because Speakur\index{Speakur} has no `server' as such,
 other than the Firebase\index{Firebase} cloud service,
 that means the security mechanisms that do things like prevent users from deleting each other's posts 
 must be implemented entirely within Firebase security rules.
-This is discussed in more detail in section~\ref{sec:security}.
+This is discussed in more detail in~\cref{sec:security}.
 
 Firebase implements the two major categories of access control: authentication\index{authentication} and 
 authorization\index{authorization}. 
@@ -294,13 +290,13 @@ Users can sign into a Speakur discussion thread, and hence Firebase, through the
 Firebase\index{Firebase} supports other authorization schemes, including account registration (``simple password''), Twitter\index{Twitter} and GitHub\index{GitHub} identities.
 Site owners who use Speakur can also designate certain threads to allow anonymous commenting.
 
-Every user who registers within a Speakur\index{Speakur} instance by signing in with one of those identity providers gets a unique identifier --- the \tcode{uid} or user ID. 
+Every user who registers within a Speakur\index{Speakur} instance by signing in with one of those identity providers gets a unique identifier---the \tcode{uid} or user ID. 
 This \tcode{uid} is used extensively in the database to refer to the user, including in the security (authorization\index{authorization}) rules that are external to the actual database (i.e, security metadata\index{metadata}.) 
 Thread owners also have the option of allowing anonymous posts by users who are not signed in.
 
 \subsection{Authorization}
 Authorization\index{authorization} security\index{security} rules determine what level of access a user has within the system and what they are allowed to do or see.
-Speakur's\index{Speakur} security\index{security} rules are described in more detail in section~\ref{sec:security}.
+Speakur's\index{Speakur} security\index{security} rules are described in more detail in~\cref{sec:security}.
 The set of security rules for a Speakur database is contained in a JSON\index{JSON} encoded file that contains expressions that determined whether a given database read or write (change) is allowed. 
 For example, Speakur has defined security rules which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator.
 Here is an excerpt for the \tcode{posts} resource from the security rules file:
@@ -324,7 +320,7 @@ Here is an excerpt for the \tcode{posts} resource from the security rules file:
 \end{changemargin}
 
 This rule structure is dictated by the architecture\index{architecture} of Firebase\index{Firebase}.
-This setup has certain pros and cons that can be seen from Listing~\ref{l:sec_rule1}. 
+This setup has certain pros and cons that can be seen from~\cref{l:sec_rule1}. 
 On one hand, it's logically designed and the expressions provide a powerful and fairly comprehensive way to specify the 
 security\index{security} and authorization\index{authorization} logic for your database.
 On the other hand, non-trivial rule expressions can get awkwardly long and in complex cases can devolve into a maze of nested ternary operators.
@@ -335,7 +331,7 @@ Having one big file with all the JSON formatted security expressions needed for 
 \section{Data flow and event handling}
 One important area of Speakur's architecture is the flow of data within the system and responding asynchronously\index{asynchronous} to local and remote user events.
 To understand the general flow of information in Speakur (and Polymer\index{Polymer}), imagine the component as an inverted tree, with the `root' at the top being the main \tcode{<speakur-discussion>}\index{<speakur-discussion>} element, 
-and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls as shown in Figure~\ref{f:component_layout}.
+and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls as shown in~\cref{f:component_layout}.
 In this model, information flows \textit{down} through data bindings and bubbles \textit{up} through events\index{event notification}.
 
 Data binding\index{data-bound template} is one of the most important extensions to standard DOM that is provided by the Polymer\index{Polymer} framework. 
@@ -347,7 +343,7 @@ and sending data to other elements or components~\cite{polymercontributors2015-b
 Data binding helps provide separation or decoupling between the user interface or \textit{view} and the underlying data \textit{model}, 
 a design pattern that is commonly known as 
 Model-View-Controller (MVC)\index{model-view-controller}.
-A short example can be found in Listing~\ref{l:dbtemplate} and a longer one in section~\ref{sec:databindings}.
+A short example can be found in~\cref{l:dbtemplate} and a longer one in~\cref{sec:databindings}.
 
 Although Polymer does support 2-way bindings\index{data-bound template}, 
 experience has shown that when exchanging data with external components, 1-way (top-down) bindings are easier to reason about and should be preferred.
@@ -355,7 +351,7 @@ Bound variables should flow in one direction, generally parent to child as menti
 So how should a child communicate changes back to the parent? 
 The parent (or any other interested party) can register a DOM\index{DOM} mutation observer to be notified when the child value changes, or the child can fire an \textit{event}\index{event notification} that the parent can respond to.
 
-As mentioned in section~\ref{sec:bgmutation}, 
+As mentioned in~\cref{sec:bgmutation}, 
 mutation observers\index{mutation observers} are a standard way to register a callback\index{callback} to be run when some area of the page (DOM) changes. 
 A callback in this case is a function that reacts to a change in some other part of the system.
 This doesn't necessarily have to be tied to a specific variable like with data-bound templates\index{data-bound template} and can reflect any change in any DOM attribute for standard \textit{and} custom elements. 
@@ -387,7 +383,7 @@ Like most applications, Speakur\index{Speakur} relies heavily on other libraries
 Some of these libraries in turn depend on other libraries.
 Collectively, all of the 3rd party modules required to run Speakur\index{Speakur} are called \textit{dependencies}\index{dependencies}.
 For example, safe HTML rendering of user-supplied Markdown-style text is handled by the excellent Marked library\index{Marked library}~\cite{christopherjeffrey2014}.
-See Appendix~\ref{appendix:credits} for the full list of Speakur's\index{Speakur} direct dependencies.
+See~\cref{appendix:credits} on~\cpageref{appendix:credits} for the full list of Speakur's\index{Speakur} direct dependencies.
 
 Taking advantage of the de-duping\index{de-duping} feature of HTML Imports\index{HTML!Imports}
 requires that you name the path to your resources and dependencies in a consistent fashion.
@@ -411,6 +407,6 @@ file to reduce the number of HTTP\index{HTTP} requests.
 Minification\index{minify} removes all comments, whitespace and non-essential elements from the code to compact it and reduce transfer times.
 Whether using Vulcanize results in an overall faster site ultimately depends on a number of factors including how and when the components are used.
 For that reason, empirical testing is needed to know whether it should be used in production on a real site~\cite{polymercontributors2015-a}.
-Table~\ref{table:speakurloading} illustrates how Vulcanize\index{Vulcanize} helps improve loading performance in three browsers.
+\Cref{table:speakurloading} on \cpageref{table:speakurloading} illustrates how Vulcanize\index{Vulcanize} helps improve loading performance in three browsers.
 Every time I release a new version of Speakur\index{Speakur}, I update the \tcode{gh-pages} branch in its Git\index{Git} repository with a Vulcanized edition that includes everything needed to run it, including Polymer\index{Polymer} and all of its other dependencies.
 This publishes it to the \tcode{github.io} CDN and makes it available to users.

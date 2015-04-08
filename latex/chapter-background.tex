@@ -6,22 +6,23 @@
 When the Web was first created by Tim Berners-Lee\index{Berners-Lee, Tim} in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
 The idea of composing a complex web application out of basic components like snapping together Lego blocks seemed like a distant dream at best.
 Until recently, web authors were limited to using the predefined HTML layout elements or `tags' that were listed in the W3C standard and understood by browser programs, such as \tcode{<title>} and \tcode{<video>}. 
-Creating your own \textit{sui generis} HTML elements with unique behaviors seemed beyond the capabilities of the web browsers of the day like Mosaic\index{Mosaic}
+Creating your own \textit{sui generis} HTML elements with unique behaviors was beyond the capabilities of the web browsers of the day like Mosaic\index{Mosaic}
 and Netscape Navigator\index{Netscape Navigator}.
 
-As of early 2015, modern web apps are typically written with a JavaScript\index{JavaScript} framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications 
---- large or small --- 
-from a number of sub-com\-ponents~\cite{dickey2014}.
+As of early 2015, modern web apps are typically written with a JavaScript\index{JavaScript} framework that provides a cohesive set of structures, design patterns and practices designed to facilitate composing web applications---large or small---from a number of sub-com\-ponents~\cite{dickey2014}.
 Angular\index{Angular}, Meteor\index{Meteor}, and Backbone\index{Backbone} are three such frameworks.
 The difference between a `framework'\index{framework} and a library is somewhat arbitrary, but typically frameworks are more comprehensive than narrowly focused utility libraries.
-Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model (DOM)\index{DOM}. 
-In this model, the entire web page or app belongs to a single `document', constituent parts are not encapsulated\index{encapsulation} or isolated from each other, and authors are limited to working with the predefined HTML tags.
-These issues make it difficult to create and share generic, reusable \textit{web components} 
---- in the abstract sense --- 
-among different users who may not use the same frameworks or follow the same set of assumptions and conventions.
+Yet all frameworks must exist within the confines of the programming model provided by the browser and the Document Object Model\index{DOM}. 
+In the DOM, the entire web page or app belongs to a single `document', constituent parts are not encapsulated\index{encapsulation} or isolated from each other, and authors are limited to working with the predefined HTML tags.
+These issues make it difficult to create and share generic, reusable \textit{web components}---in the abstract sense---among different users who may not use the same frameworks or follow the same set of assumptions and conventions.
+
+Throughout this report I will refer to both Web Components (the W3C initiative) and a more general concept of a ``software component'', 
+or just component for short, 
+which can be anything from a short function to a major software package or service.
+I also refer to ``widgets'', which are user interface (UI)\index{user interface (UI)} components like menus and buttons.
 
 \section{Current challenges in web authoring}
-In object oriented programming, encapsulation\index{encapsulation} is typically defined as a 
+In object oriented programming (OOP)\index{object oriented programming (OOP)}, encapsulation\index{encapsulation} is typically defined as a 
 ``language mechanism for restricting access to some of the object's components''
 ~\cite[p. 522]{mitchell2003}.
 The point of encapsulation is providing an \textit{abstraction} that consumers of the functionality can rely on without knowing the internals. 
@@ -30,45 +31,61 @@ The goals of encapsulation and abstraction include:
 identifying the interface of a data structure~\dots~providing \textit{information hiding} by separating implementation decisions from parts of the program that use the data 
 structure~\dots~and allowing the data structure to be used in many different ways by many different components~\cite[p. 243]{mitchell2003}.
 \end{quote}
+Among the key benefits of OOP are inheritance and polymorphism\index{polymorphism}, or the ability to treat related types of objects the same way through a shared interface.
 
-Although techniques of abstraction\index{abstraction} and encapsulation\index{encapsulation} have been widespread in object oriented programming for decades,
-the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules~\cite{ihrig2012}.
-To illustrate how these problems affect the ability of authors to share and reuse code, let's look at an example from the popular Twitter\index{Twitter} Bootstrap\index{Bootstrap} library~\cite{bootstrapcontributors2015}.
-Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and JavaScript\index{JavaScript} widgets or components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
+Although techniques of abstraction\index{abstraction} and encapsulation\index{encapsulation} have been widespread in object oriented programming\index{object oriented programming (OOP)} for decades,
+the fundamental web client programming model has not allowed for significant encapsulation of things like the DOM structure and CSS style rules or polymorphic treatment of different components~\cite{ihrig2012}.
+To illustrate how these problems affect the ability of authors to share and reuse code, 
+let us look at an example from the popular Twitter\index{Twitter} Bootstrap\index{Bootstrap} library~\cite{bootstrapcontributors2015}.
+Twitter Bootstrap is a collection of Cascading Style Sheet (CSS)\index{CSS} rules and JavaScript\index{JavaScript} user interface components designed to allow web authors to quickly `bootstrap' an attractive, consistent look-and-feel onto a web page.
 Bootstrap provides pre-styled user interface\index{user interface (UI)} (UI) widgets such as menus, buttons, panels, dropdown selectors, alerts, dialogs, and so on, to be used as building blocks to construct web sites or application user interfaces.
 Because Bootstrap must work within the confines of the DOM\index{DOM} and the HTML5\index{HTML!HTML5} standard, this necessarily exposes a great deal of Bootstrap's internals to its users.
-For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in Figure~\ref{f:twbs1}.
+For example, to add a Bootstrap site navigation bar to your page, you must essentially copy and paste a large block of HTML\index{HTML} and then customize it to your needs as shown in~\cref{l:twbs1}, adapted from the Bootstrap documentation~\cite{bootstrapcontributors2015}.
 
-\begin{figure}[htb]
-\centering
- \includegraphics[width=\textwidth]{images/bootstrap_navbar_html.png}
-\caption{Partial example of Twitter\index{Twitter} Bootstrap\index{Bootstrap} navigation bar HTML.}
-\label{f:twbs1}
-\end{figure}
-
+\begin{lstlisting}[language=HTML5,caption={Example Twitter\index{Twitter} Bootstrap\index{Bootstrap} navigation bar HTML.},label=l:twbs1]
+<nav role="navigation" class="navbar navbar-default">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="#" class="navbar-brand">Brand</a>
+  </div>
+  <!-- Collection of nav links and other content for toggling -->
+  <div id="navbarCollapse" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Inbox</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Login</a></li>
+    </ul>
+  </div>
+</nav>
+\end{lstlisting}
 
 This forces Bootstrap's\index{Bootstrap} users to tightly couple the layout of their page with the internal structure required by Bootstrap's navigation bar widget. 
 This coupling hinders a significant refactoring\index{refactoring} of the navigation widget's internal structure (HTML\index{HTML} layout) because that would require the large community of developers to update their applications accordingly.
 In addition, because CSS\index{CSS} rules normally apply across the entire page, the authors of Bootstrap must carefully select the scope and nomenclature of all rules to ensure no unintended side-effects~\cite{walton2014}. 
 Even then, conflicts are inevitable when the entire page is treated as a single sandbox and you combine components from many different vendors. 
 
-What if instead one could create and share a reusable chunk of functionality --- a web component -- that hid all of these tedious structural details and encapsulated its private, internal state? 
+What if instead one could create and share a reusable chunk of functionality---a web component---that hid all of these tedious structural details and encapsulated its private, internal state? 
 What if web authors could create their \textit{own} HTML elements?  
-Using Bootstrap's navigation bar could be as easy as replacing the code in Figure~\ref{f:twbs1} with a custom element like the one in the following example:
+Using Bootstrap's navigation bar could be as easy as replacing the code in~\cref{l:twbs1} with a custom element like the one in the following example:
 
-% 
-%\begin{figure}[htb]
-%\centering
-% \includegraphics[width=3.5in]{images/bootstrap_navbar_wc.png}
-%\caption{Hypothetical Bootstrap nav bar custom element.}
-%\label{f:twbs2}
-%\end{figure}
+\pagebreak
 
-\begin{lstlisting}[language=HTML5,caption={Hypothetical Bootstrap nav bar custom element.},label=l:twbs2]
+\begin{lstlisting}[language=HTML5,caption={Hypothetical custom element version of Bootstrap nav bar.},label=l:twbs2]
  <twbs-navbar>
+   <a toggle href="#">Brand</a>
    <a href="#">Home</a>
-   <a href="#">About</a>
-   <a href="#">Sign In</a>
+   <a href="#">Profile</a>
+   <a href="#">Inbox</a>
+   <a right href="#">Login</a>
  </twbs-navbar>
 \end{lstlisting}
 
@@ -80,7 +97,7 @@ That model was that one used internally by browsers to implement the newer
 HTML5\index{HTML!HTML5} tags 
 like the \textbf{\tcode{<video>}} element.\index{<video>} 
 The \tcode{<video>} element presents a simple interface (API) to HTML authors that hides the complexities of playing high definition video.
-Internally, however, browsers implement \tcode{<video>} with a `shadow' or hidden document inside the object that contains the internal state~\cite{kitamura2014}. 
+Internally, browsers implement \tcode{<video>} with a `shadow' or hidden document inside the object that contains the internal state~\cite{kitamura2014}. 
 For example, an author can write:
 \begin{lstlisting}[language=HTML5,numbers=none]
 	<video loop src=...> </video>
@@ -97,8 +114,8 @@ to cause the video to loop repeatedly.
 This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
 \tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
 These inner playback controls are themselves built out of HTML, CSS\index{CSS} and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
-Figure~\ref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
-A small \tcode{\#player-api} tag is visible in the DOM path at the bottom of Figure~\ref{f:html5video}.
+~\Cref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
+A small \tcode{\#player-api} tag is visible in the DOM path at the bottom of~\cref{f:html5video}.
 This is an example of the container inside \tcode{<video>}\index{<video>} using the abstraction of a \tcode{\#player-api} to encapsulate the details of actually controlling playback within the context of the overall \tcode{<video>} interface.
 
 This example illustrates three component design principles that are widely followed in other areas of software engineering\index{software engineering}~\cite{fowler2012}:
@@ -109,7 +126,7 @@ This example illustrates three component design principles that are widely follo
 \end{itemize}
 
 Composition helps reduce coupling or structural connections between modules by forcing them to interact using only public interfaces.
-In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS\index{CSS} roles and the Volume and Play controls aren't particularly special objects, just \tcode{<divs>} with CSS rules and click handlers.
+In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS\index{CSS} roles and the Volume and Play controls aren't particularly special objects, just \tcode{<div>} elements with CSS rules and click handlers.
 
 The solution, therefore, to these coupling problems in web authoring is to expose these internal brower APIs for creating elements in a safe and portable fashion. 
 This will allow web authors to create their own rich custom elements using standard portable APIs, encapsulate their internals, and enable easier sharing, composition and integration.
@@ -122,13 +139,14 @@ Custom HTML Elements\index{Custom Elements} and Shadow DOM\index{Shadow DOM} are
 One of the central goals of the Web Components\index{Web Components} initiative is to maintain interoperability across different browsers and frameworks, 
 so that modules which adhere to the Web Components standard can provide a consistent experience no matter what framework the developer chooses or which browser the user selects.
 For example, an important benefit of Custom Elements is that they \textit{are} standard HTML elements; they live in the DOM\index{DOM} and can be accessed by the usual DOM methods and the majority of standard HTML/JS development tools~\cite{penades2015}.
-They also behave somewhat like objects in traditional object oriented programming (OOP) in that 
+They also behave somewhat like objects in traditional object oriented programming in that 
 they have \textit{methods} and hidden internal \textit{state} (data).
 
 \subsection{Custom HTML elements}
 Never before have web authors been able to define their own custom HTML elements\index{Custom Elements} that were not found in the official list.
-Actually, many authors and web frameworks have been doing exactly that for years, primarily for internal purposes where the custom elements are pre\-processed and compiled down to standard HTML.
-The custom elements would not get sent to the end user's browser because it would not know what to do with them.
+Actually, some web frameworks and design tools have been doing exactly that for years, primarily for placing user interface controls that have a complex internal structure like in the Bootstrap nav bar example.
+These pseudo-custom elements would not get sent to end users because their browsers would not know what to do with them.
+Instead, preprocessing tools compile these down to standard HTML.
 In addition, the DOM\index{DOM} has long supported creating custom-named elements, but it was not possible to do much interesting with them because they were treated like an ordinary 
 \tcode{<span>}\index{<span>} element~\cite{w3ccontributors2015-b}.
 However, the possibility now exists to create custom elements in a standard way that will work consistently across browsers with the W3C Custom Element\index{Custom Elements}
@@ -136,21 +154,19 @@ specification~\cite{w3ccontributors2015-b}.
 
 The primary restriction is that all custom elements must have a \texttt{-} character (dash) in their name, such as \tcode{<my-element>}. 
 This is to avoid a name collision with future built-in HTML elements. 
-To create a new Custom Element, you must first register the element:
+To create a new Custom Element, you must first register it with JavaScript and then you can place your element on the page declaratively in HTML.
 
-\begin{lstlisting}[language=JavaScript,numbers=none]
- var MyElement = document.registerElement('my-element');
-\end{lstlisting}
-
-Then you can place your new element on the page, either declaratively in HTML:
-
-\begin{lstlisting}[language=HTML5,numbers=none]
+\begin{lstlisting}[language=HTML5,caption={Placing a custom element declaratively in HTML.},label=l:registerhtml]
+ <script>
+  document.registerElement('my-element');
+ </script>
+ ...
  <my-element> hello, world! </my-element>
 \end{lstlisting}
 
-or imperatively with JavaScript\index{JavaScript}:
+Or you can create and place custom elements purely in JavaScript\index{JavaScript}:
 
-\begin{lstlisting}[language=JavaScript,caption={Registering a custom element\index{Custom Elements} in JavaScript\index{JavaScript}.},label=l:register]
+\begin{lstlisting}[language=JavaScript,caption={Placing a custom element\index{Custom Elements} imperatively in JavaScript\index{JavaScript}.},label=l:register]
  var MyElement = document.registerElement('my-element');
 
  // create a new instance of the element
@@ -171,13 +187,14 @@ HTML5 Shadow~DOM\index{Shadow DOM} should not be confused with the React\index{R
 Typically a custom element definition has a template (more on these later) which produces the shadow DOM necessary to render the element.
 The actual contents of the shadow DOM are just ordinary elements.
 Any element, whether custom or not, can have zero, one, or more shadow DOM trees attached.
+A shadow DOM can contain any number of other elements, and those elements can in turn have their own shadow DOMs.
 
-Custom elements can wrap regular text, normal HTML elements, other custom elements, or nothing at all,
-and then project that content through its shadow DOM, 
-therefore into its visual representation.
-In the example in Listing~\ref{l:twbs2} above, 
-a \textbf{\tcode{<twbs-navbar>}} element consumes a set of three 
-\textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like the example in Figure~\ref{f:twbs1}, 
+A custom element can wrap regular text, normal HTML elements, other custom elements, or nothing at all,
+and then project that content through into its shadow DOM, 
+and thus into its visual representation.
+In the example in~\cref{l:twbs2}, 
+a \textbf{\tcode{<twbs-navbar>}} element consumes a set of five 
+\textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like~\cref{l:twbs1}, 
 projecting the set of links into the nav menu structure with appropriate wrappers.
 
 The \tcode{<content>}\index{<content>} tag is used inside a custom element's template to indicate the spot where the consumed (wrapped) content should be \textit{projected}. 
@@ -205,7 +222,7 @@ but that resource would be requested twice and executed twice, degrading applica
 
 In order to fix these problems the HTML Imports\index{HTML!Imports} standard allows for bringing in snippets of HTML, CSS\index{CSS} or JavaScript into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The one major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
-Dealing with HTML Imports in a consistent fashion is discussed in section~\ref{sec:dependencies}.
+Dealing with HTML Imports in a consistent fashion is discussed in~\cref{sec:dependencies}.
 
 \subsection{Templates}
 The last major piece of the Web Component puzzle is the native HTML5\index{HTML!HTML5} \tcode{<template>}\index{<template>} tag. 
@@ -362,7 +379,7 @@ I wanted my discussion component to have some of the following attributes:
 \begin{enumerate}
 \item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details.\label{motive:abstraction}
 
-\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online developer tools like \url{https://jsbin.com}.
+\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \url{https://jsfiddle.net/} and \url{https://jsbin.com}.
 \label{motive:cors}
 
 \item Event notification for changes similar to the 
