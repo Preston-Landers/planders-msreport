@@ -1,6 +1,6 @@
 \chapter{Approach and Software Architecture}
-\index{Approach%
-@\emph{Approach}}%
+\index{Approach and Software Architecture%
+@\emph{Approach and Software Architecture}}%
 \label{ch:approach}
 
 This chapter discusses the architectural approach behind Speakur, 
@@ -15,7 +15,7 @@ is a Custom Element\index{Custom Elements}
 (\tcode{<speakur-discussion>}\index{<speakur-discussion>|textbf}) 
 that provides an embeddable discussion forum or comment hosting service for a blog, web page or other web application, similar to the commercial service Disqus\index{Disqus}\footnote{\url{https://disqus.com/}}.
 Examples of Speakur's user interface\index{user interface (UI)} can be found in~\cref{f:demo1,f:lang}.
-Placing Speakur inside a web resource is straightforward.
+Placing Speakur inside a web page is straightforward.
 As shown in~\cref{l:example1},
 and in~\cref{publishing} below,
 the web author simply places the \tcode{<speakur-discussion>}
@@ -31,7 +31,7 @@ All forum data including user profiles and comment text is stored in an online c
 The messy details of structuring a discussion forum are abstracted\index{abstraction} away from the web page author.
 
 The \tcode{<speakur-discussion>}\index{<speakur-discussion>} element presents a simplified application programming interface (API)\index{API|textbf} to its users.
-There are only a few options available including the URL of the Firebase instance and the thread target URL or \tcode{href}\index{href}.
+There are only a few options available including the URL of the Firebase instance and the thread target URL (\tcode{href}\index{href}).
 If you do not provide your own Firebase\index{Firebase} URL, by default, my demo database is used instead.
 Therefore serious users will wish to use their own Firebase account with their own database and resource limits.
 
@@ -47,9 +47,9 @@ into 15 languages as shown in~\cref{f:lang}.
 \label{f:lang}
 \end{figure}
 
-From a technical perspective, one of the more interesting features in Speakur is the use of Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
-to allow components to automatically reflect changes in widely separated (decoupled) areas of the application.
-Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in another remote client.
+From a technical perspective, one of the more interesting features in Speakur is how Polymer's\index{Polymer} data-bound templates\index{data-bound template}, also known as Model-Driven Views\index{Model-Driven View}, 
+allow components to automatically reflect changes in widely separated (decoupled) areas of the application.
+Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in remote clients.
 Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in~\cref{f:lang}.
 
 \section{Software Architecture Overview}
@@ -73,7 +73,7 @@ just load Speakur directly from \tcode{github.io} with an HTML \textit{import}
 and then insert a tiny bit of HTML markup into your document~\cite{landers2015-d}.
 This helps fulfill the ease of use requirements 
 \#\ref{motive:abstraction} and \#\ref{motive:cors}
-in~\cref{motivations}.
+in~\cref{motivations} on~\cpageref{motivations}.
 
 \subsection{Speakur's Internal Components}
 Most of the user interface\index{user interface (UI)} elements in Speakur\index{Speakur}---things like dropdown menus and dialogs as well as invisible functional components like expand/collapse elements---are implemented with Polymer's\index{Polymer} Core\index{Core Elements} and Paper\index{Paper Elements} custom element libraries.
@@ -83,7 +83,7 @@ In turn, these internal layers consist of still more focused layers, other Polym
 simple HTML templates, 
 and wrappers around external JavaScript\index{JavaScript} libraries 
 like \tcode{moment.js}\index{moment.js library}.
-These internal layers are described in~\cref{sec:layout}.
+These internal layers are described in~\cref{sec:layout} on~\cpageref{sec:layout}.
 
 As previously mentioned, in order to make the 
 \tcode{<speakur-discussion>}\index{<speakur-discussion>} element available for use, 
@@ -91,7 +91,6 @@ you must first load the Web Components polyfill\index{polyfill} and then \textit
 either from \tcode{github.io} or your own server.
 I recommend that you create your own Firebase\index{Firebase} instance for data security and resource limitation reasons, but even this is not required. 
 If you don't create your own database, my demonstration instance is used instead.
-
 Security\index{security} for web clients engaging in data manipulation 
 (i.e., posting, editing or deleting comments) 
 is handled entirely through the Firebase\index{Firebase} authentication\index{authentication} 
@@ -168,9 +167,10 @@ Core Elements are minimally styled and can be used directly,
 but they are also used as base classes for 
 \textbf{Paper Elements}\index{Paper Elements}, 
 which implement the so-called `Material Design'\index{Material Design} look and feel (design language) used by apps for Google's\index{Google} Android\index{Android} mobile\index{mobile} operating system~\cite{imura2015}.
-Speakur's\index{Speakur} layout is composed of native HTML5 elements, 
+The use of Paper Elements helps give web apps like Speakur a look-and-feel that resembles a native mobile app.
+Speakur's\index{Speakur} layout is composed of a combination of native HTML5 elements, 
 Core and Paper Elements, 
-and Speakur's own custom elements that are used to abstract\index{abstraction} internal details.
+and Speakur's own custom elements which abstract\index{abstraction} internal implementation details.
 
 \section{Firebase and Data Synchronization}
 All persistent data in Speakur is stored in a cloud database\index{database} called Firebase~\cite{firebasecontributors2015}\index{Firebase|textbf}.
@@ -188,7 +188,7 @@ JavaScript Object Notation (JSON)\index{JSON|textbf}
 %but its free-form structure compared to XML\index{XML} can be both a blessing and a curse.  
 %It mirrors the syntax for writing data structure literals in the JavaScript\index{JavaScript} language.} 
 for securing\index{security} and validating user actions.
-The use of Firebase as the only server component allows for easy deployment\index{deployment} of Speakur with minimal dependencies, helping to adhere to the principles of ``think small'' and ``be useful right out of the box'' from above.
+The use of Firebase as the only server component allows for easy deployment\index{deployment} of Speakur with minimal dependencies, helping to adhere to the principles of ``think small'' and ``be useful right out of the box'' from the previous section.
 %Although Speakur's Firebase library uses the WebSockets protocol for data transfer and network event notification, 
 %Firebase also provides a RESTful programming interface that uses the standard HTTP protocol.
 This also makes Speakur completely dependent on Firebase security rules for authorizing user behavior like deleting posts.
@@ -227,6 +227,7 @@ curl --request DELETE $DATABASE/posts/$PARENT/$POST
 \index{curl}\index{HTTP!DELETE}
 
 Of course, the server would be expected to check your authorization to delete this resource.
+Authenticating on the command line is not shown here for simplicity.
 Viewing (reading) the post is done with a simple \tcode{GET}\index{HTTP!GET} request.
 Creating a brand new post can be done with \tcode{PUT}\index{HTTP!PUT}.
 Updating an existing post's text is done with the \tcode{POST}\index{HTTP!POST} verb.
@@ -243,7 +244,7 @@ Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\i
 
 The Firebase\index{Firebase|textbf} API\index{API} follows typical RESTful\index{REST|textbf} patterns in data access, allowing the database\index{database} 
 and its metadata\index{metadata} to be addressed as a set of linked HTTP resources starting from a single root.
-In addition, Firebase client libraries use WebSockets\index{WebSockets}, 
+In addition, Firebase client libraries use a WebSockets\index{WebSockets} connection, 
 a lower-level TCP/IP\index{TCP/IP} protocol, 
 to perform event notification\index{event notification|textbf} and distributed synchronization without the overhead of polling or high-overhead HTTP 1.1\index{HTTP} requests.
 WebSockets are used to enhance performance but all of the data in Firebase\index{Firebase|textbf} 
@@ -301,9 +302,9 @@ Firebase\index{Firebase|textbf} lets developers write security\index{security|te
 Speakur's\index{Speakur} security\index{security|textbf} rules are described in more detail in~\cref{sec:security}.
 The set of security rules for a Speakur database lives in a JSON\index{JSON} encoded file that contains expressions that determined whether a given database read or write (change) is allowed. 
 This file resides on the Firebase server, which evaluates the rules when authorizing actions.
-For example, I defined rules for Speakur which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator as shown in the following excerpt:
+For example, I defined rules for Speakur which prohibit anyone from editing or deleting an existing post unless they are the original post author or an authorized administrator as shown here:
 
-\begin{changemargin}{-0.5cm}{-1cm}
+\begin{changemargin}{-0.3cm}{-0.8cm}
 \begin{lstlisting}[language=JavaScript,caption=
 {Security rules for the \tcode{posts} table (user messages).},label=l:sec_rule1,captionpos=below]
 "posts": {
@@ -314,7 +315,7 @@ For example, I defined rules for Speakur which prohibit anyone from editing or d
       // must be admin or post owner to modify a post.
       ".write": "data.exists() ? ( auth.uid === data.child('author').child('uid').val() || root.child('admins').child(auth.uid).child('scope').val() === '*' ) : true",
       // validate structure of new posts
-      ".validate": "newData.hasChildren(['threadId', 'text', 'author']) && newData.child('timestamp').val() > 1"
+      ".validate": "newData.hasChildren([ 'threadId', 'text', 'author' ]) && newData.child('timestamp').val() > 1"
     }
   }
 }
@@ -322,7 +323,7 @@ For example, I defined rules for Speakur which prohibit anyone from editing or d
 \end{changemargin}
 
 The rule structure is dictated by the architecture\index{architecture} of Firebase\index{Firebase|textbf}.
-This setup has certain pros and cons that can be seen from~\cref{l:sec_rule1}. 
+This setup has certain pros and cons that can be seen in~\cref{l:sec_rule1}. 
 On one hand, it's logically designed and the expressions provide a powerful and fairly comprehensive way to specify the 
 security\index{security|textbf} and authorization\index{authorization} logic for your database.
 On the other hand, non-trivial rule expressions can get awkwardly long and in complex cases can devolve into a maze of nested ternary operators.
@@ -336,16 +337,18 @@ To understand the general flow of information in Speakur (and Polymer\index{Poly
 and the nodes and leaves under that being the internal parts such as the headers, the posts, and other user interface\index{user interface (UI)} controls as shown in~\cref{f:component_layout}.
 In this model, information flows \textit{down} through data bindings and bubbles \textit{up} through events\index{event notification}.
 
-Data binding\index{data-bound template|textbf} is one of the most important extensions to standard DOM that is provided by the Polymer\index{Polymer} framework. 
+Data binding\index{data-bound template|textbf} is one of the most important extensions to standard DOM provided by the Polymer\index{Polymer} framework. 
 This ties (or `binds') a variable from the data model to one or more spots in the shadow DOM, or else to an input or output from some other component, 
-such that any change in the variable is reflected in the bound locations.
+so that any change in the variable is reflected in the bound locations.
 Two primary uses of data bindings are
 binding a custom element's representation (shadow DOM template) to live data, 
 and sending data to other elements or components~\cite{polymercontributors2015-b}. 
 Data binding helps provide separation or decoupling between the user interface or \textit{view} and the underlying data \textit{model}, 
 a design pattern that is commonly known as 
 Model-View-Controller (MVC)\index{model-view-controller|textbf}.
-A short example can be found in~\cref{l:dbtemplate} and a longer one in~\cref{sec:databindings}.
+A short example can be found in~\cref{l:dbtemplate} on~\cpageref{l:dbtemplate}.
+\Cref{sec:databindings,sec:dbtemplates} discuss data binding and data-bound templates in more detail.
+%  from~\cpageref{sec:databindings}
 
 Although Polymer does support 2-way bindings\index{data-bound template}, 
 experience has shown that when exchanging data with external components, 1-way (top-down) bindings are easier to reason about and should be preferred.

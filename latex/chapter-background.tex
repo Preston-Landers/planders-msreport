@@ -1,6 +1,6 @@
 \chapter{Background and Motivations}
-\index{Background%
-@\emph{Background}}%
+\index{Background and Motivations%
+@\emph{Background and Motivations}}%
 \label{ch:background}
 
 When the Web was first created by Tim Berners-Lee\index{Berners-Lee, Tim} in 1989, web pages were largely envisioned as static \textit{documents} with a single author or a small group of coordinating authors. 
@@ -111,7 +111,7 @@ to cause the video to loop repeatedly.
 \label{f:html5video}
 \end{figure}
 
-This shadow\index{Shadow DOM} Document Object Model (DOM)\index{DOM} inside the 
+This shadow\index{Shadow DOM} Document Object Model\index{DOM} inside the 
 \tcode{<video>}\index{<video>} tag creates the user interface (UI) needed to control video playback such as the volume controls, the timeline bar, and the pause and play buttons.
 These inner playback controls are themselves built out of HTML, CSS\index{CSS} and JS but these details are not exposed to web authors who simply place a \tcode{<video>} element on their page. 
 ~\Cref{f:html5video} illustrates how this works. It shows the shadow (internal) DOM of a \tcode{<video>} element on a page with the Play button \tcode{<div>} highlighted.
@@ -136,7 +136,7 @@ The question remains, which specific browser internals must be exposed and stand
 \section{The Web Components Initiative}
 
 The Web Components\index{Web Components|textbf} standard consists of two main technologies and two supporting features. 
-Custom HTML Elements and Shadow DOM\index{Shadow DOM|textbf} are the two key players while HTML Imports\index{HTML!Imports} and Templates\index{HTML!Templates} support these features. 
+HTML Custom Elements and Shadow DOM\index{Shadow DOM|textbf} are the two key players while HTML Imports\index{HTML!Imports} and Templates\index{HTML!Templates} support these features. 
 One of the central goals of the Web Components initiative is to maintain interoperability across different browsers and frameworks, 
 so that modules which adhere to the Web Components standard can provide a consistent experience no matter what framework the developer chooses or which browser the user selects.
 For example, an important benefit of Custom Elements is that they \textit{are} standard HTML elements; they live in the DOM\index{DOM} and can be accessed by the usual DOM methods and the majority of standard HTML/JS development tools~\cite{penades2015}.
@@ -215,13 +215,13 @@ but the point is that this must be an intentional act by the developer and not a
 \subsection{HTML Imports}
 One significant problem faced by web developers is the lack of any built-in packaging system for modules in HTML.
 Prior to Web Components there was no way to import a snippet of HTML or JavaScript\index{JavaScript} from an external location and insert it exactly one time into the current document, 
-similar to an \tcode{\#include}\index{\tcode{\#include}} directive in the C language\index{C language} or the packaging and import systems that are popular in scripting languages\index{scripting languages}
+similar to an \tcode{\#include}\index{\tcode{\#include}} directive in the C language\index{C language} or the packaging and import systems in languages\index{scripting languages}
 like Python\index{Python language}, Go\index{Go language} and Ruby\index{Ruby language}. 
 JavaScript can always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this does not ensure that script resources are executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
 A component that uses a certain JS library might be needed in two different spots on the page, 
 but that causes the library's script resource to be executed twice, degrading application performance.
 
-Careful design in the library can minimize that impact, but native browser support offers a more consistent approach.
+Careful design in the library can minimize that impact, but native browser support offers a more consistent and reliable approach.
 The HTML Imports\index{HTML!Imports|textbf} standard addresses these issues by specifying how bundles of HTML, 
 CSS\index{CSS} or JavaScript---components---can be packaged and imported into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
@@ -236,12 +236,12 @@ While HTML5 templates have some similarities to the concept of templates popular
 
 HTML5\index{HTML!HTML5} templates are inert hunks of HTML embedded in the page that can be instantiated into `real' elements by JavaScript\index{JavaScript}.
 Their basic function is to give a source input for the shadow DOM\index{Shadow DOM} when you create a new (custom) element instance and place it on the page.
-However, templates are most useful in combination with `live' data, not static, unchanging text.
 Binding data into templates with special operators\footnote{
 Sometimes called mustaches, handlebars or curly braces. },
 also known as a Model-Driven View\index{Model-Driven View},
 is \textbf{not} a part of the standard HTML5\index{HTML!HTML5} template spec.
-The following example of a data bound template is something that does \textit{not} work with plain Web Components alone:
+Templates are most useful in combination with `live' data, not static, unchanging text.
+The following example of a data-bound template is something that does \textit{not} work with plain Web Components alone:
 
 \begin{lstlisting}[language=HTML5,caption={An example of a data-bound template.},label=l:dbtemplate]
 	<template> 
@@ -252,7 +252,7 @@ The following example of a data bound template is something that does \textit{no
 Google\index{Google} engineers have advanced a proposal for standardizing 
 Model-Driven Views\index{Model-Driven View}
 but it is not yet part of the standard \tcode{<template>}\index{<template>} element~\cite{googledevelopers2014}.
-Instead this functionality can be handled by a JavaScript\index{JavaScript} framework such as React or Polymer.
+Instead this functionality can be handled by JavaScript\index{JavaScript} frameworks like React or Polymer.
 Data-bound templates are discussed in more detail in the following chapters.
 
 The primary benefit of HTML Templates\index{HTML!Templates} from a performance perspective is that external resources referenced from the template (images, stylesheets, etc.) will not be fetched until the template is actually instantiated.
@@ -291,14 +291,13 @@ The Selector\index{Selectors} API was officially standardized in 2013 and browse
 
 The JS selector API allow you to quickly find DOM elements based on a rule-based description string (the selector) to perform further operations on their state such as reading or modifying data, observing future changes, attaching animations, and so on. 
 The following example shows how to populate a JS variable with the element that has the \tcode{id} attribute equal to \tcode{some-id}:
-\pagebreak
+%\pagebreak
 \begin{lstlisting}[language=JavaScript,caption={JavaScript query selector example.}]
 	// find an element whose id is equal to 'some-id'
 	var someElem = document.querySelector("#some-id");
 	if (someElem) console.log("Found it!");
 	else console.log("Wasn't there.");
 \end{lstlisting}
-
 
 %Pointer events:
 
@@ -384,7 +383,7 @@ I wanted my discussion component to have some of the following attributes:
 \begin{enumerate}
 \item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details.\label{motive:abstraction}
 
-\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \url{https://jsfiddle.net/} and \url{https://jsbin.com}
+\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \\ \url{https://jsfiddle.net/} and \url{https://jsbin.com}
 \footnote{See \url{http://jsbin.com/jubabubazu/10} for a working example.}.
 \label{motive:cors}
 

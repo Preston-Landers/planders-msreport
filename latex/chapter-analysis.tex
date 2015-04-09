@@ -1,6 +1,7 @@
 \chapter{Analysis and Lessons Learned}
-\index{Analysis%
-@\emph{Analysis}}%
+\index{Analysis and Lessons Learned%
+@\emph{Analysis and Lessons Learned}}%
+\label{ch:analysis}
 
 This report aims to demonstrate how certain traditionally difficult problems in web development have been addressed by Web Components\index{Web Components}.
 The principles underlying Web Components and Polymer\index{Polymer} are summarized by the list in~\cref{sec:wcprinciples} taken from ~\cite{webcomponentscontributors2014}.
@@ -49,7 +50,7 @@ Across component boundaries, use a one-way binding to send data down to a child,
 and fire events to notify containers of state changes.
 DOM Mutation Observers\index{mutation observers} can be useful for making one component react to a change in another without directly tying their code together.
 As the example with \tcode{lc} (locale) in~\cref{sec:i18n} showed, 
-it's sometimes necessary to `shoehorn' certain variables into a Polymer binding expression 
+sometimes it is necessary to `shoehorn' certain variables into a Polymer binding expression 
 to ensure that the expression is recalculated when that variable changes.
 
 \subsection{Optimizing Polymer Performance}
