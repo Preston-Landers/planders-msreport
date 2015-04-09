@@ -1,4 +1,4 @@
-\chapter{Analysis}
+\chapter{Analysis and Lessons Learned}
 \index{Analysis%
 @\emph{Analysis}}%
 
@@ -9,7 +9,7 @@ and to demonstrate the application of abstraction\index{abstraction} and encapsu
 My goal is to understand how the W3C Web Component\index{Web Components} initiative will impact web application engineering\index{software engineering} in the future.
 By all appearances, the long term impact will be substantial.
 
-\section{Web Components architecture}
+\section{Web Components Architecture Analysis}
 Web Component's\index{Web Components} essential benefit is that it allows decoupling of components, 
 separation of concerns, 
 and the encapsulation of internal structure.
@@ -30,6 +30,8 @@ The growth of social coding sites like GitHub\index{GitHub} will further encoura
 
 \section{Writing Web Components with Polymer}
 This section details some of the lessons learned developing Speakur\index{Speakur} on top of Google's\index{Google} Polymer\index{Polymer} framework.
+
+\subsection{Using Data-Bound Templates}
 Polymer's data bindings\index{data-bound template} are a powerful feature for driving `live' web applications.
 Their utility extends well beyond user interface\index{user interface (UI)} views.
 A 3-way automatic binding between the local model, the UI view, and the remote database is an extremely powerful abstraction,
@@ -40,6 +42,7 @@ Of course, care must be taken to design the interface so the user doesn't accide
 For example, Speakur's user preferences screen doesn't commit changes to the database until the user clicks the Save button.
 Editing the text of an existing post also saves a copy of the previous version.
 
+\subsection{Decoupling Components}
 Data bindings and synchronization are discussed in~\cref{sec:sync}.
 In general, two-way data bindings should only be used \textit{within} a component.
 Across component boundaries, use a one-way binding to send data down to a child,
@@ -49,34 +52,36 @@ As the example with \tcode{lc} (locale) in~\cref{sec:i18n} showed,
 it's sometimes necessary to `shoehorn' certain variables into a Polymer binding expression 
 to ensure that the expression is recalculated when that variable changes.
 
+\subsection{Optimizing Polymer Performance}
 Component load times are currently one problem area for Web Components.
 The Vulcanize\index{Vulcanize} tool offers definite benefits for load times as seen in~\cref{table:speakurloading},
 but Speakur is a relatively simple application where all 20 or so components are used more or less immediately.
-Vulcanization must be applied at the level of the site or app, not by the individual component authors.
+The Vulcanize tool must be applied at the level of the site or app, not by the individual component authors.
 Larger single page applications (SPAs) will face more complex challenges when trying to optimize load times, and performance in general,
-before Web Components are fully native in browsers, especially when combining frameworks.
+before Web Components\index{Web Components} are fully native in browsers, especially when combining frameworks.
 
 The \tcode{<template>}\index{<template>} element is a powerful new tool for web authors, 
 but current implementations can have performance issues when rendering large lists of items, such as with a long list of comments. 
-Polymer's \tcode{<core-list>} is more optimized for this use case.
+Polymer's\index{Polymer} \tcode{<core-list>} is more optimized for this use case.
 Also, the \tcode{if=} attribute on nested \tcode{<template>}\index{<template>} elements should not be used in those cases where you could use the \tcode{hidden?=} attribute on the inner content instead.
 There are several reasons for this, including performance and 
 the fact that Polymer's handy \tcode{this.\$} \tcode{id}-to-object map is not dynamic; 
 that is, element objects created conditionally in inner templates are not automatically added to \tcode{this.\$}.
 
-I recommend avoiding the use of Polymer's\index{Polymer} inheritance unless there is a clear case for providing polymorphism-like behavior.
+\subsection{Inheritance in Polymer}
+I recommend avoiding the use of Polymer's\index{Polymer} inheritance unless there is a clear case for providing polymorphism-like\index{polymorphism} behavior.
 One reason for that is that (as of this writing) when a base class provides computed properties, 
 these property definitions have to be repeated in any subclasses if any new ones are required,
 which violates the ``don't repeat yourself'' (DRY)\index{don't repeat yourself (DRY)} principle.
-Speakur uses Polymer inheritance in its CSS\index{CSS} theme components; 
+Speakur uses Polymer inheritance\index{inheritance} in its CSS\index{CSS} theme components; 
 most of the functionality is defined in the base class and the subclasses mainly provide numeric parameters for things like colors and margins.
-Composition could achieve these behaviors almost as easily.
+Composition\index{composition} could achieve these behaviors almost as easily.
 
 %Having multiple <core-overlay> active at the same time can cause problems. 
 % I created a simple fix that adjusts the CSS \tcode{z-index} property. 
 %You can find the fix here:~\cite{landers2015-d}.
 
-\section{The future of Web Components}
+\section{The Future of Web Components}
 
 Polymer\index{Polymer} and Web Components\index{Web Components} are extremely powerful tools.
 They are relatively immature as a technology but quickly improving.
@@ -85,7 +90,7 @@ at least until the standard is finalized and browser support is improved.
 A project version below 1.0 is a general indicator of how ready its authors feel it is for production deployment, and Polymer's\index{Polymer} current version is at 0.5, soon to be 0.8, 
 which suggests that 1.0 is not that far off.
 Even the massively popular Angular\index{Angular} framework has announced that the controversial 2.0 re-write will be based on the Web Components standard,
-so it appears that Web Components are here for the long haul~\cite{santiagoesteva2015}.
+so it appears that Web Components are here to stay~\cite{santiagoesteva2015}.
 
 The Web Components\index{Web Components} initiative is much bigger than just the Polymer project.
 The draft is due to be formally adopted as an official HTML5\index{HTML!HTML5} standard by the World Wide Web Consortium\index{W3C}.

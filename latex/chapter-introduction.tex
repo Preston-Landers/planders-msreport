@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\chapter{Introduction to Speakur and Web Components}
 \index{Introduction@\emph{Introduction}}%
 \label{ch:intro}
 
@@ -15,19 +15,21 @@
 %purpose. Yadda, yadda, yadda, \ldots
 %\end{quote}
 
+\section{Software Engineering for the Web}
 This report is a case study of using W3C Web Components, 
 \index{Web Components}
 a proposed HTML5 extension,
 to implement techniques of encapsulation\index{encapsulation}, abstraction\index{abstraction}, 
 and modularity in web application engineering.
-The author designed Speakur\index{Speakur}, a real-time discussion social plugin for the web, 
+I created Speakur\index{Speakur}, a real-time discussion social plugin for the web, 
 as an experiment to determine the viability and maturity of using Web Components to create modern, highly composable web applications. 
 Figure~\ref{f:demo1} shows an example of a Speakur discussion.
 
-Like most web applications Speakur is written in a combination of HTML markup and the Java\-Script programming language. 
+\subsection{The HTML Document Object Model}
+Like most web applications, Speakur is written in a combination of HTML markup and the Java\-Script programming language. 
 HTML is a declarative markup language used to create documents---web pages---which are viewed with the help of a program called the browser. 
 The Hyper\-text Markup Language (HTML) 
-\index{HTML}
+\index{HTML|textbf}
 standard has proven wildly successful since its introduction in 1993 by British physicist and computer scientist 
 Tim Berners-Lee, 
 \index{Berners-Lee, Tim}
@@ -51,19 +53,21 @@ everything lives together on one big page. Hacks like the
 \index{<iframe>}
 tag let you work around some of these limitations, usually in a inelegant and sometimes insecure fashion.
 
+\subsection{A Programming Language for the Web}
 At the time of HTML's introduction, the concept of quickly and easily composing a static web page, 
 much less a full-fledged dynamic application, 
 out of Lego-like reusable building blocks seemed like a distant dream at best. 
 The introduction of the 
-JavaScript\index{JavaScript}\footnote{JavaScript, also rendered as Javascript or JS, 
+JavaScript\index{JavaScript|textbf}\footnote{JavaScript, also rendered as Javascript or JS, 
 has no significant relationship to Sun's (now Oracle's) popular Java\index{Java} programming language. JavaScript is formally standardized as ECMAScript (ES)\index{ECMAScript (JavaScript)}.}
-(JS)\index{JavaScript} programming language to web browsers in 1995 allowed for a completely new dimension of dynamic behavior that was not possible before~\cite{w3ccontributors2012}.
+(JS) programming language to web browsers in 1995 allowed for a completely new dimension of dynamic behavior that was not possible before~\cite{w3ccontributors2012}.
 Eventually web apps like Gmail\index{GMail} and Google Docs\index{Google!Google Docs}, powered by JavaScript, rivaled traditional desktop applications in functionality and usability while being instantly accessible from anywhere with an Internet connection.
 Still, web apps had to be stitched together `by hand' in ways that carefully ensured the different parts did not step on each other's toes, else disaster frequently ensued. 
 Each component or area of the system could not help but be coupled to the others at some level as a result of the programming model imposed by the DOM\index{DOM} and HTML~\cite{ihrig2012}.
 
+\subsubsection{The Growth of JavaScript}
 Over the years the dynamic behaviors afforded by JavaScript grew in importance along with the web, and helped contribute to its success. 
-JavaScript\index{JavaScript} is now a ubiquitous programming language and has expanded far beyond the desktop web client. 
+JavaScript\index{JavaScript|textbf} is now a ubiquitous programming language and has expanded far beyond the desktop web client. 
 JavaScript interpreters can be found in web servers, mobile phones, industrial controllers, and now the embedded devices that comprise the Internet of Things (IoT)\index{Internet of Things (IoT)}~\cite{flaki2015}.
 Its flexible, loosely typed nature can be a boon to the prototyping and initial development process,
 but the difficulties in building a large application in the DOM soon became apparent.
@@ -75,8 +79,9 @@ Interoperability between these completing frameworks was virtually non-existent;
 typically, components from one framework couldn't easily be combined with those from an another.
 The industry kept searching for the Next Big Thing that would make writing high quality web apps less of bug-ridden, messy chore~\cite{allenpike2015}. 
 
+\subsubsection{The Rise of Angular}
 In recent years (roughly 2011 to 2014) Google's Angular~\cite{googledevelopers2015-b}
-\index{Angular}
+\index{Angular|textbf}
 has emerged as a dominant client framework, 
 due in part to its perceived high quality and the fact that it represents an common point for a fragmented industry to rally around~\cite{dickey2014}.
 Facebook's React\index{React} library with its Virtual DOM is an up-and-comer focused on high performance that is more complementary in nature to Angular than a true challenger, 
@@ -84,7 +89,7 @@ focusing primarily on the ``view'' part of the common
 model-view-controller\index{model-view-controller} (MVC) 
 design pattern~\cite{reactcontributors2015}.
 
-Yet despite the emergence of the updated HTML5\index{HTML!HTML5} standard in 2011 and the recent successes of web frameworks like Angular\index{Angular} and React\index{React} in capturing developer attention, 
+Yet despite the emergence of the updated HTML5\index{HTML!HTML5|textbf} standard in 2011 and the recent successes of web frameworks like Angular\index{Angular|textbf} and React\index{React} in capturing developer attention, 
 a clear picture still did not exist of how web apps could achieve the encapsulated component model that had become prevalent in other areas of software engineering\index{software engineering}.
 That is, until engineers from Google\footnote{
 As of March 2015, Google's Chrome\index{Google!Google Chrome} browser is the most popular desktop browser~\cite{zachte2015}.}
@@ -93,10 +98,10 @@ and Mozilla\footnote{
 The Mozilla Foundation is the sponsor of the popular Firefox\index{Mozilla!Mozilla Firefox} web browser. It grew out of Netscape, whose Navigator browser helped bring the web to a mass audience.}
 \index{Mozilla} 
 and other organizations got together in 2012 under a W3C Web Applications Working Group\index{Web Applications Working Group}~\cite{w3c2015} 
-to draft a new standard called \textbf{Web Components} that will extend and enhance HTML5\index{HTML!HTML5} in ways that could have a significant long-term impact~\cite{yveslafon2015}. 
-For example, as of the time of this writing, a rewrite of Angular\index{Angular} called Angular 2.0 is slated to include Web Components as a core architectural element~\cite{santiagoesteva2015}.
+to draft a new standard called \textbf{Web Components} that will extend and enhance HTML5 in ways that could have a significant long-term impact~\cite{yveslafon2015}. 
+For example, as of the time of this writing, a rewrite of Angular\index{Angular|textbf} called Angular 2.0 is slated to include Web Components as a core architectural element~\cite{santiagoesteva2015}.
 
-\section{Web Components overview}
+\section{Web Components Overview}
 Fundamentally, the Web Components standard consists of four new core DOM technologies---extensions to the current HTML5\index{HTML!HTML5} standard.
 If these standards are accepted by major browser vendors and the World Wide Web Consortium (W3C)
 \index{W3C}
@@ -114,6 +119,7 @@ The core Web Component technologies are~\cite{penades2015}:
 \textbf{Imports}\index{HTML!Imports}: packaging for HTML components
 \end{itemize}
 
+\subsection{Related Technologies}
 This report also explores several related web standards initiatives that are frequently associated with Web Components\index{Web Components} 
 but are not formally grouped under them, including mutation observers,
 \index{mutation observers}
@@ -137,18 +143,19 @@ have already implemented at least some native
 Web Component\index{Web Components} support 
 and the polyfill\index{polyfill} is effectively a `no-op' in these areas.
 
-The potential componentization of the web is one of the most exciting developments in web engineering in years and follows the overall growth in software-as-a-service (SaaS) 
+\subsection{The Componentization of the Web}
+The move to a component-based DOM architecture is one of the most exciting developments in web engineering in years and follows the overall growth in software-as-a-service (SaaS) 
 \index{Software as a Service (SaaS)}
 and the service oriented architecture
 \index{Service Oriented Architecture}
 model. 
-The conversion of dynamic web logic---not mere snippets of plain HTML\index{HTML}---into bundles of reusable, extendable, composable components enables web developers to move to a higher level of abstraction\index{abstraction} than was previously possible.
+The conversion of dynamic web logic---not mere snippets of plain HTML\index{HTML}---into bundles of reusable, extendable, composable services (components) enables web developers to move to a higher level of abstraction\index{abstraction} than was previously possible.
 
 The move towards a component-based Web will enable interesting new composite services, mashups, and may help broaden the potential pool of web developers. 
 What previously required a highly integrated, high-overhead development model or lots of tedious glue code can become as simple as importing a custom element and dropping it onto a page.
 Integrated development environments (IDEs) and other tools that embrace Web Components will be able to assist content authors by, for example, offering name completion on custom elements and the attributes that form their API.
 
-\section{Structure of this report}
+\section{Structure of This Report}
 \index{Structure of This Report@\emph{Structure of This Report}}%
 
 The goal of this report is to demonstrate the application of 
@@ -171,7 +178,7 @@ It also describes how the choice of the Firebase\index{Firebase} cloud database 
 
 The Implementation section shows how to apply Web Component\index{Web Components} principles to the task of creating a flexible and generic discussion forum for both desktop and mobile browsers. 
 It describes the low level architecture\index{architecture}, code flow, and data synchronization process, 
-as well as how to internationalize\index{internationalization} an JavaScript application such that the interface language (locale) can be switched on the fly.
+as well as how to internationalize\index{internationalization} an JavaScript application such that the interface language (locale\index{localization}) can be switched on the fly.
 Another important topic in this section is security\index{security}: how can we implement a largely client-based system while maintaining some kind of data integrity?
 
 This is followed by an Analysis section which discusses some of the outcomes 
@@ -179,7 +186,7 @@ as compared to the original goals and also looks at the impact of the selection 
 Polymer\index{Polymer}, Firebase\index{Firebase} and some of the other architectural\index{architecture} choices. 
 Finally, the Conclusion summarizes how the Web Components\index{Web Components} initiative will impact the future of software engineering\index{software engineering} for the web. 
 
-\section{Source code and demonstration resources}
+\section{Source Code and Demonstration Resources}
 \index{Speakur source code@\emph{Speakur source code}}%
 
 The source code for Speakur\index{Speakur} consists of HTML\index{HTML} and JavaScript\index{JavaScript} files located in a Git\index{Git} version control repository. 
@@ -188,6 +195,7 @@ These files constitute an \textit{HTML Import}\index{HTML!Imports} package that 
 custom HTML element\index{Custom Elements} for the use of web authors in their own pages.
 An example of using \tcode{<speakur-discussion>} is given in Chapter 3 and in briefly in Listing~\ref{l:example1} below.
 
+\pagebreak
 \begin{lstlisting}[language=HTML5,caption={Speakur custom HTML element},label=l:example1]
  <!-- place this on your page
       where you want a discussion -->
