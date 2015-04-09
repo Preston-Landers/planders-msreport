@@ -319,7 +319,7 @@ The \tcode{\{\{ \}\}} operators are not limited to binding to simple variables.
 Polymer supports a rich expression language within binding operators. 
 That said, keeping \tcode{<template>}\index{<template>} expressions simple and moving more complex logic to methods in the JavaScript\index{JavaScript} controller helps uphold separation of concerns between controller and view.
 
-\section{Security}
+\section{Data Security}
 \label{sec:security}
 Because Firebase\index{Firebase} is Speakur's only `server', 
 most of its security\index{security} rests in Firebase's authentication\index{authentication} and authorization\index{authorization} rules.
@@ -329,7 +329,7 @@ and/or directly accessing the REST\index{REST} API\index{API}.
 Authentication\index{authentication} ensures that we know the identity of anyone making database changes,
 and the Firebase\index{Firebase} security rules enforce authorization\index{authorization} requirements.
 
-\subsection{Authentication}
+\subsection{OAuth Authentication}
 Speakur\index{Speakur} supports signing in (authenticating\index{authentication}) users with two popular single sign-on services: Google\index{Google} and Facebook\index{Facebook}.
 This avoids the need to create a dedicated user registration and password system.
 In this scenario, Google or Facebook is an OAuth\index{OAuth} identity provider (IdP),

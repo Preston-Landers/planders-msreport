@@ -44,7 +44,7 @@
 \usepackage{makeidx}       	% Package to make an index.
 \usepackage{graphicx}
 
-%\usepackage{url}		% Allows good typesetting of web URLs.
+\usepackage[hyphens]{url}		% Allows good typesetting of web URLs.
 
 \usepackage{booktabs}  % table formatting
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
@@ -103,6 +103,8 @@
  pdfsubject={A case study in HTML5 Web Components, the Polymer framework, and Firebase.},
  pdfkeywords={Polymer} {Web Components} {HTML5} {Speakur} {Firebase},
  }
+\hypersetup{breaklinks=true}
+\usepackage{ragged2e}
 
 \usepackage[capitalize]{cleveref}
 
@@ -441,6 +443,22 @@ My analysis shows that Web Components successfully address many of the key struc
 % of \appendices.
 %
 %\appendices
+
+
+% http://tex.stackexchange.com/a/103173/75161
+%\setcounter{table}{0}
+%\setcounter{page}{1}
+%\newcommand{\initAnhang}{
+%    \renewcommand{\thepage}{A\arabic{page}}
+%    \newpage
+%}
+%\renewcommand\appendix{\par
+%        \renewcommand\thesection{A}
+%        \renewcommand\thesubsection{A\arabic{subsection}}
+%        \renewcommand\thetable{A\arabic{table}}}        
+%\appendix\initAnhang
+
+
 \appendix
 \index{Appendices@\emph{Appendices}}%
 
@@ -467,9 +485,14 @@ My analysis shows that Web Components successfully address many of the key struc
                 % explicitly cited in the text. 		     %
 		%						     %
 
+\begingroup
+%\raggedright
+%\sloppy
 %\renewcommand*{\bibfont}{\raggedright}
 \setlength{\bibitemsep}{6pt}
 \printbibliography[heading=bibintoc]
+\endgroup
+
 %\bibliographystyle{plain}  % Here the bibliography 		     %
 %\bibliography{diss}        % is inserted.			     %
 \index{Bibliography@\emph{Bibliography}}%			     %
