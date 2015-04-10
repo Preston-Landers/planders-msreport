@@ -82,23 +82,72 @@ Composition\index{composition} could achieve these behaviors almost as easily.
 % I created a simple fix that adjusts the CSS \tcode{z-index} property. 
 %You can find the fix here:~\cite{landers2015-d}.
 
-\section{The Future of Web Components}
+\section{Lessons Learned}
+When I started this project, I wasn't sure where it would take me. 
+I was particularly unsure about the extent to which I could leverage the vast existing library of JavaScript frameworks and libraries when writing a new-style Web Component. Here are some of the lessons I learned while developing Speakur:
+%\pagebreak
+\begingroup
+\setlist{parsep=0pt,listparindent=\parindent}
+\begin{itemize}
+\item \textbf{Web Components provide powerful abstractions.}
 
+Using Web Components, and particularly the data-bound templates provided by Polymer, greatly reduced the amount of effort needed to code a responsive, live web app compared to my previous efforts, 
+yet the result is still flexible and works in a variety of software architectures.
+It's difficult to estimate that difference in terms of lines of code, but it is clear that Web Components offer better tools for code organization, 
+separation of concerns, and modularization than were previously available.
+
+\item \textbf{Web Components are standardized.}
+
+Web Components follow standard HTML and HTTP\index{HTTP} semantics better than many previous JavaScript frameworks. 
+A consistent component packaging and import system, the use of HTML attributes for API\index{API} specification, 
+and the lack of a required compilation or preprocessing step all help Web Components fit cleanly into the architecture of the web.
+
+\item \textbf{Use Firebase as an adjunct.}
+
+Firebase\index{Firebase} is excellent for what it is, 
+but for a really substantial or business-critical application it's probably best to treat it as a handy side-channel for data synchronization and event notification, 
+rather than as the main business data repository. 
+Aside from cost factors or the security issues inherent in storing your data in the cloud, 
+running your own server remains the best way to ensure effective data integrity, control and validation.
+
+\item \textbf{Polymer can have problems with older JavaScript frameworks.}
+
+The ease of combining Polymer-based components with other frameworks and non-Web-Component-aware libraries (``legacy code'') depends heavily on what they do.
+Using pure-CSS libraries (like \tcode{bootstrap.css}) with Polymer/WC is safe and easy to control by limiting their scope to a particular component. 
+
+Writing a Polymer component that directly uses legacy JavaScript\index{JavaScript} libraries (like \tcode{bootstrap.js}) is not nearly as easy in many cases. 
+I tried to use several Bootstrap\index{Bootstrap} JavaScript widgets but quickly ran into incompatibilities with treatment of the document model, event handling, and so on.
+The Twitter Bootstrap developers, perhaps understandably, don't care that much about adding compatibility hacks for relatively immature projects like Polymer. 
+Libraries that provide purely logical services like i18next\index{i18next}, instead of document or interface-related features like Bootstrap, are much easier to integrate.
+
+\item \textbf{Include mobile early in the development cycle.}
+
+For example, be careful where you apply margins when designing for mobile. 
+If you have a group of interface widgets that form a logical unit, like a toolbar,
+and you want some separation between this group and what's above it, don't apply \tcode{margin-top} to the whole group container.  
+Instead apply it separately to each item inside the unit, 
+so if some items wrap to the next line they will still have the appropriate top margin.
+It's best to identify these types of issues early on.
+\end{itemize}
+\endgroup
+
+\section{The Future of Web Components}
 Polymer\index{Polymer} and Web Components\index{Web Components} are extremely powerful tools.
 They are relatively immature as a technology but quickly improving.
-Those who wish to deploy a large, full-featured ``prod\-uction-quality'' web application based on these technologies may face some bumps in the road, 
+Those who wish to deploy a large, full-featured web application based on these technologies may face some bumps in the road, 
 at least until the standard is finalized and browser support is improved.
-A project version below 1.0 is a general indicator of how ready its authors feel it is for production deployment, and Polymer's\index{Polymer} current version is at 0.5, soon to be 0.8, 
+A project version below 1.0 is a general indicator of how ready its authors feel it is for production deployment.
+Polymer's\index{Polymer} current version is at 0.5, soon to be 0.8, 
 which suggests that 1.0 is not that far off.
 Even the massively popular Angular\index{Angular} framework has announced that the controversial 2.0 re-write will be based on the Web Components standard,
 so it appears that Web Components are here to stay~\cite{santiagoesteva2015}.
 
-The Web Components\index{Web Components} initiative is much bigger than just the Polymer project.
+The Web Components\index{Web Components} initiative is much larger than just Polymer.
 The draft is due to be formally adopted as an official HTML5\index{HTML!HTML5} standard by the World Wide Web Consortium\index{W3C}.
-Although it will still be a long time before full-speed native Web Component support is found in a majority of browsers worldwide, 
+Although it will be a long time before full-speed native Web Component support exists in a majority of browsers worldwide, 
 polyfill\index{polyfill} libraries can help bring these capabilities to current browsers.
-However the prospect of forcing visitors to download a several hundred KB library just to use basic DOM functionality is not very appealing to most web engineers from a performance and user experience\index{user experience (UX)} perspective, 
-so the lack of native browser support may be a limiting factor in Web Component adoption in the near term.
+However, the prospect of forcing visitors to download a several hundred KB library just to use basic DOM functionality is not very appealing to most web engineers from a performance and user experience\index{user experience (UX)} perspective.
+The lack of native browser support may be a limiting factor in Web Component adoption in the near term.
 
 In essence, Web Component's\index{Web Components} key problem at the moment is that one has to download a large JavaScript\index{JavaScript} framework\index{framework} in order to use it, 
 yet one of its main premises is that it frees you from needing a JavaScript framework.
