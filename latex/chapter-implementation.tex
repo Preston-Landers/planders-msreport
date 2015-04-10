@@ -4,6 +4,7 @@
 \label{ch:implementation}
 
 \section{Overview}
+\label{ch4:overview}
 Speakur\index{Speakur} is an HTML5\index{HTML!HTML5} web application that uses the Polymer\index{Polymer} framework's implementation of Web Components\index{Web Components}.
 It is primarily a client side application with no dedicated server component other than Firebase\index{Firebase}.
 It is delivered as a single Custom Element\index{Custom Elements}, \tcode{<speakur-discussion>}\index{<speakur-discussion>}.
@@ -462,7 +463,7 @@ The three main responsive design techniques used in Speakur are:
 In Speakur's style sheets, a small screen is treated as the base case and 
 larger tablet or desktop-style devices are given extra rules with \tcode{@media}.
 For example, the following rule gives the main Speakur container more padding on large screen devices:
-\pagebreak
+%\pagebreak
 \begin{lstlisting}[language=HTML5,caption={CSS @media rule for large screen devices.},label=l:responsive_media,captionpos=below]
 <!-- from speakur-discussion.css -->
 @media only screen and (min-device-width : 800px) {
@@ -481,7 +482,6 @@ Polymer\index{Polymer} provides convenient layout shortcuts for the standard CSS
 %<!-- from speakur-thread-view.html -->
 %\end{lstlisting}
 
-
 \section{Publishing and Deployment}
 \label{publishing}
 
@@ -493,6 +493,7 @@ This makes it very easy to deploy\index{deployment} Speakur in a wide variety of
 Speakur\index{Speakur} is provided in two versions; 
 the `development' version where each resource is provided as a separate, raw, non-minified file,
 and a `production' or Vulcanized\index{Vulcanize} version where all necessary resources are combined into a single file for faster loading speeds~\cite{polymercontributors2015-a}. 
+
 In a relatively small application like Speakur the difference is not huge, especially on Google Chrome\index{Google!Google Chrome} which already supports Web Components natively,
 because the HTML component transfer times are largely dwarfed by the cost of loading the actual discussion from the database.
 Future protocol enhancements like HTTP 2\index{HTTP!HTTP 2.0} may eliminate this discrepancy.
@@ -501,7 +502,7 @@ as shown in~\cref{table:speakurloading} which compares the time (in milliseconds
 These figures partly reflect the degree to which each of these browsers natively supports Web Components\index{Web Components} at this time.
 At the moment Firefox\index{Mozilla!Mozilla Firefox} does not natively support as many Web Component features as Google Chrome\index{Google!Google Chrome} or Opera\index{Opera}, 
 so the polyfill\index{polyfill} must do more work, negatively impacting load times on that browser.
-
+I expect that browser support will improve greatly over the next few years after the Web Components standard is finalized.
 
 % p{8cm}
 \begin{table}\centering

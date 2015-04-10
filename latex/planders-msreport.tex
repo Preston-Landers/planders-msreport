@@ -111,6 +111,16 @@
 % Force cleveref ``page'' references to be lowercase despite the capitalize option above
 \crefformat{page}{page~#2#1#3}
 
+% Set low penalties for breaks at numbers, uppercase letters and lowercase letters
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburlucpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+
+% Fixes extra spacing around enumerate (bullet lists)
+% http://stackoverflow.com/a/1073140/858289
+\usepackage{enumitem}
+\setlist{nolistsep}
+
 %\pretolerance=10000
 
 %\linespread{1.5} % Line spacing

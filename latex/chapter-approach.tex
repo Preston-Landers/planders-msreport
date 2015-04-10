@@ -16,11 +16,11 @@ is a Custom Element\index{Custom Elements}
 that provides an embeddable discussion forum or comment hosting service for a blog, web page or other web application, similar to the commercial service Disqus\index{Disqus}\footnote{\url{https://disqus.com/}}.
 Examples of Speakur's user interface\index{user interface (UI)} can be found in~\cref{f:demo1,f:lang}.
 Placing Speakur inside a web page is straightforward.
-As shown in~\cref{l:example1},
-and in~\cref{publishing} below,
+As shown in~\cref{l:example1} on~\cpageref{l:example1},
+and in~\cref{ch4:overview} on~\cpageref{ch4:overview},
 the web author simply places the \tcode{<speakur-discussion>}
  element in the HTML\index{HTML} at the desired spot.
-This requires two supporting steps detailed in~\cref{publishing}:
+This requires two supporting steps detailed in~\cref{sec:deploying}:
 \begin{enumerate}
 \item loading the Web Components\index{Web Components} polyfill\index{polyfill} script
 \item importing the \tcode{<speakur-discussion>} element.
@@ -29,7 +29,6 @@ This requires two supporting steps detailed in~\cref{publishing}:
 Once an author imports the element and places it on his page, that site now has an integrated discussion forum for desktop and mobile\index{mobile} users. 
 All forum data including user profiles and comment text is stored in an online cloud database called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
 The messy details of structuring a discussion forum are abstracted\index{abstraction} away from the web page author.
-
 The \tcode{<speakur-discussion>}\index{<speakur-discussion>} element presents a simplified application programming interface (API)\index{API|textbf} to its users.
 There are only a few options available including the URL of the Firebase instance and the thread target URL (\tcode{href}\index{href}).
 If you do not provide your own Firebase\index{Firebase} URL, by default, my demo database is used instead.
@@ -362,6 +361,7 @@ A callback in this case is a function that reacts to a change in some other part
 This doesn't necessarily have to be tied to a specific variable like with data-bound templates\index{data-bound template} and can reflect any change in any DOM attribute for standard \textit{and} custom elements. 
 
 \section{Deploying Speakur}
+\label{sec:deploying}
 Speakur\index{Speakur} is designed to be easy to deploy\index{deployment}.
 Adding a discussion forum to a blog or web app is as simple as altering the page to:
 
@@ -406,6 +406,7 @@ under the HTTP\index{HTTP} 1.1 protocol that currently powers the web, each smal
 Techniques like \tcode{Keep-Alive} headers can help, and the HTTP 2.0\index{HTTP!HTTP 2.0} protocol addresses this question more comprehensively but is not yet finalized or widely adopted.
 
 In the meantime, the Polymer\index{Polymer} project provides a tool called Vulcanize\index{Vulcanize|textbf} which concatenates and minifies\index{minify} your web components into a single file.
+The result is functionally the exact same but takes less time to transfer.
 Concatenation puts all of the required text resources (HTML, CSS, and JS) into a 
 single\footnote{Except when Content Security Policy (CSP)\index{content security policy (CSP)} requires the enforced separation of HTML, CSS, and JS. In this case, three files are used.}
 file to reduce the number of HTTP\index{HTTP} requests.
