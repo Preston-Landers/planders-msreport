@@ -129,7 +129,7 @@ This example illustrates three component design principles that are widely follo
 Composition helps reduce coupling or structural connections between modules by forcing them to interact using only public interfaces.
 In the case of the interface for \tcode{<video>}, it's composed of simple block elements and scoped CSS\index{CSS} roles and the Volume and Play controls aren't particularly special objects, just \tcode{<div>} elements with CSS rules and click handlers.
 
-The solution, therefore, to these coupling problems in web authoring is to expose these internal brower APIs for creating elements in a safe and portable fashion. 
+The solution, therefore, to these coupling problems in web authoring is to expose these internal browser APIs for creating elements in a safe and portable fashion. 
 This will allow web authors to create their own rich custom elements using standard portable APIs, encapsulate their internals, and enable easier sharing, composition and integration.
 The question remains, which specific browser internals must be exposed and standardized in order to support Web Components?
 
