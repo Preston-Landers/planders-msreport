@@ -19,7 +19,7 @@ These issues make it difficult to create and share generic, reusable \textit{web
 
 Throughout this report I will refer to both Web Components (the W3C initiative) and to a more general concept of a ``software component'', 
 or just component for short, 
-which can be anything from a small function or module to a major software package or a collection of services.
+which can be anything from a small function or module to a major software package or a collection of web services or APIs.
 I will also refer to ``widgets'', which are generic user interface (UI)\index{user interface (UI)|textbf} components like menus and buttons.
 
 \section{Current Challenges in Web Authoring}
@@ -89,6 +89,10 @@ Using Bootstrap's navigation bar could be as easy as replacing the code in~\cref
  </twbs-navbar>
 \end{lstlisting}
 
+I wanted my discussion component (Speakur) to follow a similar pattern, 
+both in its external interface and within its internal components, 
+to ensure that internal implementation details were not exposed unnecessarily.
+
 \subsection{Abstraction, Encapsulation and Composition}
 
 The Web Components working group, consisting of software engineers\index{software engineering} from several major browser vendors, 
@@ -132,6 +136,7 @@ In the case of the interface for \tcode{<video>}, it's composed of simple block 
 The solution, therefore, to these coupling problems in web authoring is to expose these internal browser APIs for creating elements in a safe and portable fashion. 
 This will allow web authors to create their own rich custom elements using standard portable APIs, encapsulate their internals, and enable easier sharing, composition and integration.
 The question remains, which specific browser internals must be exposed and standardized in order to support Web Components?
+The answer to that is the focus of the following section.
 
 \section{The Web Components Initiative}
 
@@ -175,8 +180,8 @@ Or you can create and place custom elements purely in JavaScript\index{JavaScrip
  document.body.appendChild(thisOne); // add to the <body>
 \end{lstlisting}
 
-In a small example like this, the result does not look all that different in the browser from a \tcode{<span>}.
-To do something more interesting with your custom element you will need to the other features of Web Components: Shadow DOM, templates and imports.
+In this small example, the result does not look all that different in the browser from a plain \tcode{<span>}.
+To do something more interesting with your custom element you must use the other features in Web Components: Shadow DOM, templates and imports.
 
 \subsection{Shadow DOM}
 \label{bg:shadowdom}
@@ -197,6 +202,7 @@ In the example in~\cref{l:twbs2},
 a \textbf{\tcode{<twbs-navbar>}} element consumes a set of five 
 \textbf{\tcode{<a>}} (anchor or link) elements but internally transforms that to something like~\cref{l:twbs1}, 
 projecting the set of links into the nav menu structure with appropriate wrappers.
+Speakur follows the same pattern internally when expressing a discussion thread as a list of user comments, each encapsulated into a separate element.
 
 The \tcode{<content>}\index{<content>} tag is used inside a custom element's template to indicate the spot where the consumed (wrapped) content should be \textit{projected}. 
 This wrapped content is known as 
@@ -214,18 +220,18 @@ but the point is that this must be an intentional act by the developer and not a
 
 \subsection{HTML Imports}
 One significant problem faced by web developers is the lack of any built-in packaging system for modules in HTML.
-Prior to Web Components there was no way to import a snippet of HTML or JavaScript\index{JavaScript} from an external location and insert it exactly one time into the current document, 
+Prior to Web Components, there was no way to import a snippet of HTML or JavaScript\index{JavaScript} from an external location and insert it exactly one time into the current document, 
 similar to an \tcode{\#include}\index{\tcode{\#include}} directive in the C language\index{C language} or the packaging and import systems in languages\index{scripting languages}
-like Python\index{Python language}, Go\index{Go language} and Ruby\index{Ruby language}. 
+like Python\index{Python language} and Ruby\index{Ruby language}. 
 JavaScript can always be loaded with a \tcode{<script>} tag\index{<script>} like usual, but this does not ensure that script resources are executed exactly once, a process known as \textit{de-duping}\index{de-duping}.
-A component that uses a certain JS library might be needed in two different spots on the page, 
+A component that uses a certain JS library might be used in two different spots on the page, 
 but that causes the library's script resource to be executed twice, degrading application performance.
 
 Careful design in the library can minimize that impact, but native browser support offers a more consistent and reliable approach.
 The HTML Imports\index{HTML!Imports|textbf} standard addresses these issues by specifying how bundles of HTML, 
 CSS\index{CSS} or JavaScript---components---can be packaged and imported into the current document in a way that ensures automatic de-duping of repeated requests~\cite{w3ccontributors2015-a}.
 The major caveat is that de-duping only happens if the resources are named in exactly the same fashion in each case~\cite{bidelman2013}.
-Dealing with HTML Imports in a consistent fashion is discussed in~\cref{sec:dependencies}.
+%Dealing with HTML Imports in a consistent fashion is discussed in~\cref{sec:dependencies}.
 
 \subsection{Templates}
 The last major piece of the Web Component puzzle is the native HTML5\index{HTML!HTML5} \tcode{<template>}\index{<template>|textbf} tag. 
@@ -255,7 +261,8 @@ but it is not yet part of the standard \tcode{<template>}\index{<template>} elem
 Instead this functionality can be handled by JavaScript\index{JavaScript} frameworks like React or Polymer.
 Data-bound templates are discussed in more detail in the following chapters.
 
-The primary benefit of HTML Templates\index{HTML!Templates} from a performance perspective is that external resources referenced from the template (images, stylesheets, etc.) will not be fetched until the template is actually instantiated.
+HTML Templates\index{HTML!Templates} are useful for providing structure and architecture, but they also help performance. 
+External resources referenced from a template (images, stylesheets, etc.) will not be fetched until the template is actually instantiated.
 Templates are often used to declare the internal structure (shadow DOM\index{Shadow DOM}) of custom elements. 
 Therefore the resources needed to use the custom element\index{Custom Elements|textbf} aren't downloaded until they are actually needed, which is necessary when composing a large application out of numerous distinct components, 
 not all of which are needed immediately.
@@ -374,30 +381,38 @@ I wanted to create something that demonstrated common use cases for Web Componen
 Material Design~\cite{imura2015}\index{Material Design}.
 I was also intrigued by the possibilities of a server-free design afforded by Firebase\index{Firebase}.
 Some kind of `live' social plugin like Disqus\index{Disqus} seemed like a natural fit for the capabilities of Polymer and Firebase\index{Firebase}, so this led to a discussion plugin for blogs and other articles.
-My hope was that it would required little or nothing in the way of dedicated server resources in order for other web authors to actually use it, 
+My hope was that it would require little or nothing in the way of dedicated server resources in order for other web authors to actually use it, 
 which turned out to be the case. 
 
-\subsection{Goals and Motivations}
+\subsection{Motivations and Requirements}
 \label{motivations}
-I wanted my discussion component to have some of the following attributes:
+I wanted my discussion plugin for web authors to have some of the following attributes:
 \begin{enumerate}
-\item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details.\label{motive:abstraction}
+\item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details. In essence, to demonstrate that it was possible to write an encapsulated\index{encapsulation} plugin for web authors that would fit into a wide variety of application architectures. The question I asked is, how well do Web Components solve this encapsulation and decoupling problem?\label{motive:abstraction}
 
-\item Require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \\ \url{https://jsfiddle.net/} and \url{https://jsbin.com}
+\item It should require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \\ \url{https://jsfiddle.net/} and \url{https://jsbin.com}
 \footnote{See \url{http://jsbin.com/jubabubazu/10} for a working example.}.
 \label{motive:cors}
 
-\item Event notification for changes similar to the 
+\item It should be a purely client-side HTML\index{HTML} and JavaScript\index{JavaScript} application to the extent possible, 
+with no dedicated server component to deploy. 
+The need for data exchange between users meant that some kind of database service was still required. 
+Therefore it was necessary to delegate some security and validation behaviors to a cloud service or API. 
+Having a client-centric application helped support the first two goals. 
+This made the development of an effective security architecture particularly important in achieving a simple component interface.
+
+\item It should be a `live' app with a change-event notification system similar to the
 publish-subscribe\index{publish-subscribe} (pubsub) design pattern\index{design patterns}.\label{motive:pubsub} 
-For example, automatically updating when new replies are posted or existing posts are edited.
+For example, the interface should automatically update when new replies are posted,
+or existing posts are edited.
 
-\item Support Markdown\index{Markdown} formatted comments including syntax highlighting for code snippets.\label{motive:markdown}
+\item It should support Markdown\index{Markdown}-formatted comments including syntax highlighting for source code snippets. (The same way that source listings in this report use syntax highlighting.)\label{motive:markdown}
 
-\item Support 
+\item It should support 
 internationalization\index{internationalization} and 
-localization\index{localization} features for a global audience.\label{motive:i18n}
+localization\index{localization} features for a global audience. These should be tied to the data synchronization model for immediate updates.\label{motive:i18n}
 
 \item If any framework was used at all, it should be based on Web Components\index{Web Components}.\label{motive:webcomponents} This ruled out the vast majority of frameworks, 
-leaving only Polymer\index{Polymer} and the less-comp\-rehen\-sive X-Tags\index{X-Tags}~\cite{x-tagscontributors2015} and Bosonic~\cite{bosoniccontributors2014}\index{Bosonic} projects and a few other less ambitious contenders.
+leaving only Polymer\index{Polymer} and the less-comp\-rehen\-sive X-Tags\index{X-Tags}~\cite{x-tagscontributors2015} and Bosonic~\cite{bosoniccontributors2014}\index{Bosonic} projects and a few other contenders.
 \end{enumerate}
-The next chapter discusses some of the high level architectural concerns that should be addressed when designing this type of social web plugin, such as creating a scalable data\-base schema, designing a device-responsive user interface, and providing authentication and authorization rules.
+The next chapter discusses some of the high level architectural concerns to be addressed when designing this type of social web plugin, such as creating a scalable data\-base schema, designing a device-responsive user interface, and providing adequate security rules.

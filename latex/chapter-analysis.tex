@@ -29,6 +29,18 @@ not just the software engineers\index{software engineering} who maintain the lib
 Speakur\index{Speakur} aims to provide as small a deployment surface as possible to web authors so they can easily add a discussion forum to their site without embedding a big blob of HTML.
 The growth of social coding sites like GitHub\index{GitHub} will further encourage the sharing and reuse of Web Components designed along these principles.
 
+At least initially, Web Components and closely aligned frameworks like Polymer\index{Polymer} will be `just another framework'\index{framework} in an already crowded scene. 
+However the fact that the Web Components standard is, or will be, baked into the browser gives it something of a unique position in the marketplace, 
+unless it somehow fails to gain W3C\index{W3C} certification or widespread native browser adoption.
+Although official approval seems likely, 
+support from vendors like Apple\index{Apple} and Microsoft\index{Microsoft} will be slow to materialize and receive wide deployment, 
+perhaps in part due to the infamous \textit{Not-Invented-Here} syndrome,
+and partly due to inertia.
+For that reason, Web Components will be a niche player in the JavaScript ecosystem in the near-term.
+Even if full browser support is slow to arrive, the Web Components architecture has already begun to influence the future direction of popular development frameworks like Angular.
+The componentization principles outlined in~\cref{sec:wcprinciples} constitute solid advice for almost any type of software project.
+Prefer to err on the side of smallness, simplicity, and predictability, rather than completeness.
+
 \section{Writing Web Components with Polymer}
 This section details some of the lessons learned developing Speakur\index{Speakur} on top of Google's\index{Google} Polymer\index{Polymer} framework.
 

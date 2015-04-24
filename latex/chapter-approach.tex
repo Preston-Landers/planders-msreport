@@ -26,16 +26,24 @@ This requires two supporting steps detailed in~\cref{sec:deploying}:
 \item importing the \tcode{<speakur-discussion>} element.
 \end{enumerate}
 
-Once an author imports the element and places it on his page, that site now has an integrated discussion forum for desktop and mobile\index{mobile} users. 
+\begin{figure}[htb]
+\centering
+ \includegraphics[width=\textwidth]{images/screenshot_20150312_1630_v2.png}
+\caption{A Speakur thread inside a demonstration page.}
+\label{f:demo1}
+\end{figure}
+
+Once an author imports the element and places it on his page, that site now has an integrated discussion forum for desktop and mobile\index{mobile} users as shown in~\cref{f:demo1}. 
 All forum data including user profiles and comment text is stored in an online cloud database called Firebase~\cite{firebasecontributors2015}\index{Firebase}.
-The messy details of structuring a discussion forum are abstracted\index{abstraction} away from the web page author.
+The messy details of structuring a discussion forum are abstracted\index{abstraction} away from the web page author, including the need to deploy a dedicated server component, making Speakur more flexible and component-oriented.
 The \tcode{<speakur-discussion>}\index{<speakur-discussion>} element presents a simplified application programming interface (API)\index{API|textbf} to its users.
 There are only a few options available including the URL of the Firebase instance and the thread target URL (\tcode{href}\index{href}).
 If you do not provide your own Firebase\index{Firebase} URL, by default, my demo database is used instead.
 Therefore serious users will wish to use their own Firebase account with their own database and resource limits.
 
-In addition to basic commenting features, Speakur offers the ability to vote comments up or down, custom profiles, 
-the ability to leave comments in Markdown\index{Markdown} syntax~\cite{githubcontributors2015} with syntax highlighting\index{syntax highlighting} for common programming languages, 
+In addition to basic commenting features, 
+Speakur offers the ability to vote comments up or down, custom profiles, 
+the ability to use Markdown\index{Markdown}~\cite{githubcontributors2015} syntax in comments with  source code highlighting\index{syntax highlighting} for common programming languages, 
 and (rough) user interface translations  or localizations\index{localization}\index{internationalization} 
 into 15 languages as shown in~\cref{f:lang}.
 
@@ -50,6 +58,9 @@ From a technical perspective, one of the more interesting features in Speakur is
 allow components to automatically reflect changes in widely separated (decoupled) areas of the application.
 Also, Firebase's\index{Firebase} event notification\index{event notification} architecture allows all web clients to instantly and transparently reflect any changes in remote clients.
 Another example of the power of data-bound templates is that all of the user-visible text in the application immediately updates as soon as the user changes his or her locale preference in the dialog in~\cref{f:lang}.
+Thanks to data-bound templates, 
+most of the code for this feature is confined to a single translation module, 
+which promotes component decoupling and separation of concerns.
 
 \section{Software Architecture Overview}
 It has been said that ``any problem in computer science can be solved with another layer of indirection\index{indirection}'' (usually attributed to David Wheeler).
@@ -238,7 +249,7 @@ Areas where typical web APIs\index{API} fall short of being truly ``REST-ful''\i
 \begin{enumerate}
 \item Treating URLs as endpoints for remote procedure calls (RPC\index{RPC}) instead of hypertext resources that link to each other in exactly the same way a website starts from the home page and links to various resources which in turn link to other resources.
 \item Not closely following HTTP semantics, especially using HTTP verbs\index{HTTP!verbs} inappropriately like using \tcode{POST}\index{HTTP!POST} for all actions including deletion.
-\item Not using content-related HTTP headers\index{HTTP!headers} appropriately for data representations and API\index{API} versioning\index{versioning}~\cite{steveklabnik2011}.
+\item Not using content-related HTTP headers\index{HTTP!headers} appropriately for data representations and API\index{API} versioning\index{versioning (API)}~\cite{steveklabnik2011}.
 \end{enumerate}
 
 The Firebase\index{Firebase|textbf} API\index{API} follows typical RESTful\index{REST|textbf} patterns in data access, allowing the database\index{database} 
@@ -284,6 +295,13 @@ Authentication (sometimes abbreviated \textit{authn}) answers the question ``who
 while authorization (\textit{authz}) asks ``what are you allowed to see and do?''~\cite{stallings2011}.
 Confidentiality of in-transit data is handled with Transport Layer Security (TLS)\index{transport layer security (TLS)}, 
 better known as the secure socket layer (SSL)\index{secure socket layer (SSL)} or HTTPS\index{HTTP!HTTPS}.
+
+The topic of security is important in the context of Web Components because the client web browser is fairly open environment in terms of data exchanges between components. 
+Even with Web Component technologies, data encapsulation is not a hard and fast guarantee. 
+Furthermore, because Speakur attempts to be a self-contained and easy to deploy component, 
+it has no centralized server other than Firebase to enforce data integrity rules. 
+Malicious users can easily step outside of the official Speakur interface and submit commands directly to Firebase.
+Security is a cross-cutting concern, so this report attempts to demonstrate at least one way to write authentication and authorization rules for a client-centric Web Component that talks to a cloud database.
 
 \subsection{Authentication}
 Speakur's authentication\index{authentication|textbf} and sign-in system is handled through Firebase\index{Firebase|textbf}, 
@@ -380,7 +398,8 @@ Speakur\index{Speakur} avoids a common security restriction associated with CORS
 It does this by relying entirely on Firebase for live data,
 which in turn uses WebSockets\index{WebSockets},
 which are not subject to Same-Origin Policy\index{Same-Origin Policy} restrictions on asynchronous JavaScript HTTP\index{HTTP} requests (also known as AJAX\index{AJAX} or \tcode{XMLHttpRequest}\index{XMLHttpRequest}).
-This allows Speakur to be used on a site without that site having installed a copy of its files or directly serving them to clients.
+This allows Speakur to be used on a site without that site having installed a copy of its files or directly serving them to clients, 
+making it a more flexible component.
 
 \subsection{Software Dependencies}
 \label{sec:dependencies}
@@ -407,10 +426,10 @@ Techniques like \tcode{Keep-Alive} headers can help, and the HTTP 2.0\index{HTTP
 
 In the meantime, the Polymer\index{Polymer} project provides a tool called Vulcanize\index{Vulcanize|textbf} which concatenates and minifies\index{minify} your web components into a single file.
 The result is functionally the exact same but takes less time to transfer.
-Concatenation puts all of the required text resources (HTML, CSS, and JS) into a 
+Minification\index{minify} removes all comments, whitespace and non-essential elements from the code to compact it and reduce transfer times.
+Concatenation combines all of the required text resources (HTML, CSS, and JavaScript files) into a 
 single\footnote{Except when Content Security Policy (CSP)\index{content security policy (CSP)} requires the enforced separation of HTML, CSS, and JS. In this case, three files are used.}
 file to reduce the number of HTTP\index{HTTP} requests.
-Minification\index{minify} removes all comments, whitespace and non-essential elements from the code to compact it and reduce transfer times.
 Whether using Vulcanize results in an overall faster site ultimately depends on a number of factors including how and when the components are used.
 For that reason, empirical testing is needed to know whether it should be used in production on a real site~\cite{polymercontributors2015-a}.
 \Cref{table:speakurloading} on \cpageref{table:speakurloading} illustrates how Vulcanize helps improve loading performance in three browsers.

@@ -351,6 +351,7 @@ JSON-formatted\index{JSON} security\index{security} object,
 whose documentation can be found at~\cite{firebasecontributors2015-a}.
 These rules can be entered directly into the Firebase\index{Firebase} administrative console
 and a reference copy can be found in the Speakur\index{Speakur} source code repository under the file \tcode{security-rules.json}~\cite{landers2015-c}.
+These rules are enforced by the Firebase service itself, not my application code.
 
 The structure of the security rule object mirrors the nested hierarchy of the Firebase database itself.
 Each top level key maps to rules for a particular database ``table'' like \tcode{posts}.
@@ -377,20 +378,20 @@ making them more difficult to understand and maintain.
 
 \section{Internationalization and Localization}
 \label{sec:i18n}
-The process of customizing an application for local languages and customs is called internationalization\index{internationalization|textbf} (i18n) and localization\index{localization|textbf} (l10n)\footnote{
+Adapting an application for different languages and customs is called internationalization\index{internationalization|textbf} (i18n) and localization\index{localization|textbf} (l10n)\footnote{
 \textit{Internationalization} refers to the process of \textbf{enabling} an app to be localized, and \textit{localization} refers to adapting it to a \textbf{specific} locale.
 }. 
-Speakur\index{Speakur} offers user interface translations for 15 languages.
-The user can select a new language from the Profile dialog and the interface updates instantly.
-The actual substitution of strings using the currently selected language is handled by the i18next\index{i18next library} JavaScript library, 
-which is abstracted\index{abstraction} behind the custom element wrapper \tcode{<speakur-i18next>}~\cite{i18nextcontributors2015}.
+Speakur\index{Speakur} offers UI translations for 15 languages.
+The user can select a new language from the Profile dialog and the interface updates immediately.
+String substitution with the currently selected language is handled by the i18next\index{i18next library} JavaScript library, 
+which is abstracted\index{abstraction} with a custom element wrapper \tcode{<spe\-akur-i18\-next>}~\cite{i18nextcontributors2015}.
 This wrapper provides a Polymer filter named \tcode{\$\$} which is used in \tcode{\{\{ \}\}} expressions in data-bound templates\index{data-bound template} to translate user-visible UI strings.
 Of course, the users' posts themselves are not translated; just the application's interface strings.
 
-The i18next library loads translation strings out of JSON\index{JSON} files, one for each supported language.
-I obtained the current translations by creating an English language file and then passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
+The i18next library loads strings out of JSON\index{JSON} files, one for each supported language.
+I obtained translations by creating an English language file and then passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
 a Python\index{Python language} package that I wrote for another project~\cite{landers2015-a}.
-The i18next library includes the ability to handle variable interpolation insertion points and pluralization rules which are important for producing grammatically correct text.
+The i18next library includes variable interpolation (insertion points for data) and pluralization rules that are important for grammatically correct text.
 Here is a short excerpt from the English file followed by the Russian version:
 
 \begin{lstlisting}[language=JavaScript,caption=
