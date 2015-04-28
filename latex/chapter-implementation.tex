@@ -15,7 +15,7 @@ In Speakur's case, the discussion forum is self-contained in terms of content; l
 Speakur's\index{Speakur} options or parameters are controlled with attributes\index{HTML!attributes} like this:
 
 \begin{lstlisting}[language=HTML5,caption=
-{Using HTML attributes to set Speakur options},label=l:options1,captionpos=below]
+{Using HTML attributes to set Speakur options.},label=l:options1,captionpos=below]
  <speakur-discussion
    firebaseLocation="https://speakur-demo.firebaseio.com"
    xtitle="This is the thread's (initial) title."
@@ -390,7 +390,7 @@ Of course, the users' posts themselves are not translated; just the application'
 
 The i18next library loads strings out of JSON\index{JSON} files, one for each supported language.
 I obtained translations by creating an English language file and then passing it through the Microsoft\index{Microsoft} Translation API\index{API} using `Eurgh!'\index{Eurgh (translation library)},
-a Python\index{Python language} package that I wrote for another project~\cite{landers2015-a}.
+a Python\index{Python language} program that I wrote for another project~\cite{landers2015-a}.
 The i18next library includes variable interpolation (insertion points for data) and pluralization rules that are important for grammatically correct text.
 Here is a short excerpt from the English file followed by the Russian version:
 

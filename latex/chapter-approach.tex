@@ -22,8 +22,8 @@ the web author simply places the \tcode{<speakur-discussion>}
  element in the HTML\index{HTML} at the desired spot.
 This requires two supporting steps detailed in~\cref{sec:deploying}:
 \begin{enumerate}
-\item loading the Web Components\index{Web Components} polyfill\index{polyfill} script
-\item importing the \tcode{<speakur-discussion>} element.
+\item loading the Web Components\index{Web Components} polyfill\index{polyfill} script,
+\item then importing the \tcode{<speakur-discussion>} element.
 \end{enumerate}
 
 \begin{figure}[htb]
@@ -274,7 +274,7 @@ Firebase\index{Firebase|textbf} uses WebSockets rather than traditional high-ove
 This always-on connection allows for sending nearly instant event notifications\index{event notification} to all currently active clients with minimal overhead.
 In practice, this allows the application to update its state in real-time as different users read and write values the database.
 The Firebase\index{Firebase|textbf} client library `subscribes' to an area of interest in the database, such as the replies to a particular thread.
-It then receives notifications when these areas change and so it can update the local representation as appropriate.
+It then receives notifications when these areas change so it can update the local representations as appropriate.
 This library also allows authors to register error handler functions to be called in case something goes wrong, but as of this writing, these handlers are not being called due to an internal bug in the \tcode{<firebase-element>}\index{<firebase-element>} wrapper.
 
 \section{Security Architecture}
@@ -311,7 +311,7 @@ Firebase\index{Firebase|textbf} supports other authorization schemes, including 
 Site owners who use Speakur can also designate certain threads to allow anonymous commenting.
 
 Every user who registers within a Speakur\index{Speakur} instance by signing in with one of those identity providers gets a unique identifier---the \tcode{uid} or user ID. 
-This \tcode{uid} is used extensively in the database to refer to the user, including in the security (authorization\index{authorization}) rules that are external to the actual database (i.e., security metadata\index{metadata}.) 
+This \tcode{uid} is used extensively in the database to refer to the user, including in the security (authorization\index{authorization}) rules that are external to the actual database (i.e., security metadata\index{metadata}). 
 Thread owners also have the option of allowing anonymous posts by users who are not signed in.
 
 \subsection{Authorization}
@@ -341,7 +341,8 @@ For example, I defined rules for Speakur which prohibit anyone from editing or d
 
 The rule structure is dictated by the architecture\index{architecture} of Firebase\index{Firebase|textbf}.
 This setup has certain pros and cons that can be seen in~\cref{l:sec_rule1}. 
-On one hand, it's logically designed and the expressions provide a powerful and fairly comprehensive way to specify the 
+On one hand, it's logically designed, 
+and the expressions provide a powerful and fairly comprehensive way to specify the 
 security\index{security|textbf} and authorization\index{authorization} logic for your database.
 On the other hand, non-trivial rule expressions can get awkwardly long and in complex cases can devolve into a maze of nested ternary operators.
 Having one big file with all the JSON formatted security expressions needed for a database works great for simpler cases but may become unwieldy in a more complex application without the assistance of additional tools.

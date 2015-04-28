@@ -339,12 +339,12 @@ the Grid\index{Grid|textbf} layout,
 and Flexible (Flex)\index{Flex} boxes.
 The CSS \tcode{@media}\index{@media} rule allows one to restrict the scope of CSS rules such that they only apply to certain media types including different screen sizes.
 The CSS Grid\index{Grid|textbf} layout is intended to control the overall page structure on different device sizes~\cite{w3ccontributors2015-d}.
-For example, a 'sidebar' might normally run alongside the main content down the side of the page in a desktop layout, but in a mobile layout the sidebar might come at the end, after the main content.
+For example, a `sidebar' might normally run alongside the main content down the side of the page in a desktop layout, but in a mobile layout the sidebar might come at the end, after the main content.
 Grid allows for different page layouts for portrait vs. landscape device orientation.
 
 The CSS Flexible Boxes (Flex)\index{Flex|textbf} model allows individual page components and smaller boxes---user interface widgets---to adjust their layout automatically for different sized screens.
 Flex boxes are useful for general-purpose user interface\index{user interface (UI)} (UI) structure, not just device-responsive design, and are widely used in Polymer\index{Polymer|textbf} and in Speakur\index{Speakur}~\cite{polymercontributors2015-d}.
-Flex boxes are intended to replace the use of the \tcode{<table>}\index{<table>} tag for formatting and structure, as opposed to actual tables of information~\cite{mozillacontributors2015}.
+Flex boxes are intended to replace the use of the \tcode{<table>}\index{<table>} tag for formatting and structure, as opposed to semantic tables~\cite{mozillacontributors2015}.
 
 \section{The Polymer Framework}
 
@@ -404,7 +404,7 @@ This made the development of an effective security architecture particularly imp
 \item It should be a `live' app with a change-event notification system similar to the
 publish-subscribe\index{publish-subscribe} (pubsub) design pattern\index{design patterns}.\label{motive:pubsub} 
 For example, the interface should automatically update when new replies are posted,
-or existing posts are edited.
+or when existing posts are edited.
 
 \item It should support Markdown\index{Markdown}-formatted comments including syntax highlighting for source code snippets. (The same way that source listings in this report use syntax highlighting.)\label{motive:markdown}
 
@@ -413,6 +413,6 @@ internationalization\index{internationalization} and
 localization\index{localization} features for a global audience. These should be tied to the data synchronization model for immediate updates.\label{motive:i18n}
 
 \item If any framework was used at all, it should be based on Web Components\index{Web Components}.\label{motive:webcomponents} This ruled out the vast majority of frameworks, 
-leaving only Polymer\index{Polymer} and the less-comp\-rehen\-sive X-Tags\index{X-Tags}~\cite{x-tagscontributors2015} and Bosonic~\cite{bosoniccontributors2014}\index{Bosonic} projects and a few other contenders.
+leaving only Polymer\index{Polymer} and the less-comp\-rehen\-sive X-Tags\index{X-Tags}~\cite{x-tagscontributors2015} and Bosonic~\cite{bosoniccontributors2014}\index{Bosonic} projects.
 \end{enumerate}
 The next chapter discusses some of the high level architectural concerns to be addressed when designing this type of social web plugin, such as creating a scalable data\-base schema, designing a device-responsive user interface, and providing adequate security rules.
