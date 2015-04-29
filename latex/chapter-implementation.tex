@@ -378,8 +378,7 @@ making them more difficult to understand and maintain.
 
 \section{Internationalization and Localization}
 \label{sec:i18n}
-Adapting an application for different languages and customs is called internationalization\index{internationalization|textbf} (i18n) and localization\index{localization|textbf} (l10n)\footnote{
-\textit{Internationalization} refers to the process of \textbf{enabling} an app to be localized, and \textit{localization} refers to adapting it to a \textbf{specific} locale.
+Adapting an application for different languages and customs is called internationalization\index{internationalization|textbf} (i18n) and localization\index{localization|textbf} (l10n)\footnote{\textit{Internationalization} refers to the process of \textbf{enabling} an app to be localized, and \textit{localization} refers to adapting it to a \textbf{specific} locale.
 }. 
 Speakur\index{Speakur} offers UI translations for 15 languages.
 The user can select a new language from the Profile dialog and the interface updates immediately.
@@ -430,8 +429,7 @@ In this expression the \tcode{lc} variable (the second parameter to the \tcode{\
 Interestingly, the \tcode{lc} variable is \textit{not} required by the \tcode{\$\$} filter because it already knows the current locale.
 Instead, \tcode{lc} is included in the expression merely to register a value dependency with Polymer\index{Polymer}
 such that when the locale is changed elsewhere, all dependent expressions are recalculated, or in this example, the strings are re-translated to the current 
-locale\footnote{
-Polymer expression dependencies are implemented internally with DOM mutation observers\index{mutation observers}~\cite{polymercontributors2015-b}.}.
+locale\footnote{Polymer expression dependencies are implemented internally with DOM mutation observers\index{mutation observers}~\cite{polymercontributors2015-b}.}.
 In this case it would output something like ``1 reply'' or ``2 replies'' as needed.
 Otherwise Polymer\index{Polymer} wouldn't bother to recalculate this expression when the locale (\tcode{lc}) changed because none of its direct clauses had acquired different values.
 Adding \tcode{lc} to this expression ensures that the text is updated when the language changes.

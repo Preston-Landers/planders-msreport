@@ -111,7 +111,7 @@ to cause the video to loop repeatedly.
 \begin{figure}[htb]
 %\centering
 \centerline{\includegraphics[width=6in]{images/html5_video_control.png}} 
-\caption{Opera's\index{Opera} shadow DOM for \tcode{<video>}\index{<video>} highlighting the Play button}
+\caption{Opera's\index{Opera} shadow DOM for \tcode{<video>}\index{<video>} highlighting the Play button.}
 \label{f:html5video}
 \end{figure}
 
@@ -188,8 +188,7 @@ To do something more interesting with your custom element you must use the other
 Shadow DOM\index{Shadow DOM|textbf} encapsulates the internal structure of an element~\cite{w3ccontributors2015}. 
 As we have seen, browsers already use Shadow DOM to encapsulate the private state of standard elements like \tcode{<video>}\index{<video>} but now this capability is extended to custom-defined elements.
 
-You can think of shadow DOM like an HTML fragment inside an element that describes its external appearance without exposing these structural details\footnote{
-HTML5 Shadow~DOM\index{Shadow DOM|textbf} should not be confused with the React\index{React} framework's \textbf{Virtual}~DOM, which is conceptually closer to HTML5 Templates in nature than Shadow DOM.}. 
+You can think of shadow DOM like an HTML fragment inside an element that describes its external appearance without exposing these structural details\footnote{HTML5 Shadow~DOM\index{Shadow DOM|textbf} should not be confused with the React\index{React} framework's \textbf{Virtual}~DOM, which is conceptually closer to HTML5 Templates in nature than Shadow DOM.}. 
 Typically a custom element definition has a template (more on these later) which produces the shadow DOM necessary to render the element.
 The actual contents of the shadow DOM are just ordinary elements.
 Any element, whether custom or not, can have zero, one, or more shadow DOM trees attached.
@@ -242,8 +241,7 @@ While HTML5 templates have some similarities to the concept of templates popular
 
 HTML5\index{HTML!HTML5} templates are inert hunks of HTML embedded in the page that can be instantiated into `real' elements by JavaScript\index{JavaScript}.
 Their basic function is to give a source input for the shadow DOM\index{Shadow DOM} when you create a new (custom) element instance and place it on the page.
-Binding data into templates with special operators\footnote{
-Sometimes called mustaches, handlebars or curly braces. },
+Binding data into templates with special operators\footnote{Sometimes called mustaches, handlebars or curly braces. },
 also known as a Model-Driven View\index{Model-Driven View},
 is \textbf{not} a part of the standard HTML5\index{HTML!HTML5} template spec.
 Templates are most useful in combination with `live' data, not static, unchanging text.
@@ -262,7 +260,7 @@ Instead this functionality can be handled by JavaScript\index{JavaScript} framew
 Data-bound templates are discussed in more detail in the following chapters.
 
 HTML Templates\index{HTML!Templates} are useful for providing structure and architecture, but they also help performance. 
-External resources referenced from a template (images, stylesheets, etc.) will not be fetched until the template is actually instantiated.
+External resources referenced from a template (images, style\-sheets, etc.) will not be fetched until the template is actually instantiated.
 Templates are often used to declare the internal structure (shadow DOM\index{Shadow DOM}) of custom elements. 
 Therefore the resources needed to use the custom element\index{Custom Elements|textbf} aren't downloaded until they are actually needed, which is necessary when composing a large application out of numerous distinct components, 
 not all of which are needed immediately.
@@ -390,8 +388,7 @@ I wanted my discussion plugin for web authors to have some of the following attr
 \begin{enumerate}
 \item A simple API and usage pattern that abstracted\index{abstraction} away most of the implementation details. In essence, to demonstrate that it was possible to write an encapsulated\index{encapsulation} plugin for web authors that would fit into a wide variety of application architectures. The question I asked is, how well do Web Components solve this encapsulation and decoupling problem?\label{motive:abstraction}
 
-\item It should require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \\ \url{https://jsfiddle.net/} and \url{https://jsbin.com}
-\footnote{See \url{http://jsbin.com/jubabubazu/10} for a working example.}.
+\item It should require minimal server resources. Ideally nothing would need to be ``installed'' and it could be loaded in a cross-origin fashion from online web editors like \\ \url{https://jsfiddle.net/} and \url{https://jsbin.com}\footnote{See \url{http://jsbin.com/jubabubazu/10} for a working example.}.
 \label{motive:cors}
 
 \item It should be a purely client-side HTML\index{HTML} and JavaScript\index{JavaScript} application to the extent possible, 
